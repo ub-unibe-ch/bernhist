@@ -67,7 +67,7 @@ Extract `data.tar.gz` in the project root and import the SQL data dump:
 mysql -u [username] -p [database] < [path to data dir]/bernhist_data.sql
 ```
 
-Replace [username] with your database, [database] with the name of your database and [path to data dir] with the relative or absolute path to the extracted mysql dump.
+Replace [username] with the mysql user, [database] with the name of your database and [path to data dir] with the relative or absolute path to the extracted mysql dump.
 
 Install the frontend dependencies with:
 
