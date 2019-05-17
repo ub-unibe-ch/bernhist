@@ -1,0 +1,94 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    <h1 class="d-none d-print-block">BERNHIST</h1>
+    <h1 class="d-print-none">Resultate</h1>
+    <h3>Gewählter Ort: {{ location|raw }} <small class="d-print-none"><a href="{{ path('query', {'topicId': topic.id}) }}#{{ location.id }}">Ändern</a></small></h3>
+    <h3>Gewähltes Thema: {{ topic|raw }} <small class="d-print-none"><a href="{{ path('query_location', {'id': location.id}) }}#{{ topic.id }}">Ändern</a></small></h3>
+    <h3 class="d-none d-print-block">Jahrauswahl: {{ yearFrom }} - {{ yearTo }}</h3>
+{% endblock %}
+
+{% block content %}
+    <div class="year-select-group form-inline d-print-none" data-url="{{ path('query_result', {'locationId': location.id, 'id': topic.id, 'yearFrom': '.yearFrom.', 'yearTo': '.yearTo.'}) }}">
+        <label for="year-from">Jahr von: </label>
+        <select id="year-from" class="form-control year-select">
+            {% for year in yearsFrom %}
+                <option value="{{ year }}"{% if yearFrom == year %} selected{% endif %}>{{ year }}</option>
+            {% endfor %}
+        </select>
+        <label for="year-to">bis: </label>
+        <select id="year-to" class="form-control year-select">
+            {% for year in yearsTo %}
+                <option value="{{ year }}"{% if yearTo == year %} selected{% endif %}>{{ year }}</option>
+            {% endfor %}
+        </select>
+    </div>
+
+    <h2>{{ results|length }} Resultat{% if results|length == 0 or results|length > 1 %}e{% endif %} gefunden</h2>
+
+    <div class="d-print-none" style="margin-bottom:30px">
+        {% if results|length > 1 %}
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#chartistModal">Grafik</button>
+            <a target="_blank" class="btn btn-primary" href="{{ path('render_result', {'locationId': location.id, 'id': topic.id, 'yearFrom': yearFrom, 'yearTo': yearTo, 'format': 'xlsx'}) }}">Excel</a>
+            <a target="_blank" class="btn btn-primary" href="{{ path('render_result', {'locationId': location.id, 'id': topic.id, 'yearFrom': yearFrom, 'yearTo': yearTo, 'format': 'pdf'}) }}">PDF</a>
+            <a target="_blank" class="btn btn-primary" href="{{ path('api_record_list_full', {'locationId': location.id, 'topicId': topic.id, 'from': yearFrom, 'to': yearTo}) }}">JSON</a>
+        {% endif %}
+        <a target="_blank" class="btn btn-primary" href="javascript:window.print();">Drucken</a>
+    </div>
+
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th scope="col">Startjahr</th>
+            <th scope="col">Endjahr</th>
+            <th scope="col">Ort <i>(Typ)</i></th>
+            <th scope="col" class="text-right">Wert <i>({{ topic.type }})</i></th>
+        </tr>
+        </thead>
+        <tbody>
+        {% set showChartistNote = false %}
+        {% for dataEntry in results %}
+            {% if dataEntry.yearFrom != dataEntry.yearTo %}
+                {% set showChartistNote = true %}
+            {% endif %}
+            <tr>
+                <td>{{ dataEntry.yearFrom }}</td>
+                <td>{{ dataEntry.yearTo }}</td>
+                <td>{{ dataEntry.location|raw }}</td>
+                <td class="text-right">{{ valuePresenter.present(dataEntry.value) }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    <p class="float-right"><i>Quelle: BERNHIST</i></p>
+
+    {% if results|length > 1 %}
+        <div class="modal fade chartist-modal" id="chartistModal" tabindex="-1" role="dialog" aria-labelledby="chartistModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-xl" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="chartistModalLabel">
+                            {{ location|raw }}<br>
+                            {{ topic }} <i>({{ topic.type }})</i><br>
+                            {{ yearFrom }} - {{ yearTo }}
+                        </h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        {% if showChartistNote %}
+                            <div class="alert alert-info" role="alert">
+                                Bei Datensätzen die ein unterschiedliches Start- und Endjahr haben, sind in der Grafik zwei Einträge ersichtlich - jeweils ein Eintrag für das Start- und das Endjahr. Der Wert für die X-Achse wird folgendermassen berechnet: <code>Wert / ((Endjahr - Startjahr) + 1)</code>
+                            </div>
+                        {% endif %}
+                        <div class="chartist" style="height:600px" data-url="{{ path('query_result_chartist', {'locationId': location.id, 'id': topic.id, 'yearFrom': yearFrom, 'yearTo': yearTo}) }}"></div>
+                    </div>
+                    <div class="modal-footer">
+                        <p><i>Quelle: BERNHIST</i></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+{% endblock %}

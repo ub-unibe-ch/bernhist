@@ -1,0 +1,15 @@
+{% if topic.children|length > 0 or topic.type.name != "Kategorie" %}
+<div id="level-{{ topic.id }}" class="level-entry{% if not topic.parent is null and not topic.parent.parent is null %} d-none{% endif %}">
+    {% if topic.children|length > 0 %}
+        <div class="level-toggle{% if topic.parent is null %} opened{% endif %}"></div>
+    {% endif %}
+    {% if topic.children|length == 0 %}
+        <a href="{{ path('query_topic', {'locationId': location.id, 'id': topic.id}) }}">{{ topic|raw }}</a>
+    {% else %}
+        {{ topic|raw }}
+    {% endif %}
+    {% for topic in topic.children %}
+        {% include 'query/topic/entry.html.twig' %}
+    {% endfor %}
+</div>
+{% endif %}

@@ -1,0 +1,77 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    <h1>Geschichte von BERNHIST</h1>
+{% endblock %}
+
+{% block content %}
+    <p>
+        Die Datenbank BERNHIST ist aus äusserst bescheidenen Anfängen heraus entstanden und ohne ein anfängliches Gesamtkonzept entsprechend den jeweils neu verfügbaren Mitteln
+        Schritt für Schritt auf- und ausgebaut worden.
+    </p>
+    <table class="table table-striped">
+        <tr>
+            <th>1984</th>
+            <td>Die bernische Erziehungsdirektion unterstützt ein Pilotprojekt zur Erfassung von Taufen und Sterbefällen in allen Kirchenbüchern des Kantons.</td>
+        </tr>
+        <tr>
+            <th>1986-1990</th>
+            <td>Zusätzliche Datenbestände aus dem sozioökonomischen Umfeld zur Interpretation der demographischen Daten werden mit Hilfe des Schweizer Nationalfonds beschafft.</td>
+        </tr>
+        <tr>
+            <th>1991</th>
+            <td>
+                BERNHIST wird im Jubiläumsjahr 1991 (800 Jahre Bern) dem Publikum an der Jubiläumsaustellung BEA sowie an der Oberländischen Herbstausstellung (OHA) in Thun
+                präsentiert. Lustbetont und neugierig ging das Messepublikum an die historisch-statistische Information heran, sei es, um Eckdaten der eigenen Wohngemeinde abzurufen,
+                sei es, um erfahrene Facetten von "Vergangenheit" auf den Bildschirm zu holen oder sei es auch nur, um die Möglichkeiten der Software spielerisch zu erproben.
+            </td>
+        </tr>
+        <tr>
+            <th>1991-1993</th>
+            <td>Die Datenbestände werden mit Hilfe des SEVA Lotteriefonds und der heutigen Mobiliar Versicherung und Vorsorge in einer relationalen Datenbank reorganisiert.</td>
+        </tr>
+        <tr>
+            <th>1994</th>
+            <td>
+                Die relationale Datenbank wird zur öffentlichen Benutzung freigegeben. Sie enthält rund zwei Millionen Schlüsseldaten aus den Bereichen Bevölkerung, Wirtschaft,
+                Umwelt, Politik für den Zeitraum von 1700 bis 1990 auf der Ebene von Gemeinden, Bezirken und des Gesamtkantons.
+            </td>
+        </tr>
+        <tr>
+            <th>1995</th>
+            <td>Die für BERNHIST verwendeten statistischen Quellen werden von PFISTER (1995) ausführlich vorgestellt und kritisch diskutiert.</td>
+        </tr>
+        <tr>
+            <th>1998</th>
+            <td>Der auf der Basis von BERNHIST geschaffene Historische-Statistische Atlas des Kantons Bern (PFISTER, EGLI 1998) wird publiziert.</td>
+        </tr>
+        <tr>
+            <th>1998</th>
+            <td>
+                Programmierung einer neuen Internet-Applikation durch Urs Dietrich und Portierung der alten unter VMS implementierten Datenbank nach NT im Rahmen einer
+                Qualifikationsarbeit in Informatik. Die über das Internet abfragbaren Datenbestände werden zugleich mit Unterstützung der Hochschulstiftung reduziert und
+                reorganisiert.
+            </td>
+        </tr>
+        <tr>
+            <th>1999-2001</th>
+            <td>BERNHIST wird im Rahmen von Fortbildungskursen für Gymnasiallehrer verwendet</td>
+        </tr>
+        <tr>
+            <th>2002</th>
+            <td>Serge Meyer migriert die Datenbank von Access auf mySQL, programmiert die PHP-Schnittstellen und erstellt den Webauftritt von BERNHIST.</td>
+        </tr>
+        <tr>
+            <th>2002</th>
+            <td>BERNHIST ist Thema in einem von Stephan Hagnauer geleiteten Kurs "Ortsgeschichte" im Staatsarchiv des Kantons Bern</td>
+        </tr>
+        <tr>
+            <th>2006</th>
+            <td>BERNHIST wird von <a href="http://www.digibern.ch" target="_blank">DIGIBERN</a> übernommen</td>
+        </tr>
+        <tr>
+            <th>2019</th>
+            <td>Mathias Stocker von der Universitätsbibliothek Bern migriert die bisherige Lösung unter Verwendung neuerer Technologien um die weitere Lauffähigkeit zu sichern und erweitert die Anwendung um eine offene Programmierschnittstelle (API).</td>
+        </tr>
+    </table>
+{% endblock %}

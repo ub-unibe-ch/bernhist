@@ -1,0 +1,54 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    <h1>Literatur</h1>
+{% endblock %}
+
+{% block content %}
+    <table class="table table-striped">
+        <tr>
+            <td class="d-none d-md-table-cell">&nbsp;</td>
+            <td>
+                <span class="text-muted">Häberli, Peter, Imfeld, Klaus, Mügeli, Thomas, Pfister, Christian, Schranz, Niklaus, 1994</span>
+                <h5 class="mt-0 mb-1">Historisch-geographisches Informationssystem BERNHIST</h5>
+                <span class="text-muted">Handbuch, Historisches Institut der Universität. Bern.</span>
+            </td>
+        </tr>
+        <tr>
+            <td class="d-none d-md-table-cell">&nbsp;</td>
+            <td>
+                <span class="text-muted">Imfeld, Klaus, Häberli, Peter, Pfister, Christian, Schranz, Niklaus, 1995</span>
+                <h5 class="mt-0 mb-1">BERNHIST - Plattform für fächerübergreifendes Forschen und Lehren in Raum und Zeit</h5>
+                <span class="text-muted">Konzept und Potential eines historisch-geografischen Informationssystems (HGIS), in: Itinera 17, 46-78</span>
+            </td>
+        </tr>
+        <tr>
+            <td class="d-none d-md-table-cell">&nbsp;</td>
+            <td>
+                <span class="text-muted">Imfeld, Klaus; Pfister, Christian; Häberli, Peter, 1995</span>
+                <h5 class="mt-0 mb-1">Eine raum-zeitliche Datenbank für den Schweizer Kanton Bern im Internet</h5>
+                <span class="text-muted">in: Historical Social Research (HSR) 20/ 3, 102-133</span>
+            </td>
+        </tr>
+        <tr>
+            <td class="text-center d-none d-md-table-cell">
+                <a target="_blank" href="https://www.digibern.ch/katalog/geschichte-des-kantons-bern-seit-1798"><img src="{{ asset('/images/geschichte_kanton_bern.jpg') }}"></a>
+            </td>
+            <td class="align-middle">
+                <span class="text-muted">Pfister, Christian, 1995</span>
+                <h5 class="mt-0 mb-1"><a target="_blank" href="https://www.digibern.ch/katalog/geschichte-des-kantons-bern-seit-1798">Im Strom der Modernisierung</a></h5>
+                <span class="text-muted">Bevölkerung, Wirtschaft und Umwelt im Kanton Bern 1700-1914. Bern.</span>
+            </td>
+        </tr>
+        <tr>
+            <td class="text-center d-none d-md-table-cell">
+                <a target="_blank" href="http://baselbern.swissbib.ch/Record/305426567"><img src="{{ asset('/images/atlas.jpg') }}"></a>
+            </td>
+            <td class="align-middle">
+                <span class="text-muted">Pfister, Christian, Egli, Hans Rudolf, 1998</span>
+                <h5 class="mt-0 mb-1"><a target="_blank" href="http://baselbern.swissbib.ch/Record/305426567">Historisch- Statistischer Atlas des Kantons Bern 1750-1995</a></h5>
+                <span class="text-muted">Umwelt - Bevölkerung - Wirtschaft – Politik. Bern.</span>
+            </td>
+        </tr>
+    </table>
+{% endblock %}

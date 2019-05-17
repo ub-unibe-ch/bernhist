@@ -1,0 +1,23 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    <h1>Impressum</h1>
+{% endblock %}
+
+{% block content %}
+    <h3><a target="_blank" href="http://www.hist.unibe.ch/ueber_uns/personen/pfister_christian/index_ger.html">Prof. em. Dr. Christian Pfister</a></h3>
+    <p>Ein historisch-geografisches Informationssystem für den Kanton Bern, aufgebaut von der <a target="_blank" href="http://www.hist.unibe.ch/ueber_uns/abteilungen/wirtschafts__sozial__und_umweltgeschichte/index_ger.html">Abteilung für Wirtschafts-, Sozial- und Umweltgeschichte (WSU)</a> am <a target="_blank" href="http://www.hist.unibe.ch/">Historischen
+            Institut der Universität Bern</a> unter Mitarbeit von Daniel Brändli, <b>Urs Dietrich</b>, <b>Peter Häberli</b>, Klaus Imfeld, <b>Serge Meyer</b>, Reto Müller, Stefan Ruetsch, Niklaus
+        Schranz, <b>Hannes Schüle</b> und Erich Siffert.</p>
+    <p>Bern 1994-2006.</p>
+    <p>Der Auf- und Ausbau von BERNHIST wurde unterstützt durch:
+    <ul>
+        <li>Erziehungsdirektion des Kantons Bern (1984-1986)</li>
+        <li>Schweizerischen Nationalfonds zur Förderung der Forschung (1986-1990)</li>
+        <li>SEVA Lotteriefonds (1991-1993)</li>
+        <li>Mobiliar Versicherung und Vorsorge (1992)</li>
+        <li>Stiftung zur Förderung der wissenschaftlichen Forschung an der Universität Bern (Hochschulstiftung) (1996-97).</li>
+    </ul>
+    </p>
+    <p>Aktualisiert 2019 durch <a href="mailto:mathias.stocker@ub.unibe.ch">Mathias Stocker</a> an der <a target="_blank" href="https://ub.unibe.ch">Universitätsbibliothek Bern</a> um die Lauffähigkeit beizubehalten und mit einer <a target="_blank" href="{{ path('api_documentation') }}">offenen Programmierschnittstelle</a> (API) ergänzt.<br>Das ursprüngliche Projekt ist <a href="https://github.com/UB-Bern/bernhist/releases/tag/v1.0.0">als Version</a> auf GitHub zu finden.</p>
+{% endblock %}

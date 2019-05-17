@@ -1,0 +1,66 @@
+@import "~bootstrap/scss/bootstrap";
+@import "~chartist/dist/scss/chartist";
+
+html {
+  height: 100%;
+}
+
+body{
+  padding-top: 4.5rem;
+  padding-bottom: 9rem;
+}
+
+.level-entry{
+  margin-left: 15px;
+  .level-toggle{
+    width: 12px;
+    height: 12px;
+    opacity: 0.75;
+    background-image: url('../images/toggle-closed.svg');
+    float:left;
+    margin-left: -15px;
+    margin-right: 5px;
+    margin-top: 5px;
+    cursor: pointer;
+    &:hover{
+      opacity: 1;
+    }
+    &.opened{
+      opacity: 1;
+      background-image: url('../images/toggle-opened.svg');
+      margin-top: 7px;
+    }
+  }
+}
+
+.form-inline > label{
+  margin: 0 10px;
+}
+
+.year-select-group{
+  margin: 30px 0;
+}
+
+.chartist{
+  min-height: 500px;
+}
+
+h2{
+  margin: 15px 0;
+}
+
+.ct-label {
+  white-space: nowrap !important;
+}
+
+.footer {
+  background-color: #f5f5f5;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  .container {
+    width: auto;
+    padding: 0 15px;
+  }
+}

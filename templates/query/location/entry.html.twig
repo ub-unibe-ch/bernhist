@@ -1,0 +1,13 @@
+<div id="level-{{ location.id }}" class="level-entry{% if not location.isStartNode and not location.parent.isStartNode %} d-none{% endif %}">
+        {% if location.children|length > 0 %}
+                <div class="level-toggle{% if location.isStartNode %} opened{% endif %}"></div>
+        {% endif %}
+        {% if topicId == 0 %}
+            <a href="{{ path('query_location', {'id': location.id}) }}">{{ location|raw }}</a>
+        {% else %}
+            <a href="{{ path('query_topic', {'locationId': location.id, 'id': topicId}) }}">{{ location|raw }}</a>
+        {% endif %}
+        {% for location in location.children %}
+                {% include 'query/location/entry.html.twig' %}
+        {% endfor %}
+</div>

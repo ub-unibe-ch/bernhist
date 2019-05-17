@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    <h1>Ortsauswahl</h1>
+    <p>
+        Bitte klicken Sie auf den gewünschten Ort.<br>
+        Um untergeordnete Orte ein- oder auszublenden, klicken Sie bitte auf das entsprechende Symbol vor dem Ort.
+    </p>
+{% endblock %}
+
+{% block content %}
+    {% include 'query/location/entry.html.twig' %}
+{% endblock %}

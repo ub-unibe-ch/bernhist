@@ -1,0 +1,113 @@
+[
+  {
+    topic: {
+      id: 981,
+      name: "Bevölkerung",
+      unit: "Kategorie",
+      has_records: true
+    },
+    tree: {
+      parent: 1,
+      children: [
+        {
+          topic: {
+            id: 1201,
+            name: "Eheschliessungen",
+            unit: "Kategorie",
+            has_records: true
+          },
+          tree: {
+            parent: 981,
+            children: [
+              {
+                topic: {
+                  id: 551,
+                  name: "Eheschliessungen",
+                  unit: "N",
+                  has_records: true
+                },
+                tree: {
+                  parent: 1201,
+                  children: []
+                }
+              }
+            ]
+          }
+        },
+        {
+          topic: {
+            id: 432,
+            name: "Geburten",
+            unit: "Kategorie",
+            has_records: true
+          },
+          tree: {
+            parent: 981,
+            children: [
+              {
+                topic: {
+                  id: 430,
+                  name: "Geborene insgesamt",
+                  unit: "N",
+                  has_records: true
+                },
+                tree: {
+                  parent: 432,
+                  children: []
+                }
+              },
+              {
+                topic: {
+                  id: 431,
+                  name: "Geborene pro 1000 Ew.",
+                  unit: "Promille",
+                  has_records: true
+                },
+                tree: {
+                  parent: 432,
+                  children: []
+                }
+              },
+              {
+                topic: {
+                  id: 679,
+                  name: "Lebendgeborene",
+                  unit: "N",
+                  has_records: true
+                },
+                tree: {
+                  parent: 432,
+                  children: []
+                }
+              },
+              {
+                topic: {
+                  id: 906,
+                  name: "Taufen",
+                  unit: "N",
+                  has_records: true
+                },
+                tree: {
+                  parent: 432,
+                  children: []
+                }
+              },
+              {
+                topic: {
+                  id: 912,
+                  name: "Totgeborene insgesamt",
+                  unit: "N",
+                  has_records: true
+                },
+                tree: {
+                  parent: 432,
+                  children: []
+                }
+              }
+            ]
+          }
+        }
+      ]
+    }
+  }
+]

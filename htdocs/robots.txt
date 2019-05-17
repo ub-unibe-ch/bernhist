@@ -1,3 +1,0 @@
-# Für all Web-Crawler
-User-agent: *
-Crawl-delay: 120

@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    <h1>Themenauswahl</h1>
+    <h3>Gewählter Ort: {{ location|raw }} <small><a href="{{ path('query') }}#{{ location.id }}">Ändern</a></small></h3>
+    <p>
+        Bitte wählen Sie das gewünschte Thema.
+    </p>
+{% endblock %}
+
+{% block content %}
+    {% include 'query/topic/entry.html.twig' %}
+{% endblock %}

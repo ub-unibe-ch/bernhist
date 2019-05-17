@@ -1,0 +1,767 @@
+openapi: "3.0.0"
+info:
+  title: BERNHIST
+  version: 1.0.0
+  description: "A historical-geographic information system for the swiss canton of Bern.\n\nThe original BERNHIST project (1994 - 2006) was established by the department of economic, social and environmental History (Abteilung für Wirtschafts-, Sozial- und Umweltgeschichte, WSU) at the historical institute of the university of bern with the collaboration of Daniel Brändli, **Urs Dietrich**, **Peter Häberli**, Klaus Imfeld, **Serge Meyer**, Reto Müller, Stefan Ruetsch, Niklaus Schranz, **Hannes Schüle** und Erich Siffert.\n\nAuthor of this API: [**Mathias Stocker**](mailto:mathias.stocker@ub.unibe.ch) ([Universität Bern](https://www.unibe.ch), [Universitätsbibliothek Bern](https://ub.unibe.ch))\n\nVisit BERNHIST on [GitHub](https://github.com/UB-Bern/bernhist)"
+
+
+
+paths:
+  /api/location/list/:
+    get:
+      operationId: listLocations
+      summary: List locations
+      tags:
+        - Location
+      responses:
+        '200':
+          description: 200 ok
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LocationList'
+
+
+
+  /api/location/tree/:
+    get:
+      operationId: treeLocations
+      summary: List locations as tree
+      tags:
+        - Location
+      responses:
+        '200':
+          description: 200 ok
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LocationTreeEntry'
+
+
+
+  /api/location/{locationId}/:
+    get:
+      operationId: showLocation
+      summary: Shows location information for the given ID
+      tags:
+        - Location
+      parameters:
+        - in: path
+          name: locationId
+          schema:
+            type: integer
+            required: true
+          description: Numeric ID of the location to get
+      responses:
+        '200':
+          description: 200 ok
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LocationListEntry'
+        '404':
+          description: 404 not found is thrown when the location with the given locationId does not exist
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundException'
+
+
+
+  /api/topic/list/:
+    get:
+      operationId: listTopics
+      summary: List topics
+      tags:
+        - Topic
+      responses:
+        '200':
+          description: 200 ok
+          content:
+            application/json:
+              schema:
+                $ref: '#components/schemas/TopicList'
+
+
+
+  /api/topic/tree/:
+    get:
+      operationId: treeTopics
+      summary: List topics as tree
+      tags:
+        - Topic
+      responses:
+        '200':
+          description: 200 ok
+          content:
+            application/json:
+              schema:
+                $ref: '#components/schemas/TopicTreeEntry'
+
+
+
+  /api/topic/{topicId}/:
+    get:
+      operationId: showTopic
+      summary: Shows topic information for the given ID
+      tags:
+        - Topic
+      parameters:
+        - in: path
+          name: topicId
+          schema:
+            type: integer
+            required: true
+          description: Numeric ID of the topic to get
+      responses:
+        '200':
+          description: 200 ok
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Topic'
+        '404':
+          description: 404 not found is thrown when the topic with the given topicId does not exist
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundException'
+
+
+  /api/record/list/:
+    get:
+      operationId: listRecords
+      summary: Delivers records based on the given parameters.
+      tags:
+        - Record
+      parameters:
+        - in: query
+          name: locationId
+          description: The location id for which the records should be delivered
+          schema:
+            type: integer
+            required: false
+        - in: query
+          name: topicId
+          description: The topic id for which the records should be delivered
+          schema:
+            type: integer
+            required: false
+        - in: query
+          name: from
+          description: The start year from which on the records should be delivered
+          schema:
+            type: integer
+            required: false
+        - in: query
+          name: to
+          description: The end year until which the records should be delivered
+          schema:
+            type: integer
+            required: false
+        - in: query
+          name: page
+          description: 'The page of records which should delivered (see `RecordListInfo`). If this value is less than 1 the default value will be used.'
+          schema:
+            type: integer
+            required: false
+            default: 1
+      responses:
+        '200':
+          description: 200 ok
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RecordList'
+        '404':
+          description: 404 not found is thrown when locationId or topicId is set but the corresponding object was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundException'
+
+
+  /api/record/list/full:
+    get:
+      operationId: listFullRecords
+      summary: Same as `listRecords` but with topic and location objects instead of IDs
+      tags:
+        - Record
+      parameters:
+        - in: query
+          name: locationId
+          description: The location id for which the records should be delivered
+          schema:
+            type: integer
+            required: false
+        - in: query
+          name: topicId
+          description: The topic id for which the records should be delivered
+          schema:
+            type: integer
+            required: false
+        - in: query
+          name: from
+          description: The start year from which on the records should be delivered
+          schema:
+            type: integer
+            required: false
+        - in: query
+          name: to
+          description: The end year until which the records should be delivered
+          schema:
+            type: integer
+            required: false
+        - in: query
+          name: page
+          description: 'The page of records which should delivered (see `RecordListInfo`). If this value is less than 1 the default value will be used.'
+          schema:
+            type: integer
+            required: false
+            default: 1
+      responses:
+        '200':
+          description: 200 ok
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FullRecordList'
+        '404':
+          description: 404 not found is thrown when locationId or topicId is set but the corresponding object was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundException'
+
+
+  /api/record/{recordId}/:
+    get:
+      operationId: showRecord
+      summary: Shows record information for the given ID
+      tags:
+        - Record
+      parameters:
+        - in: path
+          name: recordId
+          schema:
+            type: integer
+            required: true
+          description: Numeric ID of the record to get
+      responses:
+        '200':
+          description: 200 ok
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Record'
+        '404':
+          description: 404 not found is thrown when the record with the given recordId does not exist
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundException'
+
+
+  /api/record/{recordId}/full/:
+    get:
+      operationId: showFullRecord
+      summary: Same as `showRecord` but delivers location and topic objects instead of IDs
+      tags:
+        - Record
+      parameters:
+        - in: path
+          name: recordId
+          schema:
+            type: integer
+            required: true
+          description: Numeric ID of the record to get
+      responses:
+        '200':
+          description: 200 ok
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FullRecord'
+        '404':
+          description: 404 not found is thrown when the record with the given recordId does not exist
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundException'
+
+
+
+components:
+  schemas:
+    Location:
+      type: object
+      description: 'Describes a geographic area'
+      properties:
+        id:
+          type: integer
+          description: 'The ID of the location'
+          example: 16
+        name:
+          type: string
+          description: 'The name of the location'
+          example: "Bern"
+        type:
+          type: string
+          description: 'The type of the location (possible values: "Bundesstaat", "Kanton", "Landesteil", "Amtsbezirk", "Kirchgemeinde", "Einwohnergemeinde")'
+          example: "Kanton"
+        has_records:
+          type: boolean
+          description: 'If `true` there is at least one `Record` object available for this location'
+          example: true
+    LocationList:
+      type: array
+      description: 'An array of `LocationListEntry`'
+      items:
+        $ref: '#/components/schemas/LocationListEntry'
+    LocationListEntry:
+      type: object
+      description: 'Provides information about the location and the position in the tree'
+      properties:
+        location:
+          $ref: '#/components/schemas/Location'
+        tree:
+          $ref: '#/components/schemas/TreeInfo'
+    LocationTreeEntry:
+      type: object
+      description: 'Represents a node in the location tree'
+      properties:
+        location:
+          $ref: '#/components/schemas/Location'
+        tree:
+          $ref: '#/components/schemas/LocationTreeInfo'
+    LocationTreeInfo:
+      type: object
+      description: 'Provides information about the position in the location tree'
+      properties:
+        parent:
+          type: integer|null
+          description: 'The ID of the parent location or null if the current location is the root node'
+          example: null
+        children:
+          type: array
+          description: 'The children of the current location as `LocationTreeInfo`'
+          example:
+            [
+            {
+              location: {
+                id: 234,
+                name: "Emmental",
+                unit: "Landesteil",
+                has_records: true
+              },
+              tree: {
+                parent: 16,
+                children: [
+                {
+                  location: {
+                    id: 40,
+                    name: "Signau",
+                    unit: "Amtsbezirk",
+                    has_records: true
+                  },
+                  tree: {
+                    parent: 234,
+                    children: [
+                    {
+                      location: {
+                        id: 378,
+                        name: "Eggiwil",
+                        unit: "Kirchgemeinde",
+                        has_records: true
+                      },
+                      tree: {
+                        parent: 40,
+                        children: [
+                        {
+                          location: {
+                            id: 760,
+                            name: "Eggiwil",
+                            unit: "Einwohnergemeinde",
+                            has_records: true
+                          },
+                          tree: {
+                            parent: 378,
+                            children: []
+                          }
+                        }
+                        ]
+                      }
+                    },
+                    {
+                      location: {
+                        id: 379,
+                        name: "Langnau",
+                        unit: "Kirchgemeinde",
+                        has_records: true
+                      },
+                      tree: {
+                        parent: 40,
+                        children: [
+                        {
+                          location: {
+                            id: 761,
+                            name: "Langnau im Emmental",
+                            unit: "Einwohnergemeinde",
+                            has_records: true
+                          },
+                          tree: {
+                            parent: 379,
+                            children: []
+                          }
+                        }
+                        ]
+                      }
+                    }
+                    ]
+                  }
+                }
+                ]
+              }
+            }
+            ]
+          items:
+            $ref: '#/components/schemas/LocationTreeEntry'
+    Topic:
+      type: object
+      description: 'Describes a topic of the dataset'
+      properties:
+        id:
+          type: integer
+          description: 'The ID of the topic'
+          example: 1
+        name:
+          type: string
+          description: 'The name of the topic'
+          example: "Alles"
+        unit:
+          type: string
+          description: 'If the unit is "Kategorie" (category) this means the topic is a container for child topics and does not have records itself. Otherwise it is the unit descriptor of the associated records of the topic.'
+          example: "Kategorie"
+        has_records:
+          type: boolean
+          description: 'Indicates if there are records available for this topic'
+          example: false
+    TopicList:
+      type: array
+      description: 'An array of `TopicListEntry`'
+      items:
+        $ref: '#/components/schemas/TopicListEntry'
+    TopicListEntry:
+      type: object
+      description: 'Provides information about the topic and the position in the tree'
+      properties:
+        topic:
+          $ref: '#/components/schemas/Topic'
+        tree:
+          $ref: '#/components/schemas/TreeInfo'
+    TopicTreeEntry:
+      type: object
+      description: 'Represents a node in the topic tree'
+      properties:
+        topic:
+          $ref: '#/components/schemas/Topic'
+        tree:
+          $ref: '#/components/schemas/TopicTreeInfo'
+    TopicTreeInfo:
+      type: object
+      description: 'Provides information about the position in the topic tree'
+      properties:
+        parent:
+          type: integer|null
+          description: 'The ID of the parent topic or null if the current topic is the root node'
+          example: null
+        children:
+          type: array
+          description: 'The children of the current topic as `TopicTreeEntry`'
+          example:
+            [
+            {
+              topic: {
+                id: 981,
+                name: "Bevölkerung",
+                unit: "Kategorie",
+                has_records: true
+              },
+              tree: {
+                parent: 1,
+                children: [
+                {
+                  topic: {
+                    id: 1201,
+                    name: "Eheschliessungen",
+                    unit: "Kategorie",
+                    has_records: true
+                  },
+                  tree: {
+                    parent: 981,
+                    children: [
+                    {
+                      topic: {
+                        id: 551,
+                        name: "Eheschliessungen",
+                        unit: "N",
+                        has_records: true
+                      },
+                      tree: {
+                        parent: 1201,
+                        children: []
+                      }
+                    }
+                    ]
+                  }
+                },
+                {
+                  topic: {
+                    id: 432,
+                    name: "Geburten",
+                    unit: "Kategorie",
+                    has_records: true
+                  },
+                  tree: {
+                    parent: 981,
+                    children: [
+                    {
+                      topic: {
+                        id: 430,
+                        name: "Geborene insgesamt",
+                        unit: "N",
+                        has_records: true
+                      },
+                      tree: {
+                        parent: 432,
+                        children: []
+                      }
+                    },
+                    {
+                      topic: {
+                        id: 431,
+                        name: "Geborene pro 1000 Ew.",
+                        unit: "Promille",
+                        has_records: true
+                      },
+                      tree: {
+                        parent: 432,
+                        children: []
+                      }
+                    },
+                    {
+                      topic: {
+                        id: 679,
+                        name: "Lebendgeborene",
+                        unit: "N",
+                        has_records: true
+                      },
+                      tree: {
+                        parent: 432,
+                        children: []
+                      }
+                    },
+                    {
+                      topic: {
+                        id: 906,
+                        name: "Taufen",
+                        unit: "N",
+                        has_records: true
+                      },
+                      tree: {
+                        parent: 432,
+                        children: []
+                      }
+                    },
+                    {
+                      topic: {
+                        id: 912,
+                        name: "Totgeborene insgesamt",
+                        unit: "N",
+                        has_records: true
+                      },
+                      tree: {
+                        parent: 432,
+                        children: []
+                      }
+                    }
+                    ]
+                  }
+                }
+                ]
+              }
+            }
+            ]
+          items:
+            $ref: '#/components/schemas/TopicTreeEntry'
+    TreeInfo:
+      type: object
+      description: 'Provides information about the position in the tree'
+      properties:
+        parent:
+          type: integer|null
+          description: 'The ID of the parent element or null if the current element is the root node'
+          example: null
+        children:
+          type: array
+          description: 'The IDs of the child elements of the current element'
+          example: [3, 4, 5]
+          items:
+            type: integer
+            description: 'The ID of the child element'
+    Record:
+      type: object
+      description: 'Represents an entry in the dataset with information about year, value, unit and the assigned location and topic IDs'
+      example:
+        {
+          id: 1,
+          location: 17,
+          topic: 679,
+          year_from: 1725,
+          year_to: 1725,
+          value: 191,
+          unit: "N"
+        }
+      properties:
+        id:
+          type: integer
+          description: 'The ID of the record'
+          example: 1
+        location:
+          type: integer
+          description: 'The location ID'
+          example: 17
+        topic:
+          type: integer
+          description: 'The topic ID'
+          example: 679
+        year_from:
+          type: integer
+          description: 'The year where the aggregation of the value started'
+          example: 1725
+        year_to:
+          type: integer
+          description: 'The year where the aggregation of the value ended'
+          example: 1725
+        value:
+          type: float
+          description: 'The aggregated value of the dataset'
+          example: 191
+        unit:
+          type: string
+          description: 'The unit of the value.'
+          example: "N"
+    FullRecord:
+      type: object
+      description: 'Represents an entry in the dataset with information about year, value, unit and the assigned location and topic objects'
+      example:
+        {
+          id: 1,
+          location: {
+            id: 17,
+            name: "Aarberg",
+            type: "Amtsbezirk",
+            has_records: true
+          },
+          topic: {
+            id: 679,
+            name: "Lebendgeborene",
+            unit: "N",
+            has_records: true
+          },
+          year_from: 1725,
+          year_to: 1725,
+          value: 191,
+          unit: "N"
+        }
+      properties:
+        id:
+          type: integer
+          description: 'The ID of the record'
+          example: 1
+        location:
+          $ref: '#/components/schemas/Location'
+        topic:
+          $ref: '#/components/schemas/Topic'
+        year_from:
+          type: integer
+          description: 'The year where the aggregation of the value started'
+          example: 1725
+        year_to:
+          type: integer
+          description: 'The year where the aggregation of the value ended'
+          example: 1725
+        value:
+          type: float
+          description: 'The aggregated value of the dataset'
+          example: 191
+        unit:
+          type: string
+          description: 'The unit of the value.'
+          example: "N"
+    RecordList:
+      type: object
+      description: 'Returns a list of records. The limit is 2500 records per request'
+      properties:
+        info:
+          $ref: '#/components/schemas/RecordListInfo'
+        records:
+          type: array
+          description: 'An array of `Record` objects'
+          items:
+            $ref: '#/components/schemas/Record'
+    FullRecordList:
+      type: object
+      description: 'Returns a list of records. The limit is 500 records per request'
+      properties:
+        info:
+          $ref: '#/components/schemas/RecordListInfo'
+        records:
+          type: array
+          description: 'An array of `FullRecord` objects'
+          items:
+            $ref: '#/components/schemas/FullRecord'
+    RecordListInfo:
+      type: object
+      description: 'Information about the received list of records'
+      properties:
+        page:
+          type: integer
+          description: 'The number of the current page (starts at 1)'
+          example: 1
+        pages_total:
+          type: integer
+          description: 'The amount of pages with records. The value will be `1` if the records where not limited'
+          example: 103
+        number_of_records:
+          type: integer
+          description: 'The amount of records delivered with this respone'
+          example: 2500
+        records_from:
+          type: integer
+          description: 'The index of the first delivered record (index starts at 1)'
+          example: 1
+        records_to:
+          type: integer
+          description: 'The index of the last delivered record (index starts at 1)'
+          example: 2500
+        records_total:
+          type: integer
+          description: 'The total amount of records for the given parameters'
+          example: 1958047
+    NotFoundException:
+      type: object
+      description: 'Response object'
+      properties:
+        error:
+          type: object
+          description: 'Exception object'
+          properties:
+            code:
+              type: integer
+              description: status code
+              example: 404
+            message:
+              type: string
+              description: status message
+              example: "Not Found"
