@@ -1,0 +1,72 @@
+.notice {
+	color:red;
+	font-weight:bold;
+}
+
+p.button  {
+	margin:3em 0;
+}	
+
+a.button, input.button  {
+	background-color:#d3ecfd;
+	border:1px solid #004a80;
+	color:black;
+	padding:5px;
+}	
+
+body {
+	background-color:white;
+	font-family:Arial,Helvetica,sans-serif;
+	font-size:10pt;
+	width:850px;
+}
+
+a,:visited {
+	color:#004a80;
+	text-decoration:none;
+}
+
+#header {
+	border:1px solid black;
+	position:absolute;
+	left:15px;
+	right:15px;
+	top:15px;
+	width:95%;
+}
+
+#menu {
+	position:fixed;
+	top:8em;
+	left:1em;
+	width:14em;
+	background-color:#d3ecfd;
+	border:grey 1px solid;
+}
+
+#menu a {
+	border-top:grey 1px solid;
+	color:black;
+	display:block;
+	padding:4px 8px;
+}
+
+#menu a:hover {
+	background:#004a80;
+	color:white;
+}
+
+#menu h4 {
+	background-color:#004a80;
+	color:#7cb6dd;
+	margin:0;
+	text-align:center;
+}
+
+hr {
+	margin:2em 0;
+}
+
+td, th {
+	padding:10px 0;
+}
