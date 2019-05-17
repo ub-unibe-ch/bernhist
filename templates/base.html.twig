@@ -22,12 +22,6 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarCollapse">
         <ul class="navbar-nav mr-auto">
-            <li class="nav-item{% if route == "home" %} active{% endif %}">
-                <a class="nav-link" href="{{ path('home') }}">Home</a>
-            </li>
-            <li class="nav-item{% if route == "query" %} active{% endif %}">
-                <a class="nav-link" href="{{ path('query') }}">Datenabfrage</a>
-            </li>
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="http://example.com" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Das Projekt</a>
                 <div class="dropdown-menu" aria-labelledby="dropdown01">
@@ -37,8 +31,11 @@
                     <a class="dropdown-item{% if route == "contact" %} active{% endif %}" href="{{ path('contact') }}">Kontakt</a>
                 </div>
             </li>
+            <li class="nav-item{% if route == "query" %} active{% endif %}">
+                <a class="nav-link" href="{{ path('query') }}">Datenabfrage</a>
+            </li>
             <li class="nav-item">
-                <a class="nav-link" href="#">DIGIBERN</a>
+                <a target="_blank" class="nav-link" href="https://www.digibern.ch/">DIGIBERN</a>
             </li>
         </ul>
     </div>
