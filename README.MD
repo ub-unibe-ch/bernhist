@@ -12,7 +12,7 @@ BERNHIST was established by the department of economic, social and environmental
 
 ![Screenshot](./assets/images/screenshot-03.jpg)
 
-The files of the original project can be found [here](https://github.com/UB-Bern/bernhist/releases/tag/v1.0.0).
+The files of the original project can be found [here](https://github.com/ub-unibe-ch/bernhist/releases/tag/v1.0.0).
 
 ## What is new?
 
