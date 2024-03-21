@@ -2,6 +2,7 @@
 
 namespace App\Controller\Api;
 
+use Symfony\Component\HttpFoundation\Request;
 use App\Service\ApiService;
 use App\Service\QueryService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -10,7 +11,7 @@ use Symfony\Component\HttpFoundation\RequestStack;
 class AbstractApiController extends AbstractController
 {
     /**
-     * @var \Symfony\Component\HttpFoundation\Request|null
+     * @var Request|null
      */
     protected $request;
 

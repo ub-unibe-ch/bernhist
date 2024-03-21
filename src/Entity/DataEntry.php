@@ -2,26 +2,28 @@
 
 namespace App\Entity;
 
+use App\Repository\DataEntryRepository;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Entity(repositoryClass: \App\Repository\DataEntryRepository::class)]
+#[ORM\Entity(repositoryClass: DataEntryRepository::class)]
 class DataEntry
 {
     #[ORM\Id]
-    #[ORM\Column(type: 'integer')]
+    #[ORM\Column(type: Types::INTEGER)]
     private ?int $id = null;
 
-    #[ORM\Column(type: 'smallint')]
+    #[ORM\Column(type: Types::SMALLINT)]
     private ?int $yearFrom = null;
 
-    #[ORM\Column(type: 'smallint')]
+    #[ORM\Column(type: Types::SMALLINT)]
     private ?int $yearTo = null;
 
     #[ORM\JoinColumn(nullable: false)]
     #[ORM\ManyToOne(targetEntity: Topic::class, inversedBy: 'dataEntries')]
     private ?Topic $topic = null;
 
-    #[ORM\Column(type: 'decimal', precision: 18, scale: 9)]
+    #[ORM\Column(type: Types::DECIMAL, precision: 18, scale: 9)]
     private ?string $value = null;
 
     #[ORM\JoinColumn(nullable: false)]

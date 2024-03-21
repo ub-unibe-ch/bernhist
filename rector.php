@@ -25,4 +25,6 @@ return static function (RectorConfig $rectorConfig): void {
         SymfonySetList::SYMFONY_CONSTRUCTOR_INJECTION,
         TwigSetList::TWIG_240,
     ]);
+
+    $rectorConfig->importNames();
 };

@@ -2,31 +2,35 @@
 
 namespace App\Entity;
 
+use App\Repository\LocationRepository;
+use Stringable;
+use Doctrine\DBAL\Types\Types;
+use Doctrine\Common\Collections\Criteria;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Entity(repositoryClass: \App\Repository\LocationRepository::class)]
-class Location implements \Stringable
+#[ORM\Entity(repositoryClass: LocationRepository::class)]
+class Location implements Stringable
 {
     #[ORM\Id]
-    #[ORM\Column(type: 'integer')]
+    #[ORM\Column(type: Types::INTEGER)]
     private ?int $id = null;
 
-    #[ORM\Column(type: 'string', length: 150)]
+    #[ORM\Column(type: Types::STRING, length: 150)]
     private ?string $name = null;
 
     #[ORM\ManyToOne(targetEntity: self::class, inversedBy: 'children', cascade: ['persist', 'remove'])]
     private ?Location $parent = null;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\Location>
+     * @var Collection<int, \App\Entity\Location>
      */
     #[ORM\OneToMany(targetEntity: self::class, mappedBy: 'parent')]
-    #[ORM\OrderBy(['name' => 'ASC'])]
+    #[ORM\OrderBy(['name' => Criteria::ASC])]
     private Collection $children;
 
-    #[ORM\Column(type: 'boolean')]
+    #[ORM\Column(type: Types::BOOLEAN)]
     private ?bool $isStartNode = null;
 
     #[ORM\JoinColumn(nullable: false)]
@@ -34,7 +38,7 @@ class Location implements \Stringable
     private ?Type $type = null;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\DataEntry>
+     * @var Collection<int, DataEntry>
      */
     #[ORM\OneToMany(targetEntity: DataEntry::class, mappedBy: 'location', orphanRemoval: true, cascade: ['persist', 'remove'])]
     private Collection $dataEntries;

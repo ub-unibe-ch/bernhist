@@ -2,6 +2,7 @@
 
 namespace App\Controller\Api;
 
+use Symfony\Component\HttpFoundation\JsonResponse;
 use App\Entity\Topic;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -13,7 +14,7 @@ class TopicController extends AbstractApiController
     /**
      * @Route("/list/", name="api_topic_list")
      */
-    public function list(): \Symfony\Component\HttpFoundation\JsonResponse
+    public function list(): JsonResponse
     {
         $topics = $this->api->createList($this->query->getTopicRoot());
 
@@ -23,7 +24,7 @@ class TopicController extends AbstractApiController
     /**
      * @Route("/tree/", name="api_topic_tree")
      */
-    public function tree(): \Symfony\Component\HttpFoundation\JsonResponse
+    public function tree(): JsonResponse
     {
         $topics = $this->api->createTree($this->query->getTopicRoot());
 
@@ -33,7 +34,7 @@ class TopicController extends AbstractApiController
     /**
      * @Route("/{id}/", name="api_topic")
      */
-    public function show(Topic $topic): \Symfony\Component\HttpFoundation\JsonResponse
+    public function show(Topic $topic): JsonResponse
     {
         return $this->json($this->api->toArray($topic));
     }

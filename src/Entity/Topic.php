@@ -2,18 +2,22 @@
 
 namespace App\Entity;
 
+use App\Repository\TopicRepository;
+use Stringable;
+use Doctrine\DBAL\Types\Types;
+use Doctrine\Common\Collections\Criteria;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Entity(repositoryClass: \App\Repository\TopicRepository::class)]
-class Topic implements \Stringable
+#[ORM\Entity(repositoryClass: TopicRepository::class)]
+class Topic implements Stringable
 {
     #[ORM\Id]
-    #[ORM\Column(type: 'integer')]
+    #[ORM\Column(type: Types::INTEGER)]
     private ?int $id = null;
 
-    #[ORM\Column(type: 'string', length: 255)]
+    #[ORM\Column(type: Types::STRING, length: 255)]
     private ?string $name = null;
 
     #[ORM\JoinColumn(nullable: false)]
@@ -24,14 +28,14 @@ class Topic implements \Stringable
     private ?Topic $parent = null;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\Topic>
+     * @var Collection<int, \App\Entity\Topic>
      */
     #[ORM\OneToMany(targetEntity: self::class, mappedBy: 'parent')]
-    #[ORM\OrderBy(['name' => 'ASC'])]
+    #[ORM\OrderBy(['name' => Criteria::ASC])]
     private Collection $children;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\DataEntry>
+     * @var Collection<int, DataEntry>
      */
     #[ORM\OneToMany(targetEntity: DataEntry::class, mappedBy: 'topic', orphanRemoval: true, cascade: ['persist', 'remove'])]
     private Collection $dataEntries;
