@@ -9,7 +9,6 @@ use Doctrine\ORM\Mapping as ORM;
 #[ORM\Entity(repositoryClass: \App\Repository\LocationRepository::class)]
 class Location implements \Stringable
 {
-    
     #[ORM\Id]
     #[ORM\Column(type: 'integer')]
     private ?int $id = null;
@@ -17,29 +16,28 @@ class Location implements \Stringable
     #[ORM\Column(type: 'string', length: 150)]
     private ?string $name = null;
 
-    #[ORM\ManyToOne(targetEntity: \App\Entity\Location::class, inversedBy: 'children', cascade: ['persist', 'remove'])]
-    private ?\App\Entity\Location $parent = null;
+    #[ORM\ManyToOne(targetEntity: self::class, inversedBy: 'children', cascade: ['persist', 'remove'])]
+    private ?Location $parent = null;
 
     /**
      * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\Location>
      */
-    #[ORM\OneToMany(targetEntity: \App\Entity\Location::class, mappedBy: 'parent')]
+    #[ORM\OneToMany(targetEntity: self::class, mappedBy: 'parent')]
     #[ORM\OrderBy(['name' => 'ASC'])]
-    private \Doctrine\Common\Collections\Collection $children;
+    private Collection $children;
 
     #[ORM\Column(type: 'boolean')]
     private ?bool $isStartNode = null;
 
-    
     #[ORM\JoinColumn(nullable: false)]
-    #[ORM\ManyToOne(targetEntity: \App\Entity\Type::class)]
-    private ?\App\Entity\Type $type = null;
+    #[ORM\ManyToOne(targetEntity: Type::class)]
+    private ?Type $type = null;
 
     /**
      * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\DataEntry>
      */
-    #[ORM\OneToMany(targetEntity: \App\Entity\DataEntry::class, mappedBy: 'location', orphanRemoval: true, cascade: ['persist', 'remove'])]
-    private \Doctrine\Common\Collections\Collection $dataEntries;
+    #[ORM\OneToMany(targetEntity: DataEntry::class, mappedBy: 'location', orphanRemoval: true, cascade: ['persist', 'remove'])]
+    private Collection $dataEntries;
 
     public function __construct()
     {

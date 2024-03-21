@@ -7,7 +7,6 @@ use Doctrine\ORM\Mapping as ORM;
 #[ORM\Entity(repositoryClass: \App\Repository\DataEntryRepository::class)]
 class DataEntry
 {
-    
     #[ORM\Id]
     #[ORM\Column(type: 'integer')]
     private ?int $id = null;
@@ -18,18 +17,16 @@ class DataEntry
     #[ORM\Column(type: 'smallint')]
     private ?int $yearTo = null;
 
-    
     #[ORM\JoinColumn(nullable: false)]
-    #[ORM\ManyToOne(targetEntity: \App\Entity\Topic::class, inversedBy: 'dataEntries')]
-    private ?\App\Entity\Topic $topic = null;
+    #[ORM\ManyToOne(targetEntity: Topic::class, inversedBy: 'dataEntries')]
+    private ?Topic $topic = null;
 
     #[ORM\Column(type: 'decimal', precision: 18, scale: 9)]
     private ?string $value = null;
 
-    
     #[ORM\JoinColumn(nullable: false)]
-    #[ORM\ManyToOne(targetEntity: \App\Entity\Location::class, inversedBy: 'dataEntries')]
-    private ?\App\Entity\Location $location = null;
+    #[ORM\ManyToOne(targetEntity: Location::class, inversedBy: 'dataEntries')]
+    private ?Location $location = null;
 
     public function getId(): ?int
     {

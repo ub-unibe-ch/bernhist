@@ -69,7 +69,7 @@ class ExcelRenderer extends AbstractRenderer
     {
         return new StreamedResponse(function () use ($writer) {
             $writer->save('php://output');
-        }, \Symfony\Component\HttpFoundation\Response::HTTP_OK, [
+        }, Response::HTTP_OK, [
             'Content-Type' => 'application/download',
             'Content-Disposition' => 'Content-Disposition: attachment',
             'Cache-Control' => 'max-age=0',

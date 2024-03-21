@@ -9,7 +9,6 @@ use Doctrine\ORM\Mapping as ORM;
 #[ORM\Entity(repositoryClass: \App\Repository\TopicRepository::class)]
 class Topic implements \Stringable
 {
-    
     #[ORM\Id]
     #[ORM\Column(type: 'integer')]
     private ?int $id = null;
@@ -17,26 +16,25 @@ class Topic implements \Stringable
     #[ORM\Column(type: 'string', length: 255)]
     private ?string $name = null;
 
-    
     #[ORM\JoinColumn(nullable: false)]
-    #[ORM\ManyToOne(targetEntity: \App\Entity\Type::class)]
-    private ?\App\Entity\Type $type = null;
+    #[ORM\ManyToOne(targetEntity: Type::class)]
+    private ?Type $type = null;
 
-    #[ORM\ManyToOne(targetEntity: \App\Entity\Topic::class, inversedBy: 'children', cascade: ['persist', 'remove'])]
-    private ?\App\Entity\Topic $parent = null;
+    #[ORM\ManyToOne(targetEntity: self::class, inversedBy: 'children', cascade: ['persist', 'remove'])]
+    private ?Topic $parent = null;
 
     /**
      * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\Topic>
      */
-    #[ORM\OneToMany(targetEntity: \App\Entity\Topic::class, mappedBy: 'parent')]
+    #[ORM\OneToMany(targetEntity: self::class, mappedBy: 'parent')]
     #[ORM\OrderBy(['name' => 'ASC'])]
-    private \Doctrine\Common\Collections\Collection $children;
+    private Collection $children;
 
     /**
      * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\DataEntry>
      */
-    #[ORM\OneToMany(targetEntity: \App\Entity\DataEntry::class, mappedBy: 'topic', orphanRemoval: true, cascade: ['persist', 'remove'])]
-    private \Doctrine\Common\Collections\Collection $dataEntries;
+    #[ORM\OneToMany(targetEntity: DataEntry::class, mappedBy: 'topic', orphanRemoval: true, cascade: ['persist', 'remove'])]
+    private Collection $dataEntries;
 
     public function __construct()
     {
