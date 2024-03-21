@@ -5,7 +5,7 @@ namespace App\Repository;
 use App\Entity\Location;
 use App\Entity\Topic;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Symfony\Bridge\Doctrine\RegistryInterface;
+use Doctrine\Persistence\ManagerRegistry;
 
 /**
  * @method Topic|null find($id, $lockMode = null, $lockVersion = null)
@@ -15,7 +15,7 @@ use Symfony\Bridge\Doctrine\RegistryInterface;
  */
 class TopicRepository extends ServiceEntityRepository
 {
-    public function __construct(RegistryInterface $registry)
+    public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Topic::class);
     }
