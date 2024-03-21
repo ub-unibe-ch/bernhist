@@ -3,15 +3,13 @@
 namespace App\Entity;
 
 use App\Repository\LocationRepository;
-use Stringable;
-use Doctrine\DBAL\Types\Types;
-use Doctrine\Common\Collections\Criteria;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: LocationRepository::class)]
-class Location implements Stringable
+class Location implements \Stringable
 {
     #[ORM\Id]
     #[ORM\Column(type: Types::INTEGER)]
@@ -27,7 +25,7 @@ class Location implements Stringable
      * @var Collection<int, \App\Entity\Location>
      */
     #[ORM\OneToMany(targetEntity: self::class, mappedBy: 'parent')]
-    #[ORM\OrderBy(['name' => Criteria::ASC])]
+    #[ORM\OrderBy(['name' => 'ASC'])]
     private Collection $children;
 
     #[ORM\Column(type: Types::BOOLEAN)]
@@ -50,7 +48,7 @@ class Location implements Stringable
         $this->dataEntries = new ArrayCollection();
     }
 
-    public function setId(int $id)
+    public function setId(int $id): void
     {
         $this->id = $id;
     }
@@ -85,7 +83,7 @@ class Location implements Stringable
     }
 
     /**
-     * @return Collection|self[]
+     * @return Collection<int, self>|self[]
      */
     public function getChildren(): Collection
     {
@@ -140,7 +138,7 @@ class Location implements Stringable
     }
 
     /**
-     * @return Collection|DataEntry[]
+     * @return Collection<int, DataEntry>|DataEntry[]
      */
     public function getDataEntries(): Collection
     {
@@ -170,7 +168,7 @@ class Location implements Stringable
         return $this;
     }
 
-    public function hasDescendant(self $location)
+    public function hasDescendant(self $location): bool
     {
         if ($this->getId() == $location->getId()) {
             return true;

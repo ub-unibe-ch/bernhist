@@ -12,7 +12,7 @@ class RendererFactory
     {
     }
 
-    public function create($format): RendererInterface
+    public function create(string $format): RendererInterface
     {
         if ('xlsx' == $format) {
             return new ExcelRenderer($this->queryService, $this->presenter);

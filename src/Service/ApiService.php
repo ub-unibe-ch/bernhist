@@ -8,9 +8,12 @@ use App\Entity\Topic;
 
 class ApiService
 {
-    public function toArray($entry, $listMode = true, $treeInfo = true): array
+    /**
+     * @return array<string, mixed>
+     */
+    public function toArray(DataEntry|Topic|Location|null $entry, bool $listMode = true, bool $treeInfo = true): array
     {
-        if (!$entry instanceof DataEntry && !$entry instanceof Topic && !$entry instanceof Location) {
+        if (null === $entry) {
             return [];
         }
 
@@ -23,18 +26,18 @@ class ApiService
                     'year_from' => $entry->getYearFrom(),
                     'year_to' => $entry->getYearTo(),
                     'value' => (float) $entry->getValue(),
-                    'unit' => $entry->getTopic()->getType()->getName(),
+                    'unit' => $entry->getTopic()?->getType()?->getName(),
                 ];
             }
 
             return [
                 'id' => $entry->getId(),
-                'location' => $entry->getLocation()->getId(),
-                'topic' => $entry->getTopic()->getId(),
+                'location' => $entry->getLocation()?->getId(),
+                'topic' => $entry->getTopic()?->getId(),
                 'year_from' => $entry->getYearFrom(),
                 'year_to' => $entry->getYearTo(),
                 'value' => (float) $entry->getValue(),
-                'unit' => $entry->getTopic()->getType()->getName(),
+                'unit' => $entry->getTopic()?->getType()?->getName(),
             ];
         }
 
@@ -50,17 +53,13 @@ class ApiService
             return [
                 'id' => $entry->getId(),
                 'name' => $entry->getName(),
-                $type => $entry->getType()->getName(),
+                $type => $entry->getType()?->getName(),
                 'has_records' => true,
             ];
         }
+        $parent = $entry->getParent()?->getId();
 
-        $parent = $entry->getParent();
-        if (!empty($parent)) {
-            $parent = $entry->getParent()->getId();
-        }
-
-        if ($entry instanceof Location && $entry->getIsStartNode()) {
+        if ($entry instanceof Location && null !== $entry->getIsStartNode() && $entry->getIsStartNode()) {
             $parent = null;
         }
 
@@ -68,7 +67,7 @@ class ApiService
             $field => [
                 'id' => $entry->getId(),
                 'name' => $entry->getName(),
-                $type => $entry->getType()->getName(),
+                $type => $entry->getType()?->getName(),
                 'has_records' => true,
             ],
         ];
@@ -92,9 +91,14 @@ class ApiService
         return $result;
     }
 
-    public function createList($node, &$result = []): array
+    /**
+     * @param array<string, mixed> $result
+     *
+     * @return array<string, mixed>
+     */
+    public function createList(Topic|Location|null $node, &$result = []): array
     {
-        if (!$node instanceof Topic && !$node instanceof Location) {
+        if (null === $node) {
             return [];
         }
 
@@ -107,9 +111,12 @@ class ApiService
         return $result;
     }
 
-    public function createTree($node)
+    /**
+     * @return array<string, mixed>
+     */
+    public function createTree(Topic|Location|null $node): array
     {
-        if (!$node instanceof Topic && !$node instanceof Location) {
+        if (null === $node) {
             return [];
         }
 

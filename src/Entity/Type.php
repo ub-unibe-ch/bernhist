@@ -3,12 +3,11 @@
 namespace App\Entity;
 
 use App\Repository\TypeRepository;
-use Stringable;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: TypeRepository::class)]
-class Type implements Stringable
+class Type implements \Stringable
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]

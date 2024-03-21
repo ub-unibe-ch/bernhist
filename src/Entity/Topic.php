@@ -3,15 +3,13 @@
 namespace App\Entity;
 
 use App\Repository\TopicRepository;
-use Stringable;
-use Doctrine\DBAL\Types\Types;
-use Doctrine\Common\Collections\Criteria;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: TopicRepository::class)]
-class Topic implements Stringable
+class Topic implements \Stringable
 {
     #[ORM\Id]
     #[ORM\Column(type: Types::INTEGER)]
@@ -28,10 +26,10 @@ class Topic implements Stringable
     private ?Topic $parent = null;
 
     /**
-     * @var Collection<int, \App\Entity\Topic>
+     * @var Collection<int, Topic>
      */
     #[ORM\OneToMany(targetEntity: self::class, mappedBy: 'parent')]
-    #[ORM\OrderBy(['name' => Criteria::ASC])]
+    #[ORM\OrderBy(['name' => 'ASC'])]
     private Collection $children;
 
     /**
@@ -51,7 +49,7 @@ class Topic implements Stringable
         return $this->id;
     }
 
-    public function setId(int $id)
+    public function setId(int $id): void
     {
         $this->id = $id;
     }
@@ -93,7 +91,7 @@ class Topic implements Stringable
     }
 
     /**
-     * @return Collection|self[]
+     * @return Collection<int, self>|self[]
      */
     public function getChildren(): Collection
     {
@@ -124,7 +122,7 @@ class Topic implements Stringable
     }
 
     /**
-     * @return Collection|DataEntry[]
+     * @return Collection<int, DataEntry>|DataEntry[]
      */
     public function getDataEntries(): Collection
     {
@@ -154,7 +152,7 @@ class Topic implements Stringable
         return $this;
     }
 
-    public function hasDescendant(self $topic)
+    public function hasDescendant(self $topic): bool
     {
         if ($this->getId() == $topic->getId()) {
             return true;

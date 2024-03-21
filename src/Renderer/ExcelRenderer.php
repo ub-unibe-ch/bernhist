@@ -37,9 +37,9 @@ class ExcelRenderer extends AbstractRenderer
             $spreadsheet->getActiveSheet()
                 ->setCellValue('A'.$currentRow, $dataEntry->getYearFrom())
                 ->setCellValue('B'.$currentRow, $dataEntry->getYearTo())
-                ->setCellValue('C'.$currentRow, $dataEntry->getLocation()->getName().' ('.$dataEntry->getLocation()->getType()->getName().')')
+                ->setCellValue('C'.$currentRow, $dataEntry->getLocation()?->getName().' ('.$dataEntry->getLocation()?->getType()?->getName().')')
                 ->setCellValue('D'.$currentRow, $this->presenter::present($dataEntry->getValue()))
-                ->setCellValue('E'.$currentRow, $dataEntry->getTopic()->getName().' ('.$dataEntry->getTopic()->getType()->getName().')')
+                ->setCellValue('E'.$currentRow, $dataEntry->getTopic()?->getName().' ('.$dataEntry->getTopic()?->getType()?->getName().')')
             ;
 
             ++$currentRow;

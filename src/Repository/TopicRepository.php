@@ -12,6 +12,8 @@ use Doctrine\Persistence\ManagerRegistry;
  * @method Topic|null findOneBy(array $criteria, array $orderBy = null)
  * @method Topic[]    findAll()
  * @method Topic[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ *
+ * @extends ServiceEntityRepository<Topic>
  */
 class TopicRepository extends ServiceEntityRepository
 {
@@ -29,9 +31,12 @@ class TopicRepository extends ServiceEntityRepository
         ;
     }
 
-    public function findWithDataEntries(?Location $location = null)
+    /**
+     * @return Topic[]
+     */
+    public function findWithDataEntries(?Location $location = null): array
     {
-        if (!empty($location)) {
+        if (null !== $location) {
             return $this->createQueryBuilder('t')
                 ->innerJoin('t.dataEntries', 'd')
                 ->addSelect('t')

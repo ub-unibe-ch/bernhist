@@ -6,13 +6,21 @@ use App\Entity\DataEntry;
 
 class ValuePresenter
 {
-    private static $dataEntries;
-    private static $decimals = 0;
+    /**
+     * @var DataEntry[]
+     */
+    private static array $dataEntries = [];
+    private static int $decimals = 0;
 
-    public static function present(string $value): string
+    public static function present(?string $value): string
     {
-        if (empty(self::$dataEntries)) {
-            return $value;
+        if (\is_string($value)) {
+            $value = (float) $value;
+        } else {
+            $value = 0;
+        }
+        if (0 === \count(self::$dataEntries)) {
+            return (string) $value;
         }
 
         return number_format($value, self::$decimals, '.', "'");
@@ -21,7 +29,7 @@ class ValuePresenter
     /**
      * @param DataEntry[] $dataEntries
      */
-    public static function setDataEntries(array $dataEntries)
+    public static function setDataEntries(array $dataEntries): void
     {
         self::$dataEntries = $dataEntries;
         self::$decimals = 0;

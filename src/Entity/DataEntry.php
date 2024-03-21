@@ -35,7 +35,7 @@ class DataEntry
         return $this->id;
     }
 
-    public function setId(int $id)
+    public function setId(int $id): void
     {
         $this->id = $id;
     }
@@ -76,12 +76,12 @@ class DataEntry
         return $this;
     }
 
-    public function getValue()
+    public function getValue(): ?string
     {
         return $this->value;
     }
 
-    public function setValue($value): self
+    public function setValue(?string $value): self
     {
         $this->value = $value;
 

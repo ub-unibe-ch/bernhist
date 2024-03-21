@@ -14,6 +14,8 @@ use Doctrine\Persistence\ManagerRegistry;
  * @method DataEntry|null findOneBy(array $criteria, array $orderBy = null)
  * @method DataEntry[]    findAll()
  * @method DataEntry[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ *
+ * @extends ServiceEntityRepository<DataEntry>
  */
 class DataEntryRepository extends ServiceEntityRepository
 {
@@ -111,13 +113,13 @@ class DataEntryRepository extends ServiceEntityRepository
 
         $query = $this->createQueryBuilder('d');
 
-        if (!empty($location)) {
+        if (null !== $location) {
             $query->andWhere('d.location = :location')
                 ->setParameter('location', $location)
             ;
         }
 
-        if (!empty($topic)) {
+        if (null !== $topic) {
             $query->andWhere('d.topic = :topic')
                 ->setParameter('topic', $topic)
             ;

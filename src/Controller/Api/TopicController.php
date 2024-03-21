@@ -2,32 +2,35 @@
 
 namespace App\Controller\Api;
 
-use Symfony\Component\HttpFoundation\JsonResponse;
 use App\Entity\Topic;
+use App\Service\ApiService;
+use App\Service\QueryService;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Annotation\Route;
 
 #[Route(path: '/api/topic', defaults: ['_format' => 'json'])]
-class TopicController extends AbstractApiController
+class TopicController extends AbstractController
 {
     #[Route(path: '/list/', name: 'api_topic_list')]
-    public function list(): JsonResponse
+    public function list(ApiService $apiService, QueryService $queryService): JsonResponse
     {
-        $topics = $this->api->createList($this->query->getTopicRoot());
+        $topics = $apiService->createList($queryService->getTopicRoot());
 
         return $this->json($topics);
     }
 
     #[Route(path: '/tree/', name: 'api_topic_tree')]
-    public function tree(): JsonResponse
+    public function tree(ApiService $apiService, QueryService $queryService): JsonResponse
     {
-        $topics = $this->api->createTree($this->query->getTopicRoot());
+        $topics = $apiService->createTree($queryService->getTopicRoot());
 
         return $this->json($topics);
     }
 
     #[Route(path: '/{id}/', name: 'api_topic')]
-    public function show(Topic $topic): JsonResponse
+    public function show(Topic $topic, ApiService $apiService): JsonResponse
     {
-        return $this->json($this->api->toArray($topic));
+        return $this->json($apiService->toArray($topic));
     }
 }

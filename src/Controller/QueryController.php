@@ -2,16 +2,16 @@
 
 namespace App\Controller;
 
-use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\RedirectResponse;
-use Symfony\Component\HttpFoundation\JsonResponse;
 use App\Entity\Location;
 use App\Entity\Topic;
 use App\Repository\LocationRepository;
 use App\Service\QueryService;
 use App\Service\ValuePresenter;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -42,14 +42,14 @@ class QueryController extends AbstractController
     public function selectYearRange(int $locationId, Topic $topic, LocationRepository $locationRepo, QueryService $queryService): RedirectResponse
     {
         $location = $locationRepo->find($locationId);
-        if (empty($location)) {
+        if (null === $location) {
             throw new NotFoundHttpException();
         }
 
         $yearsFrom = $queryService->getYearsFrom($location, $topic);
         $yearsTo = $queryService->getYearsTo($location, $topic);
 
-        if (empty($yearsFrom) || empty($yearsTo)) {
+        if (0 === \count($yearsFrom) || 0 === \count($yearsTo)) {
             $this->addFlash('warning', 'Für das zuvor gewählte Thema "'.$topic.'" sind für diesen Ort keine Einträge vorhanden.');
 
             return $this->redirectToRoute('query_location', ['id' => $location->getId()]);
@@ -65,18 +65,18 @@ class QueryController extends AbstractController
     public function showResult(int $locationId, Topic $topic, int $yearFrom, int $yearTo, LocationRepository $locationRepo, QueryService $queryService, ValuePresenter $valuePresenter): Response
     {
         $location = $locationRepo->find($locationId);
-        if (empty($location)) {
+        if (null === $location) {
             throw new NotFoundHttpException();
         }
 
         $yearsFrom = $queryService->getYearsFrom($location, $topic);
         $yearsTo = $queryService->getYearsTo($location, $topic);
 
-        if (empty($yearsFrom) || empty($yearsTo)) {
+        if (0 === \count($yearsFrom) || 0 === \count($yearsTo)) {
             throw new NotFoundHttpException();
         }
 
-        if (!\in_array($yearFrom, $yearsFrom) || !\in_array($yearTo, $yearsTo)) {
+        if (!\in_array($yearFrom, $yearsFrom, true) || !\in_array($yearTo, $yearsTo, true)) {
             throw new NotFoundHttpException();
         }
 
@@ -105,18 +105,18 @@ class QueryController extends AbstractController
     public function chartistResult(int $locationId, Topic $topic, int $yearFrom, int $yearTo, LocationRepository $locationRepo, QueryService $queryService, ValuePresenter $valuePresenter): JsonResponse
     {
         $location = $locationRepo->find($locationId);
-        if (empty($location)) {
+        if (null === $location) {
             throw new NotFoundHttpException();
         }
 
         $yearsFrom = $queryService->getYearsFrom($location, $topic);
         $yearsTo = $queryService->getYearsTo($location, $topic);
 
-        if (empty($yearsFrom) || empty($yearsTo)) {
+        if (0 === \count($yearsFrom) || 0 === \count($yearsTo)) {
             throw new NotFoundHttpException();
         }
 
-        if (!\in_array($yearFrom, $yearsFrom) || !\in_array($yearTo, $yearsTo)) {
+        if (!\in_array($yearFrom, $yearsFrom, true) || !\in_array($yearTo, $yearsTo, true)) {
             throw new NotFoundHttpException();
         }
 
@@ -137,8 +137,8 @@ class QueryController extends AbstractController
             if ($dataEntry->getYearFrom() == $dataEntry->getYearTo()) {
                 $valuesByYear[$dataEntry->getYearFrom()] = (float) $dataEntry->getValue();
             } else {
-                $years = $dataEntry->getYearTo() - $dataEntry->getYearFrom() + 1;
-                $value = $dataEntry->getValue() / $years;
+                $years = ($dataEntry->getYearTo() ?? 0) - ($dataEntry->getYearFrom() ?? 0) + 1;
+                $value = (int) $dataEntry->getValue() / $years;
                 $valuesByYear[$dataEntry->getYearFrom()] = (float) $value;
                 $valuesByYear[$dataEntry->getYearTo()] = (float) $value;
             }

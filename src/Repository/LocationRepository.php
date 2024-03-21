@@ -11,6 +11,8 @@ use Doctrine\Persistence\ManagerRegistry;
  * @method Location|null findOneBy(array $criteria, array $orderBy = null)
  * @method Location[]    findAll()
  * @method Location[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ *
+ * @extends ServiceEntityRepository<Location>
  */
 class LocationRepository extends ServiceEntityRepository
 {
@@ -19,7 +21,7 @@ class LocationRepository extends ServiceEntityRepository
         parent::__construct($registry, Location::class);
     }
 
-    public function findRoot()
+    public function findRoot(): ?Location
     {
         return $this->createQueryBuilder('l')
             ->where('l.isStartNode = true')
@@ -28,7 +30,10 @@ class LocationRepository extends ServiceEntityRepository
         ;
     }
 
-    public function findWithDataEntries()
+    /**
+     * @return Location[]
+     */
+    public function findWithDataEntries(): array
     {
         return $this->createQueryBuilder('l')
             ->innerJoin('l.dataEntries', 'd')
