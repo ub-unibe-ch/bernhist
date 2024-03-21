@@ -2,7 +2,7 @@
     "image": "mcr.microsoft.com/devcontainers/base:ubuntu",
     "features": {
       "ghcr.io/shyim/devcontainers-features/php:latest": {
-        "version": "7.1",
+        "version": "7.4",
         "extensionsExtra": "xdebug"
       },
       "ghcr.io/devcontainers/features/node:1": {},
