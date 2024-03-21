@@ -301,8 +301,8 @@
         "recipe": {
             "repo": "github.com/symfony/recipes",
             "branch": "main",
-            "version": "5.1",
-            "ref": "2f91477d6efaed3fb857db87480f7d07d31cbb3e"
+            "version": "6.3",
+            "ref": "a411a0480041243d97382cac7984f7dce7813c08"
         },
         "files": [
             ".env.test",
