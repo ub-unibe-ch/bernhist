@@ -242,12 +242,12 @@
         "version": "v4.2.8"
     },
     "symfony/framework-bundle": {
-        "version": "4.2",
+        "version": "4.3",
         "recipe": {
             "repo": "github.com/symfony/recipes",
-            "branch": "master",
+            "branch": "main",
             "version": "4.2",
-            "ref": "f64037a414de7d861f68e9b5b5c0e4f7425e2002"
+            "ref": "95b4ddc6f93f433727cf62c0549b0f987d8c3bc2"
         },
         "files": [
             "config/bootstrap.php",
