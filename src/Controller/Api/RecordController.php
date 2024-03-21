@@ -11,14 +11,10 @@ use App\Repository\TopicRepository;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Annotation\Route;
 
-/**
- * @Route("/api/record", defaults={"_format": "json"})
- */
+#[Route(path: '/api/record', defaults: ['_format' => 'json'])]
 class RecordController extends AbstractApiController
 {
-    /**
-     * @Route("/list/", name="api_record_location")
-     */
+    #[Route(path: '/list/', name: 'api_record_location')]
     public function list(LocationRepository $locationRepo, TopicRepository $topicRepo): JsonResponse
     {
         $locationId = $this->request->get('locationId', 0);
@@ -36,9 +32,7 @@ class RecordController extends AbstractApiController
         return $this->json($this->createRecordList(true, $location, $topic));
     }
 
-    /**
-     * @Route("/list/full/", name="api_record_list_full")
-     */
+    #[Route(path: '/list/full/', name: 'api_record_list_full')]
     public function fullList(LocationRepository $locationRepo, TopicRepository $topicRepo): JsonResponse
     {
         $locationId = $this->request->get('locationId', 0);
@@ -56,17 +50,13 @@ class RecordController extends AbstractApiController
         return $this->json($this->createRecordList(false, $location, $topic));
     }
 
-    /**
-     * @Route("/{id}/", name="api_record")
-     */
+    #[Route(path: '/{id}/', name: 'api_record')]
     public function record(DataEntry $record): JsonResponse
     {
         return $this->json($this->api->toArray($record, false));
     }
 
-    /**
-     * @Route("/{id}/full/", name="api_record_full")
-     */
+    #[Route(path: '/{id}/full/', name: 'api_record_full')]
     public function fullRecord(DataEntry $record): JsonResponse
     {
         return $this->json($this->api->toArray($record));

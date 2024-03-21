@@ -15,14 +15,10 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Annotation\Route;
 
-/**
- * @Route("/query")
- */
+#[Route(path: '/query')]
 class QueryController extends AbstractController
 {
-    /**
-     * @Route("/", name="query")
-     */
+    #[Route(path: '/', name: 'query')]
     public function selectLocation(Request $request, QueryService $queryService): Response
     {
         $topicId = $request->get('topicId', 0);
@@ -33,9 +29,7 @@ class QueryController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/location/{id}/", name="query_location")
-     */
+    #[Route(path: '/location/{id}/', name: 'query_location')]
     public function selectTopic(Location $location, QueryService $queryService): Response
     {
         return $this->render('query/topic/index.html.twig', [
@@ -44,9 +38,7 @@ class QueryController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/location/{locationId}/topic/{id}/", name="query_topic")
-     */
+    #[Route(path: '/location/{locationId}/topic/{id}/', name: 'query_topic')]
     public function selectYearRange(int $locationId, Topic $topic, LocationRepository $locationRepo, QueryService $queryService): RedirectResponse
     {
         $location = $locationRepo->find($locationId);
@@ -69,9 +61,7 @@ class QueryController extends AbstractController
         return $this->redirectToRoute('query_result', ['locationId' => $location->getId(), 'id' => $topic->getId(), 'yearFrom' => $yearFrom, 'yearTo' => $yearTo]);
     }
 
-    /**
-     * @Route("/location/{locationId}/topic/{id}/{yearFrom}-{yearTo}/", name="query_result")
-     */
+    #[Route(path: '/location/{locationId}/topic/{id}/{yearFrom}-{yearTo}/', name: 'query_result')]
     public function showResult(int $locationId, Topic $topic, int $yearFrom, int $yearTo, LocationRepository $locationRepo, QueryService $queryService, ValuePresenter $valuePresenter): Response
     {
         $location = $locationRepo->find($locationId);
@@ -111,9 +101,7 @@ class QueryController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/location/{locationId}/topic/{id}/{yearFrom}-{yearTo}/chartist/", name="query_result_chartist")
-     */
+    #[Route(path: '/location/{locationId}/topic/{id}/{yearFrom}-{yearTo}/chartist/', name: 'query_result_chartist')]
     public function chartistResult(int $locationId, Topic $topic, int $yearFrom, int $yearTo, LocationRepository $locationRepo, QueryService $queryService, ValuePresenter $valuePresenter): JsonResponse
     {
         $location = $locationRepo->find($locationId);

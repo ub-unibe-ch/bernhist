@@ -6,14 +6,10 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use App\Entity\Topic;
 use Symfony\Component\Routing\Annotation\Route;
 
-/**
- * @Route("/api/topic", defaults={"_format": "json"})
- */
+#[Route(path: '/api/topic', defaults: ['_format' => 'json'])]
 class TopicController extends AbstractApiController
 {
-    /**
-     * @Route("/list/", name="api_topic_list")
-     */
+    #[Route(path: '/list/', name: 'api_topic_list')]
     public function list(): JsonResponse
     {
         $topics = $this->api->createList($this->query->getTopicRoot());
@@ -21,9 +17,7 @@ class TopicController extends AbstractApiController
         return $this->json($topics);
     }
 
-    /**
-     * @Route("/tree/", name="api_topic_tree")
-     */
+    #[Route(path: '/tree/', name: 'api_topic_tree')]
     public function tree(): JsonResponse
     {
         $topics = $this->api->createTree($this->query->getTopicRoot());
@@ -31,9 +25,7 @@ class TopicController extends AbstractApiController
         return $this->json($topics);
     }
 
-    /**
-     * @Route("/{id}/", name="api_topic")
-     */
+    #[Route(path: '/{id}/', name: 'api_topic')]
     public function show(Topic $topic): JsonResponse
     {
         return $this->json($this->api->toArray($topic));

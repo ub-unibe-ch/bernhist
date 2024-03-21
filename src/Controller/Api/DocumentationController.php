@@ -7,14 +7,10 @@ use App\Service\QueryService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 
-/**
- * @Route("/api")
- */
+#[Route(path: '/api')]
 class DocumentationController extends AbstractController
 {
-    /**
-     * @Route("/", name="api_documentation")
-     */
+    #[Route(path: '/', name: 'api_documentation')]
     public function documentation(QueryService $queryService): Response
     {
         return $this->render('swagger.html.twig');

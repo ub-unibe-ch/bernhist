@@ -9,14 +9,10 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Annotation\Route;
 
-/**
- * @Route("/render")
- */
+#[Route(path: '/render')]
 class RenderController extends AbstractController
 {
-    /**
-     * @Route("/BERNHIST_{locationId}_{id}_{yearFrom}-{yearTo}.{format}", name="render_result")
-     */
+    #[Route(path: '/BERNHIST_{locationId}_{id}_{yearFrom}-{yearTo}.{format}', name: 'render_result')]
     public function renderFile(int $locationId, Topic $topic, int $yearFrom, int $yearTo, $format, LocationRepository $locationRepo, RendererFactory $rendererFactory)
     {
         $location = $locationRepo->find($locationId);
