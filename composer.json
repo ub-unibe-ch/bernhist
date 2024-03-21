@@ -37,6 +37,7 @@
         "tecnickcom/tcpdf": "^6.2"
     },
     "require-dev": {
+        "friendsofphp/php-cs-fixer": "^3.52",
         "phpunit/phpunit": "^9.5",
         "symfony/browser-kit": "6.4.*",
         "symfony/css-selector": "6.4.*",
