@@ -95,5 +95,11 @@
             "allow-contrib": false,
             "require": "6.4.*"
         }
-    }
+    },
+    "repositories": [
+        {
+          "type": "composer",
+          "url": "https://ub-unibe-ch.github.io/ubPackagist"
+        }
+    ]
 }
