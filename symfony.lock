@@ -158,16 +158,15 @@
         "version": "v4.2.8"
     },
     "symfony/console": {
-        "version": "4.3",
+        "version": "5.4",
         "recipe": {
             "repo": "github.com/symfony/recipes",
             "branch": "main",
-            "version": "4.2",
-            "ref": "0a4841612ca4dd3464cbbe1e06b073c79ce7a7f2"
+            "version": "5.3",
+            "ref": "da0c8be8157600ad34f10ff0c9cc91232522e047"
         },
         "files": [
-            "bin/console",
-            "config/bootstrap.php"
+            "bin/console"
         ]
     },
     "symfony/contracts": {
