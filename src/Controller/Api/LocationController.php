@@ -13,7 +13,7 @@ class LocationController extends AbstractApiController
     /**
      * @Route("/list/", name="api_location_list")
      */
-    public function list()
+    public function list(): \Symfony\Component\HttpFoundation\JsonResponse
     {
         $locations = $this->api->createList($this->query->getLocationRoot());
 
@@ -23,7 +23,7 @@ class LocationController extends AbstractApiController
     /**
      * @Route("/tree/", name="api_location_tree")
      */
-    public function tree()
+    public function tree(): \Symfony\Component\HttpFoundation\JsonResponse
     {
         $locations = $this->api->createTree($this->query->getLocationRoot());
 
@@ -33,7 +33,7 @@ class LocationController extends AbstractApiController
     /**
      * @Route("/{id}/", name="api_location")
      */
-    public function show(Location $location)
+    public function show(Location $location): \Symfony\Component\HttpFoundation\JsonResponse
     {
         return $this->json($this->api->toArray($location));
     }

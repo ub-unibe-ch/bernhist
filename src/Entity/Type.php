@@ -4,24 +4,17 @@ namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * @ORM\Entity(repositoryClass="App\Repository\TypeRepository")
- */
-class Type
+#[ORM\Entity(repositoryClass: \App\Repository\TypeRepository::class)]
+class Type implements \Stringable
 {
-    /**
-     * @ORM\Id()
-     *
-     * @ORM\GeneratedValue()
-     *
-     * @ORM\Column(type="integer")
-     */
-    private $id;
+    
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column(type: 'integer')]
+    private ?int $id = null;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $name;
+    #[ORM\Column(type: 'string', length: 255)]
+    private ?string $name = null;
 
     public function getId(): ?int
     {
@@ -40,8 +33,8 @@ class Type
         return $this;
     }
 
-    public function __toString()
+    public function __toString(): string
     {
-        return $this->name;
+        return (string) $this->name;
     }
 }

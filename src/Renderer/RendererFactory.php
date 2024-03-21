@@ -8,14 +8,8 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class RendererFactory
 {
-    private $queryService;
-
-    private $presenter;
-
-    public function __construct(QueryService $queryService, ValuePresenter $presenter)
+    public function __construct(private readonly QueryService $queryService, private readonly ValuePresenter $presenter)
     {
-        $this->queryService = $queryService;
-        $this->presenter = $presenter;
     }
 
     public function create($format): RendererInterface

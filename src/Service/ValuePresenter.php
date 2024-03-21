@@ -27,7 +27,7 @@ class ValuePresenter
         self::$decimals = 0;
 
         foreach ($dataEntries as $dataEntry) {
-            $arr = explode('.', $dataEntry->getValue());
+            $arr = explode('.', (string) $dataEntry->getValue());
             $decimals = $arr[1];
             for ($i = 0; $i < \strlen($decimals); ++$i) {
                 $digit = substr($decimals, $i, 1);

@@ -14,7 +14,7 @@ class DocumentationController extends AbstractController
     /**
      * @Route("/", name="api_documentation")
      */
-    public function documentation(QueryService $queryService)
+    public function documentation(QueryService $queryService): \Symfony\Component\HttpFoundation\Response
     {
         return $this->render('swagger.html.twig');
     }

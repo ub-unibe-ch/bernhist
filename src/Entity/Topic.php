@@ -6,46 +6,37 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * @ORM\Entity(repositoryClass="App\Repository\TopicRepository")
- */
-class Topic
+#[ORM\Entity(repositoryClass: \App\Repository\TopicRepository::class)]
+class Topic implements \Stringable
 {
-    /**
-     * @ORM\Id()
-     *
-     * @ORM\Column(type="integer")
-     */
-    private $id;
+    
+    #[ORM\Id]
+    #[ORM\Column(type: 'integer')]
+    private ?int $id = null;
+
+    #[ORM\Column(type: 'string', length: 255)]
+    private ?string $name = null;
+
+    
+    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\ManyToOne(targetEntity: \App\Entity\Type::class)]
+    private ?\App\Entity\Type $type = null;
+
+    #[ORM\ManyToOne(targetEntity: \App\Entity\Topic::class, inversedBy: 'children', cascade: ['persist', 'remove'])]
+    private ?\App\Entity\Topic $parent = null;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\Topic>
      */
-    private $name;
+    #[ORM\OneToMany(targetEntity: \App\Entity\Topic::class, mappedBy: 'parent')]
+    #[ORM\OrderBy(['name' => 'ASC'])]
+    private \Doctrine\Common\Collections\Collection $children;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Type")
-     *
-     * @ORM\JoinColumn(nullable=false)
+     * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\DataEntry>
      */
-    private $type;
-
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Topic", inversedBy="children", cascade={"persist", "remove"})
-     */
-    private $parent;
-
-    /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Topic", mappedBy="parent")
-     *
-     * @ORM\OrderBy({"name" = "ASC"})
-     */
-    private $children;
-
-    /**
-     * @ORM\OneToMany(targetEntity="App\Entity\DataEntry", mappedBy="topic", orphanRemoval=true, cascade={"persist", "remove"})
-     */
-    private $dataEntries;
+    #[ORM\OneToMany(targetEntity: \App\Entity\DataEntry::class, mappedBy: 'topic', orphanRemoval: true, cascade: ['persist', 'remove'])]
+    private \Doctrine\Common\Collections\Collection $dataEntries;
 
     public function __construct()
     {
@@ -176,8 +167,8 @@ class Topic
         return false;
     }
 
-    public function __toString()
+    public function __toString(): string
     {
-        return $this->name;
+        return (string) $this->name;
     }
 }

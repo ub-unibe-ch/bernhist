@@ -6,51 +6,40 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * @ORM\Entity(repositoryClass="App\Repository\LocationRepository")
- */
-class Location
+#[ORM\Entity(repositoryClass: \App\Repository\LocationRepository::class)]
+class Location implements \Stringable
 {
-    /**
-     * @ORM\Id()
-     *
-     * @ORM\Column(type="integer")
-     */
-    private $id;
+    
+    #[ORM\Id]
+    #[ORM\Column(type: 'integer')]
+    private ?int $id = null;
+
+    #[ORM\Column(type: 'string', length: 150)]
+    private ?string $name = null;
+
+    #[ORM\ManyToOne(targetEntity: \App\Entity\Location::class, inversedBy: 'children', cascade: ['persist', 'remove'])]
+    private ?\App\Entity\Location $parent = null;
 
     /**
-     * @ORM\Column(type="string", length=150)
+     * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\Location>
      */
-    private $name;
+    #[ORM\OneToMany(targetEntity: \App\Entity\Location::class, mappedBy: 'parent')]
+    #[ORM\OrderBy(['name' => 'ASC'])]
+    private \Doctrine\Common\Collections\Collection $children;
+
+    #[ORM\Column(type: 'boolean')]
+    private ?bool $isStartNode = null;
+
+    
+    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\ManyToOne(targetEntity: \App\Entity\Type::class)]
+    private ?\App\Entity\Type $type = null;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Location", inversedBy="children", cascade={"persist", "remove"})
+     * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\DataEntry>
      */
-    private $parent;
-
-    /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Location", mappedBy="parent")
-     *
-     * @ORM\OrderBy({"name" = "ASC"})
-     */
-    private $children;
-
-    /**
-     * @ORM\Column(type="boolean")
-     */
-    private $isStartNode;
-
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Type")
-     *
-     * @ORM\JoinColumn(nullable=false)
-     */
-    private $type;
-
-    /**
-     * @ORM\OneToMany(targetEntity="App\Entity\DataEntry", mappedBy="location", orphanRemoval=true, cascade={"persist", "remove"})
-     */
-    private $dataEntries;
+    #[ORM\OneToMany(targetEntity: \App\Entity\DataEntry::class, mappedBy: 'location', orphanRemoval: true, cascade: ['persist', 'remove'])]
+    private \Doctrine\Common\Collections\Collection $dataEntries;
 
     public function __construct()
     {
@@ -194,7 +183,7 @@ class Location
         return false;
     }
 
-    public function __toString()
+    public function __toString(): string
     {
         return $this->name.' <i>('.$this->type.')</i>';
     }

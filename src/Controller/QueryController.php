@@ -20,7 +20,7 @@ class QueryController extends AbstractController
     /**
      * @Route("/", name="query")
      */
-    public function selectLocation(Request $request, QueryService $queryService)
+    public function selectLocation(Request $request, QueryService $queryService): \Symfony\Component\HttpFoundation\Response
     {
         $topicId = $request->get('topicId', 0);
 
@@ -33,7 +33,7 @@ class QueryController extends AbstractController
     /**
      * @Route("/location/{id}/", name="query_location")
      */
-    public function selectTopic(Location $location, QueryService $queryService)
+    public function selectTopic(Location $location, QueryService $queryService): \Symfony\Component\HttpFoundation\Response
     {
         return $this->render('query/topic/index.html.twig', [
             'location' => $location,
@@ -44,7 +44,7 @@ class QueryController extends AbstractController
     /**
      * @Route("/location/{locationId}/topic/{id}/", name="query_topic")
      */
-    public function selectYearRange(int $locationId, Topic $topic, LocationRepository $locationRepo, QueryService $queryService)
+    public function selectYearRange(int $locationId, Topic $topic, LocationRepository $locationRepo, QueryService $queryService): \Symfony\Component\HttpFoundation\RedirectResponse
     {
         $location = $locationRepo->find($locationId);
         if (empty($location)) {
@@ -69,7 +69,7 @@ class QueryController extends AbstractController
     /**
      * @Route("/location/{locationId}/topic/{id}/{yearFrom}-{yearTo}/", name="query_result")
      */
-    public function showResult(int $locationId, Topic $topic, int $yearFrom, int $yearTo, LocationRepository $locationRepo, QueryService $queryService, ValuePresenter $valuePresenter)
+    public function showResult(int $locationId, Topic $topic, int $yearFrom, int $yearTo, LocationRepository $locationRepo, QueryService $queryService, ValuePresenter $valuePresenter): \Symfony\Component\HttpFoundation\Response
     {
         $location = $locationRepo->find($locationId);
         if (empty($location)) {
@@ -111,7 +111,7 @@ class QueryController extends AbstractController
     /**
      * @Route("/location/{locationId}/topic/{id}/{yearFrom}-{yearTo}/chartist/", name="query_result_chartist")
      */
-    public function chartistResult(int $locationId, Topic $topic, int $yearFrom, int $yearTo, LocationRepository $locationRepo, QueryService $queryService, ValuePresenter $valuePresenter)
+    public function chartistResult(int $locationId, Topic $topic, int $yearFrom, int $yearTo, LocationRepository $locationRepo, QueryService $queryService, ValuePresenter $valuePresenter): \Symfony\Component\HttpFoundation\JsonResponse
     {
         $location = $locationRepo->find($locationId);
         if (empty($location)) {

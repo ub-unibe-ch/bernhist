@@ -4,46 +4,32 @@ namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * @ORM\Entity(repositoryClass="App\Repository\DataEntryRepository")
- */
+#[ORM\Entity(repositoryClass: \App\Repository\DataEntryRepository::class)]
 class DataEntry
 {
-    /**
-     * @ORM\Id()
-     *
-     * @ORM\Column(type="integer")
-     */
-    private $id;
+    
+    #[ORM\Id]
+    #[ORM\Column(type: 'integer')]
+    private ?int $id = null;
 
-    /**
-     * @ORM\Column(type="smallint")
-     */
-    private $yearFrom;
+    #[ORM\Column(type: 'smallint')]
+    private ?int $yearFrom = null;
 
-    /**
-     * @ORM\Column(type="smallint")
-     */
-    private $yearTo;
+    #[ORM\Column(type: 'smallint')]
+    private ?int $yearTo = null;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Topic", inversedBy="dataEntries")
-     *
-     * @ORM\JoinColumn(nullable=false)
-     */
-    private $topic;
+    
+    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\ManyToOne(targetEntity: \App\Entity\Topic::class, inversedBy: 'dataEntries')]
+    private ?\App\Entity\Topic $topic = null;
 
-    /**
-     * @ORM\Column(type="decimal", precision=18, scale=9)
-     */
-    private $value;
+    #[ORM\Column(type: 'decimal', precision: 18, scale: 9)]
+    private ?string $value = null;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Location", inversedBy="dataEntries")
-     *
-     * @ORM\JoinColumn(nullable=false)
-     */
-    private $location;
+    
+    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\ManyToOne(targetEntity: \App\Entity\Location::class, inversedBy: 'dataEntries')]
+    private ?\App\Entity\Location $location = null;
 
     public function getId(): ?int
     {

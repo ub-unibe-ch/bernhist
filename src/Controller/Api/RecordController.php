@@ -18,7 +18,7 @@ class RecordController extends AbstractApiController
     /**
      * @Route("/list/", name="api_record_location")
      */
-    public function list(LocationRepository $locationRepo, TopicRepository $topicRepo)
+    public function list(LocationRepository $locationRepo, TopicRepository $topicRepo): \Symfony\Component\HttpFoundation\JsonResponse
     {
         $locationId = $this->request->get('locationId', 0);
         $location = $locationRepo->find($locationId);
@@ -38,7 +38,7 @@ class RecordController extends AbstractApiController
     /**
      * @Route("/list/full/", name="api_record_list_full")
      */
-    public function fullList(LocationRepository $locationRepo, TopicRepository $topicRepo)
+    public function fullList(LocationRepository $locationRepo, TopicRepository $topicRepo): \Symfony\Component\HttpFoundation\JsonResponse
     {
         $locationId = $this->request->get('locationId', 0);
         $location = $locationRepo->find($locationId);
@@ -58,7 +58,7 @@ class RecordController extends AbstractApiController
     /**
      * @Route("/{id}/", name="api_record")
      */
-    public function record(DataEntry $record)
+    public function record(DataEntry $record): \Symfony\Component\HttpFoundation\JsonResponse
     {
         return $this->json($this->api->toArray($record, false));
     }
@@ -66,7 +66,7 @@ class RecordController extends AbstractApiController
     /**
      * @Route("/{id}/full/", name="api_record_full")
      */
-    public function fullRecord(DataEntry $record)
+    public function fullRecord(DataEntry $record): \Symfony\Component\HttpFoundation\JsonResponse
     {
         return $this->json($this->api->toArray($record));
     }

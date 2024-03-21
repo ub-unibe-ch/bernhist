@@ -13,7 +13,7 @@ class TopicController extends AbstractApiController
     /**
      * @Route("/list/", name="api_topic_list")
      */
-    public function list()
+    public function list(): \Symfony\Component\HttpFoundation\JsonResponse
     {
         $topics = $this->api->createList($this->query->getTopicRoot());
 
@@ -23,7 +23,7 @@ class TopicController extends AbstractApiController
     /**
      * @Route("/tree/", name="api_topic_tree")
      */
-    public function tree()
+    public function tree(): \Symfony\Component\HttpFoundation\JsonResponse
     {
         $topics = $this->api->createTree($this->query->getTopicRoot());
 
@@ -33,7 +33,7 @@ class TopicController extends AbstractApiController
     /**
      * @Route("/{id}/", name="api_topic")
      */
-    public function show(Topic $topic)
+    public function show(Topic $topic): \Symfony\Component\HttpFoundation\JsonResponse
     {
         return $this->json($this->api->toArray($topic));
     }

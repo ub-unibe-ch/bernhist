@@ -11,26 +11,8 @@ use App\Repository\TopicRepository;
 
 class QueryService
 {
-    /**
-     * @var LocationRepository
-     */
-    private $locationRepo;
-
-    /**
-     * @var TopicRepository
-     */
-    private $topicRepo;
-
-    /**
-     * @var DataEntryRepository
-     */
-    private $dataEntryRepo;
-
-    public function __construct(LocationRepository $locationRepo, TopicRepository $topicRepo, DataEntryRepository $dataEntryRepo)
+    public function __construct(private readonly LocationRepository $locationRepo, private readonly TopicRepository $topicRepo, private readonly DataEntryRepository $dataEntryRepo)
     {
-        $this->locationRepo = $locationRepo;
-        $this->topicRepo = $topicRepo;
-        $this->dataEntryRepo = $dataEntryRepo;
     }
 
     public function getLocationRoot(): ?Location
