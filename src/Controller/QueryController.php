@@ -4,9 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Location;
 use App\Entity\Topic;
-use App\Repository\DataEntryRepository;
 use App\Repository\LocationRepository;
-use App\Repository\TopicRepository;
 use App\Service\QueryService;
 use App\Service\ValuePresenter;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -39,7 +37,7 @@ class QueryController extends AbstractController
     {
         return $this->render('query/topic/index.html.twig', [
             'location' => $location,
-            'topic' => $queryService->getTopicRoot($location)
+            'topic' => $queryService->getTopicRoot($location),
         ]);
     }
 
@@ -49,20 +47,21 @@ class QueryController extends AbstractController
     public function selectYearRange(int $locationId, Topic $topic, LocationRepository $locationRepo, QueryService $queryService)
     {
         $location = $locationRepo->find($locationId);
-        if(empty($location)){
+        if (empty($location)) {
             throw new NotFoundHttpException();
         }
 
         $yearsFrom = $queryService->getYearsFrom($location, $topic);
         $yearsTo = $queryService->getYearsTo($location, $topic);
 
-        if(empty($yearsFrom) || empty($yearsTo)){
-            $this->addFlash('warning', 'Für das zuvor gewählte Thema "' . $topic . '" sind für diesen Ort keine Einträge vorhanden.');
+        if (empty($yearsFrom) || empty($yearsTo)) {
+            $this->addFlash('warning', 'Für das zuvor gewählte Thema "'.$topic.'" sind für diesen Ort keine Einträge vorhanden.');
+
             return $this->redirectToRoute('query_location', ['id' => $location->getId()]);
         }
 
         $yearFrom = $yearsFrom[0];
-        $yearTo = $yearsTo[count($yearsTo) - 1];
+        $yearTo = $yearsTo[\count($yearsTo) - 1];
 
         return $this->redirectToRoute('query_result', ['locationId' => $location->getId(), 'id' => $topic->getId(), 'yearFrom' => $yearFrom, 'yearTo' => $yearTo]);
     }
@@ -73,26 +72,25 @@ class QueryController extends AbstractController
     public function showResult(int $locationId, Topic $topic, int $yearFrom, int $yearTo, LocationRepository $locationRepo, QueryService $queryService, ValuePresenter $valuePresenter)
     {
         $location = $locationRepo->find($locationId);
-        if(empty($location)){
+        if (empty($location)) {
             throw new NotFoundHttpException();
         }
 
         $yearsFrom = $queryService->getYearsFrom($location, $topic);
         $yearsTo = $queryService->getYearsTo($location, $topic);
 
-        if(empty($yearsFrom) || empty($yearsTo)){
+        if (empty($yearsFrom) || empty($yearsTo)) {
             throw new NotFoundHttpException();
         }
 
-        if(!in_array($yearFrom, $yearsFrom) || !in_array($yearTo, $yearsTo))
-        {
+        if (!\in_array($yearFrom, $yearsFrom) || !\in_array($yearTo, $yearsTo)) {
             throw new NotFoundHttpException();
         }
 
-        if($yearTo < $yearFrom){
+        if ($yearTo < $yearFrom) {
             $this->addFlash('warning', 'Bitte wählen Sie bei "Jahr bis" einen Wert der gleich oder grösser ist, als "Jahr von".');
             $results = [];
-        }else{
+        } else {
             $results = $queryService->getDataEntries($location, $topic, $yearFrom, $yearTo);
         }
 
@@ -116,23 +114,22 @@ class QueryController extends AbstractController
     public function chartistResult(int $locationId, Topic $topic, int $yearFrom, int $yearTo, LocationRepository $locationRepo, QueryService $queryService, ValuePresenter $valuePresenter)
     {
         $location = $locationRepo->find($locationId);
-        if(empty($location)){
+        if (empty($location)) {
             throw new NotFoundHttpException();
         }
 
         $yearsFrom = $queryService->getYearsFrom($location, $topic);
         $yearsTo = $queryService->getYearsTo($location, $topic);
 
-        if(empty($yearsFrom) || empty($yearsTo)){
+        if (empty($yearsFrom) || empty($yearsTo)) {
             throw new NotFoundHttpException();
         }
 
-        if(!in_array($yearFrom, $yearsFrom) || !in_array($yearTo, $yearsTo))
-        {
+        if (!\in_array($yearFrom, $yearsFrom) || !\in_array($yearTo, $yearsTo)) {
             throw new NotFoundHttpException();
         }
 
-        if($yearTo < $yearFrom){
+        if ($yearTo < $yearFrom) {
             throw new NotFoundHttpException();
         }
 
@@ -141,15 +138,14 @@ class QueryController extends AbstractController
         $valuePresenter::setDataEntries($results);
 
         $valuesByYear = [];
-        for($year = $yearFrom; $year <= $yearTo; $year++){
+        for ($year = $yearFrom; $year <= $yearTo; ++$year) {
             $valuesByYear[$year] = null;
         }
 
-        foreach($results as $dataEntry)
-        {
-            if($dataEntry->getYearFrom() == $dataEntry->getYearTo()){
+        foreach ($results as $dataEntry) {
+            if ($dataEntry->getYearFrom() == $dataEntry->getYearTo()) {
                 $valuesByYear[$dataEntry->getYearFrom()] = (float) $dataEntry->getValue();
-            }else{
+            } else {
                 $years = $dataEntry->getYearTo() - $dataEntry->getYearFrom() + 1;
                 $value = $dataEntry->getValue() / $years;
                 $valuesByYear[$dataEntry->getYearFrom()] = (float) $value;
@@ -159,7 +155,7 @@ class QueryController extends AbstractController
 
         $chartistData = [];
 
-        foreach($valuesByYear as $year => $value){
+        foreach ($valuesByYear as $year => $value) {
             $chartistData['labels'][] = $year;
             $chartistData['series'][0][] = $value;
         }

@@ -16,6 +16,7 @@ class TopicController extends AbstractApiController
     public function list()
     {
         $topics = $this->api->createList($this->query->getTopicRoot());
+
         return $this->json($topics);
     }
 
@@ -25,6 +26,7 @@ class TopicController extends AbstractApiController
     public function tree()
     {
         $topics = $this->api->createTree($this->query->getTopicRoot());
+
         return $this->json($topics);
     }
 

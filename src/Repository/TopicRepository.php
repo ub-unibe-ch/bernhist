@@ -25,12 +25,13 @@ class TopicRepository extends ServiceEntityRepository
         return $this->createQueryBuilder('t')
             ->where('t.parent IS NULL')
             ->getQuery()
-            ->getOneOrNullResult();
+            ->getOneOrNullResult()
+        ;
     }
 
     public function findWithDataEntries(?Location $location = null)
     {
-        if(!empty($location)) {
+        if (!empty($location)) {
             return $this->createQueryBuilder('t')
                 ->innerJoin('t.dataEntries', 'd')
                 ->addSelect('t')
@@ -38,7 +39,8 @@ class TopicRepository extends ServiceEntityRepository
                 ->setParameter('location', $location)
                 ->addGroupBy('t')
                 ->getQuery()
-                ->getResult();
+                ->getResult()
+            ;
         }
 
         return $this->createQueryBuilder('t')
@@ -46,7 +48,8 @@ class TopicRepository extends ServiceEntityRepository
             ->addSelect('t')
             ->addGroupBy('t')
             ->getQuery()
-            ->getResult();
+            ->getResult()
+        ;
     }
 
     // /**

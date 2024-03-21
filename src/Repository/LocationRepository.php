@@ -19,13 +19,13 @@ class LocationRepository extends ServiceEntityRepository
         parent::__construct($registry, Location::class);
     }
 
-
     public function findRoot()
     {
         return $this->createQueryBuilder('l')
             ->where('l.isStartNode = true')
             ->getQuery()
-            ->getOneOrNullResult();
+            ->getOneOrNullResult()
+        ;
     }
 
     public function findWithDataEntries()
@@ -35,7 +35,8 @@ class LocationRepository extends ServiceEntityRepository
             ->addSelect('l')
             ->addGroupBy('l')
             ->getQuery()
-            ->getResult();
+            ->getResult()
+        ;
     }
 
     // /**

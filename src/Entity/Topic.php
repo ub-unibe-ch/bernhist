@@ -13,6 +13,7 @@ class Topic
 {
     /**
      * @ORM\Id()
+     *
      * @ORM\Column(type="integer")
      */
     private $id;
@@ -24,6 +25,7 @@ class Topic
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Type")
+     *
      * @ORM\JoinColumn(nullable=false)
      */
     private $type;
@@ -35,6 +37,7 @@ class Topic
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Topic", mappedBy="parent")
+     *
      * @ORM\OrderBy({"name" = "ASC"})
      */
     private $children;
@@ -55,7 +58,8 @@ class Topic
         return $this->id;
     }
 
-    public function setId(int $id){
+    public function setId(int $id)
+    {
         $this->id = $id;
     }
 
@@ -157,15 +161,14 @@ class Topic
         return $this;
     }
 
-    public function hasDescendant(Topic $topic)
+    public function hasDescendant(self $topic)
     {
-        if($this->getId() == $topic->getId())
-        {
+        if ($this->getId() == $topic->getId()) {
             return true;
         }
 
-        foreach($this->getChildren() as $child){
-            if($child->hasDescendant($topic)){
+        foreach ($this->getChildren() as $child) {
+            if ($child->hasDescendant($topic)) {
                 return true;
             }
         }

@@ -2,7 +2,6 @@
 
 namespace App\Renderer;
 
-
 use App\Service\QueryService;
 use App\Service\ValuePresenter;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
@@ -21,10 +20,10 @@ class RendererFactory
 
     public function create($format): RendererInterface
     {
-        if($format == 'xlsx')
-        {
+        if ('xlsx' == $format) {
             return new ExcelRenderer($this->queryService, $this->presenter);
-        }elseif($format == 'pdf'){
+        }
+        if ('pdf' == $format) {
             return new PdfRenderer($this->queryService, $this->presenter);
         }
 

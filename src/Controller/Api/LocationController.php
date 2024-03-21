@@ -16,6 +16,7 @@ class LocationController extends AbstractApiController
     public function list()
     {
         $locations = $this->api->createList($this->query->getLocationRoot());
+
         return $this->json($locations);
     }
 
@@ -25,6 +26,7 @@ class LocationController extends AbstractApiController
     public function tree()
     {
         $locations = $this->api->createTree($this->query->getLocationRoot());
+
         return $this->json($locations);
     }
 

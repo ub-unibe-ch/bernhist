@@ -2,12 +2,10 @@
 
 namespace App\Renderer;
 
-
 use App\Entity\Location;
 use App\Entity\Topic;
 use PhpOffice\PhpSpreadsheet\IOFactory;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
-use PhpOffice\PhpSpreadsheet\Style\Alignment;
 use PhpOffice\PhpSpreadsheet\Writer\IWriter;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\StreamedResponse;
@@ -24,26 +22,27 @@ class ExcelRenderer extends AbstractRenderer
         $currentRow = 1;
 
         $spreadsheet->setActiveSheetIndex(0)
-            ->setCellValue('A' . $currentRow, 'Startjahr')
-            ->setCellValue('B' . $currentRow, 'Endjahr')
-            ->setCellValue('C' . $currentRow, 'Ort')
-            ->setCellValue('D' . $currentRow, 'Wert')
-            ->setCellValue('E'. $currentRow, 'Thema');
+            ->setCellValue('A'.$currentRow, 'Startjahr')
+            ->setCellValue('B'.$currentRow, 'Endjahr')
+            ->setCellValue('C'.$currentRow, 'Ort')
+            ->setCellValue('D'.$currentRow, 'Wert')
+            ->setCellValue('E'.$currentRow, 'Thema')
+        ;
 
-        $currentRow++;
+        ++$currentRow;
 
         $data = $this->getData($location, $topic, $yearFrom, $yearTo);
 
-        foreach($data as $dataEntry)
-        {
+        foreach ($data as $dataEntry) {
             $spreadsheet->getActiveSheet()
-                ->setCellValue('A' . $currentRow, $dataEntry->getYearFrom())
-                ->setCellValue('B' . $currentRow, $dataEntry->getYearTo())
-                ->setCellValue('C' . $currentRow, $dataEntry->getLocation()->getName() . ' (' . $dataEntry->getLocation()->getType()->getName() . ')')
-                ->setCellValue('D' . $currentRow, $this->presenter::present($dataEntry->getValue()))
-                ->setCellValue('E'. $currentRow, $dataEntry->getTopic()->getName() . ' (' . $dataEntry->getTopic()->getType()->getName() . ')');
+                ->setCellValue('A'.$currentRow, $dataEntry->getYearFrom())
+                ->setCellValue('B'.$currentRow, $dataEntry->getYearTo())
+                ->setCellValue('C'.$currentRow, $dataEntry->getLocation()->getName().' ('.$dataEntry->getLocation()->getType()->getName().')')
+                ->setCellValue('D'.$currentRow, $this->presenter::present($dataEntry->getValue()))
+                ->setCellValue('E'.$currentRow, $dataEntry->getTopic()->getName().' ('.$dataEntry->getTopic()->getType()->getName().')')
+            ;
 
-            $currentRow++;
+            ++$currentRow;
         }
 
         $spreadsheet->getActiveSheet()->getColumnDimension('A')->setAutoSize(true);
@@ -62,12 +61,13 @@ class ExcelRenderer extends AbstractRenderer
     protected function createResponse(Spreadsheet $spreadsheet): Response
     {
         $writer = IOFactory::createWriter($spreadsheet, 'Xlsx');
+
         return $this->write($writer);
     }
 
     protected function write(IWriter $writer): Response
     {
-        return new StreamedResponse(function() use ($writer){
+        return new StreamedResponse(function () use ($writer) {
             $writer->save('php://output');
         }, 200, [
             'Content-Type' => 'application/download',

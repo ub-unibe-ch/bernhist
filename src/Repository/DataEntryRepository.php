@@ -23,8 +23,6 @@ class DataEntryRepository extends ServiceEntityRepository
     }
 
     /**
-     * @param Location $location
-     * @param Topic $topic
      * @return int[]
      */
     public function findYearsFrom(Location $location, Topic $topic): array
@@ -38,9 +36,10 @@ class DataEntryRepository extends ServiceEntityRepository
             ->addGroupBy('d.yearFrom')
             ->orderBy('d.yearFrom')
             ->getQuery()
-            ->getResult();
+            ->getResult()
+        ;
 
-        foreach($years as &$entry){
+        foreach ($years as &$entry) {
             $entry = $entry['year'];
         }
 
@@ -48,8 +47,6 @@ class DataEntryRepository extends ServiceEntityRepository
     }
 
     /**
-     * @param Location $location
-     * @param Topic $topic
      * @return int[]
      */
     public function findYearsTo(Location $location, Topic $topic): array
@@ -63,95 +60,76 @@ class DataEntryRepository extends ServiceEntityRepository
             ->addGroupBy('d.yearTo')
             ->orderBy('d.yearTo')
             ->getQuery()
-            ->getResult();
+            ->getResult()
+        ;
 
-        foreach($years as &$entry){
+        foreach ($years as &$entry) {
             $entry = $entry['year'];
         }
 
         return $years;
     }
 
-    /**
-     * @param Location|null $location
-     * @param Topic|null $topic
-     * @param int|null $yearFrom
-     * @param int|null $yearTo
-     * @param int|null $offset
-     * @param int|null $limit
-     * @return int
-     */
     public function findByLocationTopicYearTotal(?Location $location = null, ?Topic $topic = null, ?int $yearFrom = null, ?int $yearTo = null): int
     {
         return $this->createLocationTopicYearQuery($location, $topic, $yearFrom, $yearTo)
             ->select('COUNT(d.id) AS total')
             ->getQuery()
-            ->getOneOrNullResult()['total'];
+            ->getOneOrNullResult()['total']
+        ;
     }
 
     /**
-     * @param Location|null $location
-     * @param Topic|null $topic
-     * @param int|null $yearFrom
-     * @param int|null $yearTo
-     * @param int|null $offset
-     * @param int|null $limit
      * @return DataEntry[]
      */
     public function findByLocationTopicYear(?Location $location = null, ?Topic $topic = null, ?int $yearFrom = null, ?int $yearTo = null, ?int $offset = null, ?int $limit = null): array
     {
         $query = $this->createLocationTopicYearQuery($location, $topic, $yearFrom, $yearTo);
 
-
-
-        if(!is_null($offset)){
+        if (null !== $offset) {
             $query->setFirstResult($offset);
         }
 
-        if(!is_null($limit)){
+        if (null !== $limit) {
             $query->setMaxResults($limit);
         }
 
         return $query->getQuery()
-        ->getResult();
+            ->getResult()
+        ;
     }
 
-
-    /**
-     * @param Location|null $location
-     * @param Topic|null $topic
-     * @param int|null $yearFrom
-     * @param int|null $yearTo
-     * @return QueryBuilder
-     */
     protected function createLocationTopicYearQuery(?Location $location, ?Topic $topic, ?int $yearFrom, ?int $yearTo): QueryBuilder
     {
-        if(is_null($yearFrom)){
+        if (null === $yearFrom) {
             $yearFrom = 0;
         }
 
-        if(is_null($yearTo)){
+        if (null === $yearTo) {
             $yearTo = 9999;
         }
 
         $query = $this->createQueryBuilder('d');
 
-        if(!empty($location)) {
+        if (!empty($location)) {
             $query->andWhere('d.location = :location')
-                ->setParameter('location', $location);
+                ->setParameter('location', $location)
+            ;
         }
 
-        if(!empty($topic)) {
+        if (!empty($topic)) {
             $query->andWhere('d.topic = :topic')
-                ->setParameter('topic', $topic);
+                ->setParameter('topic', $topic)
+            ;
         }
 
         return $query->andWhere('d.yearFrom >= :yearFrom AND d.yearTo <= :yearTo')
-        ->setParameter('yearFrom', $yearFrom)
-        ->setParameter('yearTo', $yearTo)
-        ->addOrderBy('d.yearFrom')
-        ->addOrderBy('d.yearTo')
-        ->addOrderBy('d.id');
+            ->setParameter('yearFrom', $yearFrom)
+            ->setParameter('yearTo', $yearTo)
+            ->addOrderBy('d.yearFrom')
+            ->addOrderBy('d.yearTo')
+            ->addOrderBy('d.id')
+        ;
     }
 
     // /**

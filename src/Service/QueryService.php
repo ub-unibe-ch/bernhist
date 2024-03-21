@@ -2,7 +2,6 @@
 
 namespace App\Service;
 
-
 use App\Entity\DataEntry;
 use App\Entity\Location;
 use App\Entity\Topic;
@@ -40,7 +39,7 @@ class QueryService
 
         $allowedLocations = $this->locationRepo->findWithDataEntries();
 
-        if(!$this->hasAllowedLocation($location, $allowedLocations)){
+        if (!$this->hasAllowedLocation($location, $allowedLocations)) {
             return null;
         }
 
@@ -55,7 +54,7 @@ class QueryService
 
         $allowedTopics = $this->topicRepo->findWithDataEntries($location);
 
-        if(!$this->hasAllowedTopic($topic, $allowedTopics)){
+        if (!$this->hasAllowedTopic($topic, $allowedTopics)) {
             return null;
         }
 
@@ -65,8 +64,6 @@ class QueryService
     }
 
     /**
-     * @param Location $location
-     * @param Topic $topic
      * @return int[]
      */
     public function getYearsFrom(Location $location, Topic $topic): array
@@ -75,8 +72,6 @@ class QueryService
     }
 
     /**
-     * @param Location $location
-     * @param Topic $topic
      * @return int[]
      */
     public function getYearsTo(Location $location, Topic $topic): array
@@ -86,9 +81,8 @@ class QueryService
 
     protected function hasAllowedLocation(Location $location, array $allowedLocations)
     {
-        foreach($allowedLocations as $allowedLocation)
-        {
-            if($location->hasDescendant($allowedLocation)){
+        foreach ($allowedLocations as $allowedLocation) {
+            if ($location->hasDescendant($allowedLocation)) {
                 return true;
             }
         }
@@ -97,12 +91,6 @@ class QueryService
     }
 
     /**
-     * @param Location|null $location
-     * @param Topic|null $topic
-     * @param int|null $yearFrom
-     * @param int|null $yearTo
-     * @param int|null $offset
-     * @param int|null $limit
      * @return DataEntry[]
      */
     public function getDataEntries(?Location $location = null, ?Topic $topic = null, ?int $yearFrom = null, ?int $yearTo = null, ?int $offset = null, ?int $limit = null): array
@@ -110,24 +98,18 @@ class QueryService
         return $this->dataEntryRepo->findByLocationTopicYear($location, $topic, $yearFrom, $yearTo, $offset, $limit);
     }
 
-    /**
-     * @param Location $location
-     * @param Topic $topic
-     * @param int|null $yearFrom
-     * @param int|null $yearTo
-     * @return int
-     */
     public function getDataEntriesTotal(?Location $location = null, ?Topic $topic = null, ?int $yearFrom = null, ?int $yearTo = null): int
     {
         return $this->dataEntryRepo->findByLocationTopicYearTotal($location, $topic, $yearFrom, $yearTo);
     }
 
-    protected function removeSubLocations(Location $location, array $allowedLocations){
-        if(!$this->hasAllowedLocation($location, $allowedLocations)){
+    protected function removeSubLocations(Location $location, array $allowedLocations)
+    {
+        if (!$this->hasAllowedLocation($location, $allowedLocations)) {
             $parent = $location->getParent();
             $parent->removeChild($location);
-        }else{
-            foreach($location->getChildren() as $child) {
+        } else {
+            foreach ($location->getChildren() as $child) {
                 $this->removeSubLocations($child, $allowedLocations);
             }
         }
@@ -135,9 +117,8 @@ class QueryService
 
     protected function hasAllowedTopic(Topic $topic, array $allowedTopics)
     {
-        foreach($allowedTopics as $allowedTopic)
-        {
-            if($topic->hasDescendant($allowedTopic)){
+        foreach ($allowedTopics as $allowedTopic) {
+            if ($topic->hasDescendant($allowedTopic)) {
                 return true;
             }
         }
@@ -145,12 +126,13 @@ class QueryService
         return false;
     }
 
-    protected function removeSubTopics(Topic $topic, array $allowedTopics){
-        if(!$this->hasAllowedTopic($topic, $allowedTopics)){
+    protected function removeSubTopics(Topic $topic, array $allowedTopics)
+    {
+        if (!$this->hasAllowedTopic($topic, $allowedTopics)) {
             $parent = $topic->getParent();
             $parent->removeChild($topic);
-        }else{
-            foreach($topic->getChildren() as $child) {
+        } else {
+            foreach ($topic->getChildren() as $child) {
                 $this->removeSubTopics($child, $allowedTopics);
             }
         }

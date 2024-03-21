@@ -2,8 +2,6 @@
 
 namespace App\Controller\Api;
 
-use App\Entity\Location;
-use App\Repository\LocationRepository;
 use App\Service\QueryService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;

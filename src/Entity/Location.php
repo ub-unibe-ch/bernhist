@@ -13,6 +13,7 @@ class Location
 {
     /**
      * @ORM\Id()
+     *
      * @ORM\Column(type="integer")
      */
     private $id;
@@ -29,6 +30,7 @@ class Location
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Location", mappedBy="parent")
+     *
      * @ORM\OrderBy({"name" = "ASC"})
      */
     private $children;
@@ -40,6 +42,7 @@ class Location
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Type")
+     *
      * @ORM\JoinColumn(nullable=false)
      */
     private $type;
@@ -56,7 +59,8 @@ class Location
         $this->dataEntries = new ArrayCollection();
     }
 
-    public function setId(int $id){
+    public function setId(int $id)
+    {
         $this->id = $id;
     }
 
@@ -175,15 +179,14 @@ class Location
         return $this;
     }
 
-    public function hasDescendant(Location $location)
+    public function hasDescendant(self $location)
     {
-        if($this->getId() == $location->getId())
-        {
+        if ($this->getId() == $location->getId()) {
             return true;
         }
 
-        foreach($this->getChildren() as $child){
-            if($child->hasDescendant($location)){
+        foreach ($this->getChildren() as $child) {
+            if ($child->hasDescendant($location)) {
                 return true;
             }
         }
@@ -193,6 +196,6 @@ class Location
 
     public function __toString()
     {
-        return $this->name . ' <i>(' . $this->type . ')</i>';
+        return $this->name.' <i>('.$this->type.')</i>';
     }
 }

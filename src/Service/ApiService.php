@@ -2,7 +2,6 @@
 
 namespace App\Service;
 
-
 use App\Entity\DataEntry;
 use App\Entity\Location;
 use App\Entity\Topic;
@@ -11,19 +10,19 @@ class ApiService
 {
     public function toArray($entry, $listMode = true, $treeInfo = true): array
     {
-        if(!$entry instanceof DataEntry && !$entry instanceof Topic && !$entry instanceof Location) {
+        if (!$entry instanceof DataEntry && !$entry instanceof Topic && !$entry instanceof Location) {
             return [];
         }
 
-        if($entry instanceof DataEntry){
-            if($listMode) {
+        if ($entry instanceof DataEntry) {
+            if ($listMode) {
                 return [
                     'id' => $entry->getId(),
                     'location' => $this->toArray($entry->getLocation(), true, false),
                     'topic' => $this->toArray($entry->getTopic(), true, false),
                     'year_from' => $entry->getYearFrom(),
                     'year_to' => $entry->getYearTo(),
-                    'value' => (float)$entry->getValue(),
+                    'value' => (float) $entry->getValue(),
                     'unit' => $entry->getTopic()->getType()->getName(),
                 ];
             }
@@ -34,7 +33,7 @@ class ApiService
                 'topic' => $entry->getTopic()->getId(),
                 'year_from' => $entry->getYearFrom(),
                 'year_to' => $entry->getYearTo(),
-                'value' => (float)$entry->getValue(),
+                'value' => (float) $entry->getValue(),
                 'unit' => $entry->getTopic()->getType()->getName(),
             ];
         }
@@ -42,13 +41,12 @@ class ApiService
         $field = 'location';
         $type = 'type';
 
-        if($entry instanceof Topic){
+        if ($entry instanceof Topic) {
             $field = 'topic';
             $type = 'unit';
         }
 
-        if(!$treeInfo)
-        {
+        if (!$treeInfo) {
             return [
                 'id' => $entry->getId(),
                 'name' => $entry->getName(),
@@ -62,7 +60,7 @@ class ApiService
             $parent = $entry->getParent()->getId();
         }
 
-        if($entry instanceof Location && $entry->getIsStartNode()){
+        if ($entry instanceof Location && $entry->getIsStartNode()) {
             $parent = null;
         }
 
@@ -75,7 +73,7 @@ class ApiService
             ],
         ];
 
-        if($listMode){
+        if ($listMode) {
             $children = [];
             foreach ($entry->getChildren() as $child) {
                 $children[] = $child->getId();
@@ -85,7 +83,7 @@ class ApiService
                 'parent' => $parent,
                 'children' => $children,
             ];
-        }else{
+        } else {
             $result['tree'] = [
                 'parent' => $parent,
             ];
@@ -96,14 +94,13 @@ class ApiService
 
     public function createList($node, &$result = []): array
     {
-        if(!$node instanceof Topic && !$node instanceof Location) {
+        if (!$node instanceof Topic && !$node instanceof Location) {
             return [];
         }
 
         $result[] = $this->toArray($node);
 
-        foreach($node->getChildren() as $child)
-        {
+        foreach ($node->getChildren() as $child) {
             $this->createList($child, $result);
         }
 
@@ -112,18 +109,18 @@ class ApiService
 
     public function createTree($node)
     {
-        if(!$node instanceof Topic && !$node instanceof Location) {
+        if (!$node instanceof Topic && !$node instanceof Location) {
             return [];
         }
 
         $children = [];
-        foreach($node->getChildren() as $child)
-        {
+        foreach ($node->getChildren() as $child) {
             $children[] = $this->createTree($child);
         }
 
         $result = $this->toArray($node, false);
         $result['tree']['children'] = $children;
+
         return $result;
     }
 }

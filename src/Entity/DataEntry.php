@@ -11,6 +11,7 @@ class DataEntry
 {
     /**
      * @ORM\Id()
+     *
      * @ORM\Column(type="integer")
      */
     private $id;
@@ -27,6 +28,7 @@ class DataEntry
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Topic", inversedBy="dataEntries")
+     *
      * @ORM\JoinColumn(nullable=false)
      */
     private $topic;
@@ -38,6 +40,7 @@ class DataEntry
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Location", inversedBy="dataEntries")
+     *
      * @ORM\JoinColumn(nullable=false)
      */
     private $location;
@@ -47,7 +50,8 @@ class DataEntry
         return $this->id;
     }
 
-    public function setId(int $id){
+    public function setId(int $id)
+    {
         $this->id = $id;
     }
 

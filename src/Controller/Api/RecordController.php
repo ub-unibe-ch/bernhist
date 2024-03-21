@@ -22,13 +22,13 @@ class RecordController extends AbstractApiController
     {
         $locationId = $this->request->get('locationId', 0);
         $location = $locationRepo->find($locationId);
-        if(!empty($locationId) && empty($location)){
+        if (!empty($locationId) && empty($location)) {
             throw new NotFoundHttpException();
         }
 
         $topicId = $this->request->get('topicId', 0);
         $topic = $topicRepo->find($topicId);
-        if(!empty($topicId) && empty($topic)){
+        if (!empty($topicId) && empty($topic)) {
             throw new NotFoundHttpException();
         }
 
@@ -42,13 +42,13 @@ class RecordController extends AbstractApiController
     {
         $locationId = $this->request->get('locationId', 0);
         $location = $locationRepo->find($locationId);
-        if(!empty($locationId) && empty($location)){
+        if (!empty($locationId) && empty($location)) {
             throw new NotFoundHttpException();
         }
 
         $topicId = $this->request->get('topicId', 0);
         $topic = $topicRepo->find($topicId);
-        if(!empty($topicId) && empty($topic)){
+        if (!empty($topicId) && empty($topic)) {
             throw new NotFoundHttpException();
         }
 
@@ -75,7 +75,7 @@ class RecordController extends AbstractApiController
     {
         $limit = 500;
 
-        if($minimized){
+        if ($minimized) {
             $limit = 2500;
         }
 
@@ -85,11 +85,11 @@ class RecordController extends AbstractApiController
         $offset = ($page - 1) * $limit;
 
         $recordsFrom = $offset + 1;
-        $recordsTo = $recordsFrom + ($limit -1);
+        $recordsTo = $recordsFrom + ($limit - 1);
 
         $totalRecords = $this->query->getDataEntriesTotal($location, $topic, $yearFrom, $yearTo);
 
-        if($totalRecords < $recordsTo){
+        if ($totalRecords < $recordsTo) {
             $recordsTo = $totalRecords;
         }
 
@@ -101,7 +101,7 @@ class RecordController extends AbstractApiController
             'info' => [
                 'page' => $page,
                 'pages_total' => $pagesTotal,
-                'number_of_records' => count($dataEntries),
+                'number_of_records' => \count($dataEntries),
                 'records_from' => $recordsFrom,
                 'records_to' => $recordsTo,
                 'records_total' => $totalRecords,
@@ -109,7 +109,7 @@ class RecordController extends AbstractApiController
             'records' => [],
         ];
 
-        foreach($dataEntries as $dataEntry){
+        foreach ($dataEntries as $dataEntry) {
             $records['records'][] = $this->api->toArray($dataEntry, !$minimized);
         }
 

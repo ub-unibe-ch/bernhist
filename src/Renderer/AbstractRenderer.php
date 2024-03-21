@@ -2,7 +2,6 @@
 
 namespace App\Renderer;
 
-
 use App\Entity\Location;
 use App\Entity\Topic;
 use App\Service\QueryService;
@@ -27,10 +26,6 @@ abstract class AbstractRenderer implements RendererInterface
     }
 
     /**
-     * @param Location $location
-     * @param Topic $topic
-     * @param int|null $yearFrom
-     * @param int|null $yearTo
      * @return \App\Entity\DataEntry[]
      */
     protected function getData(Location $location, Topic $topic, ?int $yearFrom, ?int $yearTo): array
