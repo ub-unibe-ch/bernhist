@@ -13,25 +13,122 @@ on:
 
 jobs:
   phpstan:
-    uses: ub-unibe-ch/github-workflows/.github/workflows/phpstan.yaml@v1
-    with: 
-      php-version: "8.2"
-    secrets:
-      packagist-token: ${{ secrets.PACKAGIST_TOKEN }}
+    name: "pstan"
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: "Checkout"
+        uses: "actions/checkout@v4"
+
+      - name: "Install PHP"
+        uses: "shivammathur/setup-php@v2"
+        with:
+          coverage: "none"
+          php-version: "8.2"
+          extensions: "intl, json, zip"
+
+      - name: Get composer cache directory
+        id: composerCache
+        run: echo "dir=$(composer config cache-files-dir)" >> $GITHUB_OUTPUT
+
+      - name: Cache dependencies
+        uses: actions/cache@v3
+        with:
+          path: ${{ steps.composerCache.outputs.dir }}
+          key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.json') }}
+          restore-keys: ${{ runner.os }}-composer-
+
+      - name: "Install latest dependencies"
+        run: composer install --ansi --no-interaction --no-progress --prefer-dist
+
+      - name: "Run phpstan"
+        run: php vendor/bin/phpstan analyse --error-format=github 
+
 
   php-cs-fixer:
-    uses: ub-unibe-ch/github-workflows/.github/workflows/php-cs-fixer.yaml@v1
-    with: 
-      php-version: "8.2"
-    secrets:
-      packagist-token: ${{ secrets.PACKAGIST_TOKEN }}
+    name: "php-cs-fixer"
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: "Checkout"
+        uses: "actions/checkout@v4"
+
+      - name: "Install PHP"
+        uses: "shivammathur/setup-php@v2"
+        with:
+          coverage: "none"
+          php-version: "8.2"
+          extensions: "intl, json, zip"
+
+      - name: Get composer cache directory
+        id: composerCache
+        run: echo "dir=$(composer config cache-files-dir)" >> $GITHUB_OUTPUT
+
+      - name: Cache dependencies
+        uses: actions/cache@v3
+        with:
+          path: ${{ steps.composerCache.outputs.dir }}
+          key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.json') }}
+          restore-keys: ${{ runner.os }}-composer-
+
+      - name: "Install latest dependencies"
+        run: composer install --ansi --no-interaction --no-progress --prefer-dist
+
+      - name: "Run php-cs-fixer"
+        run: php vendor/bin/php-cs-fixer fix -v --dry-run --using-cache=no
 
   phpunit:
     needs: [ "phpstan", "php-cs-fixer" ]
-    uses: ub-unibe-ch/github-workflows/.github/workflows/phpunit.yaml@v1
-    with: 
-      php-version: "8.2"
-      database-init: "none"
-    secrets:
-      packagist-token: ${{ secrets.PACKAGIST_TOKEN }}
-      node-token: ${{ secrets.NODE_AUTH_TOKEN }}
+    
+    name: "phpunit"
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: "Checkout"
+        uses: "actions/checkout@v4"
+
+      - name: "Install PHP"
+        uses: "shivammathur/setup-php@verbose"
+        with:
+          coverage: "pcov"
+          php-version: "8.2"
+          extensions: "intl, json, zip"
+
+      - name: "Install symfony-cli"
+        run: |
+          curl -sS https://get.symfony.com/cli/installer | bash
+          mv $HOME/.symfony5/bin/symfony /usr/local/bin/symfony
+
+      - name: Get composer cache directory
+        id: composerCache
+        run: echo "dir=$(composer config cache-files-dir)" >> $GITHUB_OUTPUT
+
+      - name: Cache dependencies
+        uses: actions/cache@v3
+        with:
+          path: ${{ steps.composerCache.outputs.dir }}
+          key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.json') }}
+          restore-keys: ${{ runner.os }}-composer-
+
+      - name: "Install Node"
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18.16'
+
+      - name: "Install latest dependencies"
+        run: |
+          composer install --ansi --no-interaction --no-progress --prefer-dist
+          yarn
+
+      - name: "Build assets"
+        run: yarn encore production --color
+
+      - name: "Start services"
+        run: docker compose up -d --wait
+
+      - name: "Run PHPUnit"
+        run: symfony php vendor/bin/phpunit
+
+      - name: "Cleanup"
+        if: ${{ always() }}
+        run: docker-compose down
