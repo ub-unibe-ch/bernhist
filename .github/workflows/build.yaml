@@ -31,6 +31,7 @@ jobs:
     uses: ub-unibe-ch/github-workflows/.github/workflows/phpunit.yaml@v1
     with: 
       php-version: "8.2"
+      database-init: "none"
     secrets:
       packagist-token: ${{ secrets.PACKAGIST_TOKEN }}
       node-token: ${{ secrets.NODE_AUTH_TOKEN }}
