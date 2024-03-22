@@ -21,10 +21,10 @@ To enable automated queries an [OAI](<https://github.com/OAI/OpenAPI-Specificati
 
 ## Prerequisites
 
-* [PHP](<https://php.net/>) 7.1.3 or newer (See [here](<https://symfony.com/doc/4.2/reference/requirements.html>) for more information about the needed php extensions)
-* A database. The symfony framework is compatible with many database types. The project was tested with [MySQL](<https://www.mysql.com/>) server version 5.7.26
+* [PHP](<https://php.net/>) 8.2 or newer (See [here](<https://symfony.com/doc/6.4/reference/requirements.html>) for more information about the needed php extensions)
+* A database. The symfony framework is compatible with many database types. The project was tested with [PostgreSQL](<https://www.postgresql.org/>) server version 15
 * [composer]((<https://getcomposer.org/>)) and [yarn](<https://yarnpkg.com/>)
-* [Apache](<https://httpd.apache.org/>) or [NGINX](<https://www.nginx.com/>) webserver (See [here](<https://symfony.com/doc/4.2/setup/web_server_configuration.html>) for more information about the configuration).
+* [Apache](<https://httpd.apache.org/>) or [NGINX](<https://www.nginx.com/>) webserver (See [here](<https://symfony.com/doc/6.4/setup/web_server_configuration.html>) for more information about the configuration).
   During development Symfony's built-in webserver can be used.
 
 ## Installation
@@ -32,7 +32,7 @@ To enable automated queries an [OAI](<https://github.com/OAI/OpenAPI-Specificati
 Clone the repository:
 
 ```bash
-git clone https://github.com/UB-Bern/bernhist.git
+git clone https://github.com/ub-unibe-ch/bernhist.git
 ```
 
 Change to the created directory and run:
@@ -61,13 +61,13 @@ Create the database schema:
 bin/console doctrine:schema:create
 ```
 
-Extract `data.tar.gz` in the project root and import the SQL data dump:
+Import the sql file `data.sql.gz` in the database:
 
 ```
-mysql -u [username] -p [database] < [path to data dir]/bernhist_data.sql
+gunzip -c data.sql.gz | psql -u [username] -p [database]
 ```
 
-Replace [username] with the mysql user, [database] with the name of your database and [path to data dir] with the relative or absolute path to the extracted mysql dump.
+Replace [username] with the mysql user, [database] with the name of your database.
 
 Install the frontend dependencies with:
 
