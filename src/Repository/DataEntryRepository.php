@@ -75,6 +75,7 @@ class DataEntryRepository extends ServiceEntityRepository
     public function findByLocationTopicYearTotal(?Location $location = null, ?Topic $topic = null, ?int $yearFrom = null, ?int $yearTo = null): int
     {
         return $this->createLocationTopicYearQuery($location, $topic, $yearFrom, $yearTo)
+            ->resetDQLPart('orderBy')
             ->select('COUNT(d.id) AS total')
             ->getQuery()
             ->getOneOrNullResult()['total']
