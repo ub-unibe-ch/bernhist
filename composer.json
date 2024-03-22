@@ -37,6 +37,7 @@
         "tecnickcom/tcpdf": "^6.2"
     },
     "require-dev": {
+        "dama/doctrine-test-bundle": "^8.0",
         "friendsofphp/php-cs-fixer": "^3.52",
         "phpro/grumphp-shim": "^2.5",
         "phpstan/extension-installer": "^1.3",

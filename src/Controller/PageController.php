@@ -14,12 +14,6 @@ class PageController extends AbstractController
         return $this->render('page/home.html.twig');
     }
 
-    #[Route(path: '/query/', name: 'query')]
-    public function query(): Response
-    {
-        return $this->render('page/query.html.twig');
-    }
-
     #[Route(path: '/whatis/', name: 'whatis')]
     public function whatis(): Response
     {

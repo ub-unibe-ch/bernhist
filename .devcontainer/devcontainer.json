@@ -3,7 +3,7 @@
     "features": {
       "ghcr.io/shyim/devcontainers-features/php:latest": {
         "version": "8.2",
-        "extensionsExtra": "xdebug"
+        "extensionsExtra": "xdebug mbstring"
       },
       "ghcr.io/devcontainers/features/node:1": {},
       "ghcr.io/shyim/devcontainers-features/symfony-cli:0": {},
@@ -16,7 +16,10 @@
       "vscode": {
         "settings": {
           "intelephense.files.maxSize": 100000000
-        }
+        },
+        "extensions": [
+            "DEVSENSE.phptools-vscode"
+        ]
       }
     }
   }

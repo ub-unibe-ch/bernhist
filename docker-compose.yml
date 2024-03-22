@@ -1,22 +1,17 @@
 version: '3'
 
 services:
-  ###> doctrine/doctrine-bundle ###
+###> doctrine/doctrine-bundle ###
   database:
-    image: mariadb:${MARIADB_VERSION:-10.4}
+    image: postgres:${POSTGRES_VERSION:-15}-alpine
     environment:
-      MARIADB_DATABASE: ${MARIADB_DB:-app}
-      MARIADB_ROOT_PASSWORD: ${MARIADB_ROOT_PW:-rootPassword}
-      MARIADB_MYSQL_LOCALHOST_USER: 1
-      #volumes:
-      #- db-data:/var/lib/mysql:rw
-    healthcheck:
-      test: [ "CMD-SHELL", "/usr/local/bin/healthcheck.sh --su-mysql --innodb_initialized || exit 1" ]
-      retries: 10
-      interval: 5s
-      timeout: 5s
-      # You may use a bind-mounted host directory instead, so that it is harder to accidentally remove the volume and lose all your data!
-      # - ./docker/db/data:/var/lib/postgresql/data:rw
+      POSTGRES_DB: ${POSTGRES_DB:-app}
+      # You should definitely change the password in production
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-ChangeMe}
+      POSTGRES_USER: ${POSTGRES_USER:-symfony}
+    volumes:
+      # - db-data:/var/lib/postgresql/data:rw
+      - ./data.sql.gz:/docker-entrypoint-initdb.d/data.sql.gz
 ###< doctrine/doctrine-bundle ###
 
 volumes:
