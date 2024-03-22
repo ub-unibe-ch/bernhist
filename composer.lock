@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "4d713310ae36e1135e5c4ef63814dfe0",
+    "content-hash": "025eaa4b7e9d6ed5564bafccc9079c41",
     "packages": [
         {
             "name": "doctrine/annotations",
@@ -7326,6 +7326,200 @@
                 }
             ],
             "time": "2024-01-23T14:51:35+00:00"
+        },
+        {
+            "name": "symsensor/actuator-bundle",
+            "version": "v1.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/SymSensor/ActuatorBundle.git",
+                "reference": "aaaa4cdbd58e6d5149a03f0beb0c09b3f1a71661"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/SymSensor/ActuatorBundle/zipball/aaaa4cdbd58e6d5149a03f0beb0c09b3f1a71661",
+                "reference": "aaaa4cdbd58e6d5149a03f0beb0c09b3f1a71661",
+                "shasum": ""
+            },
+            "require": {
+                "symfony/framework-bundle": "^6.0 || ^7.0"
+            },
+            "require-dev": {
+                "friendsofphp/php-cs-fixer": "^3.22",
+                "mikey179/vfsstream": "^1.6",
+                "phpstan/phpstan": "^1.10",
+                "phpstan/phpstan-phpunit": "^1.1",
+                "phpstan/phpstan-symfony": "^1.1",
+                "phpunit/phpunit": "^10.3",
+                "symfony/browser-kit": "^6.0",
+                "symfony/yaml": "^6.0"
+            },
+            "type": "symfony-bundle",
+            "autoload": {
+                "psr-4": {
+                    "SymSensor\\ActuatorBundle\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "Extensible bundle to provide runtime health or information about a deployed application",
+            "keywords": [
+                "actuator"
+            ],
+            "support": {
+                "issues": "https://github.com/SymSensor/ActuatorBundle/issues",
+                "source": "https://github.com/SymSensor/ActuatorBundle/tree/v1.1.0"
+            },
+            "time": "2023-12-06T14:09:45+00:00"
+        },
+        {
+            "name": "symsensor/actuator-doctrine-bundle",
+            "version": "v1.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/SymSensor/ActuatorDoctrineBundle.git",
+                "reference": "b01f309eef641f6274953d4a5ac5dac35a9fa854"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/SymSensor/ActuatorDoctrineBundle/zipball/b01f309eef641f6274953d4a5ac5dac35a9fa854",
+                "reference": "b01f309eef641f6274953d4a5ac5dac35a9fa854",
+                "shasum": ""
+            },
+            "require": {
+                "symfony/framework-bundle": "^6.0 || ^7.0",
+                "symsensor/actuator-bundle": "^1.1"
+            },
+            "require-dev": {
+                "doctrine/doctrine-bundle": "^2.0",
+                "doctrine/doctrine-migrations-bundle": "^3.2",
+                "friendsofphp/php-cs-fixer": "^3.22",
+                "mikey179/vfsstream": "^1.6",
+                "phpstan/phpstan": "^1.10",
+                "phpstan/phpstan-phpunit": "^1.1",
+                "phpstan/phpstan-symfony": "^1.1",
+                "phpunit/phpunit": "^10.3",
+                "symfony/browser-kit": "^6.0",
+                "symfony/yaml": "^6.0"
+            },
+            "type": "symfony-bundle",
+            "autoload": {
+                "psr-4": {
+                    "SymSensor\\ActuatorDoctrineBundle\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "Extension to monitor the doctrine connection for the actuator bundle",
+            "keywords": [
+                "actuator"
+            ],
+            "support": {
+                "issues": "https://github.com/SymSensor/ActuatorDoctrineBundle/issues",
+                "source": "https://github.com/SymSensor/ActuatorDoctrineBundle/tree/v1.1.0"
+            },
+            "time": "2023-12-06T14:18:33+00:00"
+        },
+        {
+            "name": "symsensor/actuator-mailer-bundle",
+            "version": "v1.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/SymSensor/ActuatorMailerBundle.git",
+                "reference": "c8bdb71cc3b0bce16e883af96cce2af6df02242c"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/SymSensor/ActuatorMailerBundle/zipball/c8bdb71cc3b0bce16e883af96cce2af6df02242c",
+                "reference": "c8bdb71cc3b0bce16e883af96cce2af6df02242c",
+                "shasum": ""
+            },
+            "require": {
+                "symfony/framework-bundle": "^6.0 || ^7.0",
+                "symsensor/actuator-bundle": "^1.1"
+            },
+            "require-dev": {
+                "friendsofphp/php-cs-fixer": "^3.22",
+                "mikey179/vfsstream": "^1.6",
+                "phpstan/phpstan": "^1.10",
+                "phpstan/phpstan-phpunit": "^1.1",
+                "phpstan/phpstan-symfony": "^1.1",
+                "phpunit/phpunit": "^10.3",
+                "symfony/browser-kit": "^6.0",
+                "symfony/mailer": "^6.0",
+                "symfony/yaml": "^6.0"
+            },
+            "type": "symfony-bundle",
+            "autoload": {
+                "psr-4": {
+                    "SymSensor\\ActuatorMailerBundle\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "Extension for the ActuatorBundle which provides health checking capabilities for the symfony mailer component.",
+            "keywords": [
+                "actuator"
+            ],
+            "support": {
+                "issues": "https://github.com/SymSensor/ActuatorMailerBundle/issues",
+                "source": "https://github.com/SymSensor/ActuatorMailerBundle/tree/v1.1.0"
+            },
+            "time": "2023-12-06T14:19:17+00:00"
+        },
+        {
+            "name": "symsensor/actuator-maintenance-bundle",
+            "version": "v1.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/SymSensor/ActuatorMaintenanceBundle.git",
+                "reference": "a8391f0999eac43a0d3124db56a639c0a25b5c26"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/SymSensor/ActuatorMaintenanceBundle/zipball/a8391f0999eac43a0d3124db56a639c0a25b5c26",
+                "reference": "a8391f0999eac43a0d3124db56a639c0a25b5c26",
+                "shasum": ""
+            },
+            "require": {
+                "symfony/framework-bundle": "^6.0 || ^7.0",
+                "symsensor/actuator-bundle": "^1.1"
+            },
+            "require-dev": {
+                "friendsofphp/php-cs-fixer": "^3.22",
+                "mikey179/vfsstream": "^1.6",
+                "phpstan/phpstan": "^1.10",
+                "phpstan/phpstan-phpunit": "^1.1",
+                "phpstan/phpstan-symfony": "^1.1",
+                "phpunit/phpunit": "^10.3",
+                "symfony/browser-kit": "^6.0",
+                "symfony/yaml": "^6.0"
+            },
+            "type": "symfony-bundle",
+            "autoload": {
+                "psr-4": {
+                    "SymSensor\\ActuatorMaintenanceBundle\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "Extension for the ActuatorBundle which provides health checking capabilities for maintenance modes.",
+            "keywords": [
+                "actuator"
+            ],
+            "support": {
+                "issues": "https://github.com/SymSensor/ActuatorMaintenanceBundle/issues",
+                "source": "https://github.com/SymSensor/ActuatorMaintenanceBundle/tree/v1.0.1"
+            },
+            "time": "2024-03-22T13:15:47+00:00"
         },
         {
             "name": "tecnickcom/tcpdf",

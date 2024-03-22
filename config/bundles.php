@@ -12,4 +12,8 @@ return [
     Symfony\WebpackEncoreBundle\WebpackEncoreBundle::class => ['all' => true],
     Symfony\Bundle\DebugBundle\DebugBundle::class => ['dev' => true],
     DAMA\DoctrineTestBundle\DAMADoctrineTestBundle::class => ['test' => true],
+    SymSensor\ActuatorBundle\SymSensorActuatorBundle::class => ['all' => true],
+    SymSensor\ActuatorDoctrineBundle\SymSensorActuatorDoctrineBundle::class => ['all' => true],
+    SymSensor\ActuatorMaintenanceBundle\SymSensorActuatorMaintenanceBundle::class => ['all' => true],
+    SymSensor\ActuatorMailerBundle\SymSensorActuatorMailerBundle::class => ['all' => true],
 ];

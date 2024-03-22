@@ -24,7 +24,9 @@ security:
     access_control:
         # - { path: ^/admin, roles: ROLE_ADMIN }
         # - { path: ^/profile, roles: ROLE_USER }
-
+        - { path: '^/_actuator', roles: PUBLIC_ACCESS, ips: [127.0.0.1, ::1, 130.92.0.0/16] }
+        - { path: '^/_actuator', roles: ROLE_NO_ACCESS }
+        
 when@test:
     security:
         password_hashers:

@@ -1,0 +1,8 @@
+sym_sensor_actuator_maintenance:
+  files:
+    - "%kernel.project_dir%/var/maintenance"
+    - "%kernel.project_dir%/var/global-maintenance"
+
+sym_sensor_actuator_doctrine:
+  migrations:
+    enabled: false

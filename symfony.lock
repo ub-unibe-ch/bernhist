@@ -501,6 +501,18 @@
     "symfony/yaml": {
         "version": "v4.2.8"
     },
+    "symsensor/actuator-bundle": {
+        "version": "v1.1.0"
+    },
+    "symsensor/actuator-doctrine-bundle": {
+        "version": "v1.1.0"
+    },
+    "symsensor/actuator-mailer-bundle": {
+        "version": "v1.1.0"
+    },
+    "symsensor/actuator-maintenance-bundle": {
+        "version": "v1.0.0"
+    },
     "tecnickcom/tcpdf": {
         "version": "6.2.26"
     },
