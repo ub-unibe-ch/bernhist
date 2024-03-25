@@ -1,0 +1,10 @@
+grumphp:
+    tasks:
+        composer:
+            no_check_publish: true
+        phpcsfixer:
+            config: .php-cs-fixer.dist.php
+        phpstan:
+            configuration: phpstan.dist.neon
+            use_grumphp_paths: false
+        securitychecker_symfony: ~

@@ -2,47 +2,41 @@
 
 namespace App\Entity;
 
+use App\Repository\TopicRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * @ORM\Entity(repositoryClass="App\Repository\TopicRepository")
- */
-class Topic
+#[ORM\Entity(repositoryClass: TopicRepository::class)]
+class Topic implements \Stringable
 {
-    /**
-     * @ORM\Id()
-     * @ORM\Column(type="integer")
-     */
-    private $id;
+    #[ORM\Id]
+    #[ORM\Column(type: Types::INTEGER)]
+    private ?int $id = null;
+
+    #[ORM\Column(type: Types::STRING, length: 255)]
+    private ?string $name = null;
+
+    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\ManyToOne(targetEntity: Type::class)]
+    private ?Type $type = null;
+
+    #[ORM\ManyToOne(targetEntity: self::class, inversedBy: 'children', cascade: ['persist', 'remove'])]
+    private ?Topic $parent = null;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @var Collection<int, Topic>
      */
-    private $name;
+    #[ORM\OneToMany(targetEntity: self::class, mappedBy: 'parent')]
+    #[ORM\OrderBy(['name' => 'ASC'])]
+    private Collection $children;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Type")
-     * @ORM\JoinColumn(nullable=false)
+     * @var Collection<int, DataEntry>
      */
-    private $type;
-
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Topic", inversedBy="children", cascade={"persist", "remove"})
-     */
-    private $parent;
-
-    /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Topic", mappedBy="parent")
-     * @ORM\OrderBy({"name" = "ASC"})
-     */
-    private $children;
-
-    /**
-     * @ORM\OneToMany(targetEntity="App\Entity\DataEntry", mappedBy="topic", orphanRemoval=true, cascade={"persist", "remove"})
-     */
-    private $dataEntries;
+    #[ORM\OneToMany(targetEntity: DataEntry::class, mappedBy: 'topic', orphanRemoval: true, cascade: ['persist', 'remove'])]
+    private Collection $dataEntries;
 
     public function __construct()
     {
@@ -55,7 +49,8 @@ class Topic
         return $this->id;
     }
 
-    public function setId(int $id){
+    public function setId(int $id): void
+    {
         $this->id = $id;
     }
 
@@ -96,7 +91,7 @@ class Topic
     }
 
     /**
-     * @return Collection|self[]
+     * @return Collection<int, self>|self[]
      */
     public function getChildren(): Collection
     {
@@ -127,7 +122,7 @@ class Topic
     }
 
     /**
-     * @return Collection|DataEntry[]
+     * @return Collection<int, DataEntry>|DataEntry[]
      */
     public function getDataEntries(): Collection
     {
@@ -157,15 +152,14 @@ class Topic
         return $this;
     }
 
-    public function hasDescendant(Topic $topic)
+    public function hasDescendant(self $topic): bool
     {
-        if($this->getId() == $topic->getId())
-        {
+        if ($this->getId() == $topic->getId()) {
             return true;
         }
 
-        foreach($this->getChildren() as $child){
-            if($child->hasDescendant($topic)){
+        foreach ($this->getChildren() as $child) {
+            if ($child->hasDescendant($topic)) {
                 return true;
             }
         }
@@ -173,8 +167,8 @@ class Topic
         return false;
     }
 
-    public function __toString()
+    public function __toString(): string
     {
-        return $this->name;
+        return (string) $this->name;
     }
 }

@@ -5,17 +5,19 @@ namespace App\Repository;
 use App\Entity\Location;
 use App\Entity\Topic;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Symfony\Bridge\Doctrine\RegistryInterface;
+use Doctrine\Persistence\ManagerRegistry;
 
 /**
  * @method Topic|null find($id, $lockMode = null, $lockVersion = null)
  * @method Topic|null findOneBy(array $criteria, array $orderBy = null)
  * @method Topic[]    findAll()
  * @method Topic[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ *
+ * @extends ServiceEntityRepository<Topic>
  */
 class TopicRepository extends ServiceEntityRepository
 {
-    public function __construct(RegistryInterface $registry)
+    public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Topic::class);
     }
@@ -25,12 +27,16 @@ class TopicRepository extends ServiceEntityRepository
         return $this->createQueryBuilder('t')
             ->where('t.parent IS NULL')
             ->getQuery()
-            ->getOneOrNullResult();
+            ->getOneOrNullResult()
+        ;
     }
 
-    public function findWithDataEntries(?Location $location = null)
+    /**
+     * @return Topic[]
+     */
+    public function findWithDataEntries(?Location $location = null): array
     {
-        if(!empty($location)) {
+        if (null !== $location) {
             return $this->createQueryBuilder('t')
                 ->innerJoin('t.dataEntries', 'd')
                 ->addSelect('t')
@@ -38,7 +44,8 @@ class TopicRepository extends ServiceEntityRepository
                 ->setParameter('location', $location)
                 ->addGroupBy('t')
                 ->getQuery()
-                ->getResult();
+                ->getResult()
+            ;
         }
 
         return $this->createQueryBuilder('t')
@@ -46,7 +53,8 @@ class TopicRepository extends ServiceEntityRepository
             ->addSelect('t')
             ->addGroupBy('t')
             ->getQuery()
-            ->getResult();
+            ->getResult()
+        ;
     }
 
     // /**

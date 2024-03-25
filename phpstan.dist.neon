@@ -1,0 +1,10 @@
+parameters:
+    bootstrapFiles:
+        - tests/bootstrap.php
+    symfony:
+        container_xml_path: var/cache/dev/App_KernelDevDebugContainer.xml
+        constant_hassers: false
+    level: 8
+    paths:
+        - src
+        - tests

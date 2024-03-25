@@ -2,21 +2,16 @@
 
 namespace App\Controller\Api;
 
-use App\Entity\Location;
-use App\Repository\LocationRepository;
 use App\Service\QueryService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-/**
- * @Route("/api")
- */
+#[Route(path: '/api')]
 class DocumentationController extends AbstractController
 {
-    /**
-     * @Route("/", name="api_documentation")
-     */
-    public function documentation(QueryService $queryService)
+    #[Route(path: '/', name: 'api_documentation')]
+    public function documentation(QueryService $queryService): Response
     {
         return $this->render('swagger.html.twig');
     }

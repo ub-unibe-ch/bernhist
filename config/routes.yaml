@@ -1,3 +1,9 @@
-#index:
-#    path: /
-#    controller: App\Controller\DefaultController::index
+controllers:
+    resource:
+        path: ../src/Controller/
+        namespace: App\Controller
+    type: attribute
+
+actuator:
+    resource: '@SymSensorActuatorBundle/config/routing.yaml'
+    prefix: /_actuator

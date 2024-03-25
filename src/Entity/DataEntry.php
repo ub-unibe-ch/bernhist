@@ -2,52 +2,41 @@
 
 namespace App\Entity;
 
+use App\Repository\DataEntryRepository;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * @ORM\Entity(repositoryClass="App\Repository\DataEntryRepository")
- */
+#[ORM\Entity(repositoryClass: DataEntryRepository::class)]
 class DataEntry
 {
-    /**
-     * @ORM\Id()
-     * @ORM\Column(type="integer")
-     */
-    private $id;
+    #[ORM\Id]
+    #[ORM\Column(type: Types::INTEGER)]
+    private ?int $id = null;
 
-    /**
-     * @ORM\Column(type="smallint")
-     */
-    private $yearFrom;
+    #[ORM\Column(type: Types::SMALLINT)]
+    private ?int $yearFrom = null;
 
-    /**
-     * @ORM\Column(type="smallint")
-     */
-    private $yearTo;
+    #[ORM\Column(type: Types::SMALLINT)]
+    private ?int $yearTo = null;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Topic", inversedBy="dataEntries")
-     * @ORM\JoinColumn(nullable=false)
-     */
-    private $topic;
+    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\ManyToOne(targetEntity: Topic::class, inversedBy: 'dataEntries')]
+    private ?Topic $topic = null;
 
-    /**
-     * @ORM\Column(type="decimal", precision=18, scale=9)
-     */
-    private $value;
+    #[ORM\Column(type: Types::DECIMAL, precision: 18, scale: 9)]
+    private ?string $value = null;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Location", inversedBy="dataEntries")
-     * @ORM\JoinColumn(nullable=false)
-     */
-    private $location;
+    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\ManyToOne(targetEntity: Location::class, inversedBy: 'dataEntries')]
+    private ?Location $location = null;
 
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function setId(int $id){
+    public function setId(int $id): void
+    {
         $this->id = $id;
     }
 
@@ -87,12 +76,12 @@ class DataEntry
         return $this;
     }
 
-    public function getValue()
+    public function getValue(): ?string
     {
         return $this->value;
     }
 
-    public function setValue($value): self
+    public function setValue(?string $value): self
     {
         $this->value = $value;
 

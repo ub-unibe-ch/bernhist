@@ -2,52 +2,44 @@
 
 namespace App\Entity;
 
+use App\Repository\LocationRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * @ORM\Entity(repositoryClass="App\Repository\LocationRepository")
- */
-class Location
+#[ORM\Entity(repositoryClass: LocationRepository::class)]
+class Location implements \Stringable
 {
-    /**
-     * @ORM\Id()
-     * @ORM\Column(type="integer")
-     */
-    private $id;
+    #[ORM\Id]
+    #[ORM\Column(type: Types::INTEGER)]
+    private ?int $id = null;
+
+    #[ORM\Column(type: Types::STRING, length: 150)]
+    private ?string $name = null;
+
+    #[ORM\ManyToOne(targetEntity: self::class, inversedBy: 'children', cascade: ['persist', 'remove'])]
+    private ?Location $parent = null;
 
     /**
-     * @ORM\Column(type="string", length=150)
+     * @var Collection<int, \App\Entity\Location>
      */
-    private $name;
+    #[ORM\OneToMany(targetEntity: self::class, mappedBy: 'parent')]
+    #[ORM\OrderBy(['name' => 'ASC'])]
+    private Collection $children;
+
+    #[ORM\Column(type: Types::BOOLEAN)]
+    private ?bool $isStartNode = null;
+
+    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\ManyToOne(targetEntity: Type::class)]
+    private ?Type $type = null;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Location", inversedBy="children", cascade={"persist", "remove"})
+     * @var Collection<int, DataEntry>
      */
-    private $parent;
-
-    /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Location", mappedBy="parent")
-     * @ORM\OrderBy({"name" = "ASC"})
-     */
-    private $children;
-
-    /**
-     * @ORM\Column(type="boolean")
-     */
-    private $isStartNode;
-
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Type")
-     * @ORM\JoinColumn(nullable=false)
-     */
-    private $type;
-
-    /**
-     * @ORM\OneToMany(targetEntity="App\Entity\DataEntry", mappedBy="location", orphanRemoval=true, cascade={"persist", "remove"})
-     */
-    private $dataEntries;
+    #[ORM\OneToMany(targetEntity: DataEntry::class, mappedBy: 'location', orphanRemoval: true, cascade: ['persist', 'remove'])]
+    private Collection $dataEntries;
 
     public function __construct()
     {
@@ -56,7 +48,8 @@ class Location
         $this->dataEntries = new ArrayCollection();
     }
 
-    public function setId(int $id){
+    public function setId(int $id): void
+    {
         $this->id = $id;
     }
 
@@ -90,7 +83,7 @@ class Location
     }
 
     /**
-     * @return Collection|self[]
+     * @return Collection<int, self>|self[]
      */
     public function getChildren(): Collection
     {
@@ -145,7 +138,7 @@ class Location
     }
 
     /**
-     * @return Collection|DataEntry[]
+     * @return Collection<int, DataEntry>|DataEntry[]
      */
     public function getDataEntries(): Collection
     {
@@ -175,15 +168,14 @@ class Location
         return $this;
     }
 
-    public function hasDescendant(Location $location)
+    public function hasDescendant(self $location): bool
     {
-        if($this->getId() == $location->getId())
-        {
+        if ($this->getId() == $location->getId()) {
             return true;
         }
 
-        foreach($this->getChildren() as $child){
-            if($child->hasDescendant($location)){
+        foreach ($this->getChildren() as $child) {
+            if ($child->hasDescendant($location)) {
                 return true;
             }
         }
@@ -191,8 +183,8 @@ class Location
         return false;
     }
 
-    public function __toString()
+    public function __toString(): string
     {
-        return $this->name . ' <i>(' . $this->type . ')</i>';
+        return $this->name.' <i>('.$this->type.')</i>';
     }
 }
