@@ -12,6 +12,7 @@ use Symfony\Component\HttpFoundation\StreamedResponse;
 
 class ExcelRenderer extends AbstractRenderer
 {
+    #[\Override]
     public function render(Location $location, Topic $topic, ?int $yearFrom = null, ?int $yearTo = null): Response
     {
         $spreadsheet = new Spreadsheet();

@@ -167,6 +167,7 @@ class Topic implements \Stringable
         return false;
     }
 
+    #[\Override]
     public function __toString(): string
     {
         return (string) $this->name;
