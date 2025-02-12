@@ -22,7 +22,7 @@ class Location implements \Stringable
     private ?Location $parent = null;
 
     /**
-     * @var Collection<int, \App\Entity\Location>
+     * @var Collection<int, Location>
      */
     #[ORM\OneToMany(targetEntity: self::class, mappedBy: 'parent')]
     #[ORM\OrderBy(['name' => 'ASC'])]
