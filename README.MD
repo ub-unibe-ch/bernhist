@@ -21,7 +21,7 @@ To enable automated queries an [OAI](<https://github.com/OAI/OpenAPI-Specificati
 
 ## Prerequisites
 
-* [PHP](<https://php.net/>) 8.2 or newer (See [here](<https://symfony.com/doc/6.4/reference/requirements.html>) for more information about the needed php extensions)
+* [PHP](<https://php.net/>) 8.3 or newer (See [here](<https://symfony.com/doc/6.4/reference/requirements.html>) for more information about the needed php extensions)
 * A database. The symfony framework is compatible with many database types. The project was tested with [PostgreSQL](<https://www.postgresql.org/>) server version 15
 * [composer]((<https://getcomposer.org/>)) and [yarn](<https://yarnpkg.com/>)
 * [Apache](<https://httpd.apache.org/>) or [NGINX](<https://www.nginx.com/>) webserver (See [here](<https://symfony.com/doc/6.4/setup/web_server_configuration.html>) for more information about the configuration).
