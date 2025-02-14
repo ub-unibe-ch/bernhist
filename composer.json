@@ -10,7 +10,7 @@
         "doctrine/doctrine-migrations-bundle": "^3.0",
         "doctrine/orm": "^3.0",
         "phpdocumentor/reflection-docblock": "^5.3",
-        "phpoffice/phpspreadsheet": "^1.6",
+        "phpoffice/phpspreadsheet": "^4.0",
         "symfony/apache-pack": "^1.0",
         "symfony/asset": "7.2.*",
         "symfony/console": "7.2.*",
