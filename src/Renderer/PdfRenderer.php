@@ -9,6 +9,7 @@ use Symfony\Component\HttpFoundation\Response;
 
 class PdfRenderer extends ExcelRenderer
 {
+    #[\Override]
     protected function createResponse(Spreadsheet $spreadsheet): Response
     {
         IOFactory::registerWriter('Pdf', Tcpdf::class);

@@ -22,7 +22,7 @@ class Location implements \Stringable
     private ?Location $parent = null;
 
     /**
-     * @var Collection<int, \App\Entity\Location>
+     * @var Collection<int, Location>
      */
     #[ORM\OneToMany(targetEntity: self::class, mappedBy: 'parent')]
     #[ORM\OrderBy(['name' => 'ASC'])]
@@ -183,6 +183,7 @@ class Location implements \Stringable
         return false;
     }
 
+    #[\Override]
     public function __toString(): string
     {
         return $this->name.' <i>('.$this->type.')</i>';
