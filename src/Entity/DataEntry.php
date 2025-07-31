@@ -11,24 +11,24 @@ class DataEntry
 {
     #[ORM\Id]
     #[ORM\Column(type: Types::INTEGER)]
-    private ?int $id = null;
+    private int $id;
 
     #[ORM\Column(type: Types::SMALLINT)]
-    private ?int $yearFrom = null;
+    private int $yearFrom;
 
     #[ORM\Column(type: Types::SMALLINT)]
-    private ?int $yearTo = null;
+    private int $yearTo;
 
     #[ORM\JoinColumn(nullable: false)]
     #[ORM\ManyToOne(targetEntity: Topic::class, inversedBy: 'dataEntries')]
-    private ?Topic $topic = null;
+    private Topic $topic;
 
     #[ORM\Column(type: Types::DECIMAL, precision: 18, scale: 9)]
-    private ?string $value = null;
+    private string $value;
 
     #[ORM\JoinColumn(nullable: false)]
     #[ORM\ManyToOne(targetEntity: Location::class, inversedBy: 'dataEntries')]
-    private ?Location $location = null;
+    private Location $location;
 
     public function getId(): ?int
     {
@@ -69,7 +69,7 @@ class DataEntry
         return $this->topic;
     }
 
-    public function setTopic(?Topic $topic): self
+    public function setTopic(Topic $topic): self
     {
         $this->topic = $topic;
 
@@ -81,7 +81,7 @@ class DataEntry
         return $this->value;
     }
 
-    public function setValue(?string $value): self
+    public function setValue(string $value): self
     {
         $this->value = $value;
 
@@ -93,7 +93,7 @@ class DataEntry
         return $this->location;
     }
 
-    public function setLocation(?Location $location): self
+    public function setLocation(Location $location): self
     {
         $this->location = $location;
 
