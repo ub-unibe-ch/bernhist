@@ -134,7 +134,7 @@ class QueryController extends AbstractController
         }
 
         foreach ($results as $dataEntry) {
-            if ($dataEntry->getYearFrom() == $dataEntry->getYearTo()) {
+            if ($dataEntry->getYearFrom() === $dataEntry->getYearTo()) {
                 $valuesByYear[$dataEntry->getYearFrom()] = (float) $dataEntry->getValue();
             } else {
                 $years = ($dataEntry->getYearTo() ?? 0) - ($dataEntry->getYearFrom() ?? 0) + 1;
