@@ -10,11 +10,6 @@ use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * @method DataEntry|null find($id, $lockMode = null, $lockVersion = null)
- * @method DataEntry|null findOneBy(array $criteria, array $orderBy = null)
- * @method DataEntry[]    findAll()
- * @method DataEntry[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
- *
  * @extends ServiceEntityRepository<DataEntry>
  */
 class DataEntryRepository extends ServiceEntityRepository

@@ -14,10 +14,10 @@ class RendererFactory
 
     public function create(string $format): RendererInterface
     {
-        if ('xlsx' == $format) {
+        if ('xlsx' === $format) {
             return new ExcelRenderer($this->queryService, $this->presenter);
         }
-        if ('pdf' == $format) {
+        if ('pdf' === $format) {
             return new PdfRenderer($this->queryService, $this->presenter);
         }
 

@@ -92,11 +92,11 @@ class ApiService
     }
 
     /**
-     * @param array<string, mixed> $result
+     * @param array<int|string, mixed> $result
      *
      * @return array<string, mixed>
      */
-    public function createList(Topic|Location|null $node, &$result = []): array
+    public function createList(Topic|Location|null $node, array &$result = []): array
     {
         if (null === $node) {
             return [];

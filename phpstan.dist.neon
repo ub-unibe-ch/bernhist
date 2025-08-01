@@ -8,5 +8,7 @@ parameters:
     paths:
         - src
         - tests
+    doctrine:
+        allowNullablePropertyForRequiredField: true
 includes:
 	- phar://phpstan.phar/conf/bleedingEdge.neon

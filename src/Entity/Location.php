@@ -170,7 +170,7 @@ class Location implements \Stringable
 
     public function hasDescendant(self $location): bool
     {
-        if ($this->getId() == $location->getId()) {
+        if ($this->getId() === $location->getId()) {
             return true;
         }
 

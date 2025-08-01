@@ -154,7 +154,7 @@ class Topic implements \Stringable
 
     public function hasDescendant(self $topic): bool
     {
-        if ($this->getId() == $topic->getId()) {
+        if ($this->getId() === $topic->getId()) {
             return true;
         }
 
