@@ -2,6 +2,7 @@
 
 namespace App\Renderer;
 
+use Override;
 use App\Entity\Location;
 use App\Entity\Topic;
 use PhpOffice\PhpSpreadsheet\IOFactory;
@@ -12,7 +13,7 @@ use Symfony\Component\HttpFoundation\StreamedResponse;
 
 class ExcelRenderer extends AbstractRenderer
 {
-    #[\Override]
+    #[Override]
     public function render(Location $location, Topic $topic, ?int $yearFrom = null, ?int $yearTo = null): Response
     {
         $spreadsheet = new Spreadsheet();

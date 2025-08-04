@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Stringable;
+use Override;
 use App\Repository\LocationRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -9,7 +11,7 @@ use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: LocationRepository::class)]
-class Location implements \Stringable
+class Location implements Stringable
 {
     #[ORM\Id]
     #[ORM\Column(type: Types::INTEGER)]
@@ -29,7 +31,7 @@ class Location implements \Stringable
     private Collection $children;
 
     #[ORM\Column(type: Types::BOOLEAN)]
-    private ?bool $isStartNode = null;
+    private ?bool $isStartNode = false;
 
     #[ORM\JoinColumn(nullable: false)]
     #[ORM\ManyToOne(targetEntity: Type::class)]
@@ -43,7 +45,6 @@ class Location implements \Stringable
 
     public function __construct()
     {
-        $this->isStartNode = false;
         $this->children = new ArrayCollection();
         $this->dataEntries = new ArrayCollection();
     }
@@ -183,7 +184,7 @@ class Location implements \Stringable
         return false;
     }
 
-    #[\Override]
+    #[Override]
     public function __toString(): string
     {
         return $this->name.' <i>('.$this->type.')</i>';
