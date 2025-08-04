@@ -2,8 +2,6 @@
 
 namespace App\Entity;
 
-use Stringable;
-use Override;
 use App\Repository\LocationRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -11,7 +9,7 @@ use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: LocationRepository::class)]
-class Location implements Stringable
+class Location implements \Stringable
 {
     #[ORM\Id]
     #[ORM\Column(type: Types::INTEGER)]
@@ -184,7 +182,7 @@ class Location implements Stringable
         return false;
     }
 
-    #[Override]
+    #[\Override]
     public function __toString(): string
     {
         return $this->name.' <i>('.$this->type.')</i>';

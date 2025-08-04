@@ -2,14 +2,12 @@
 
 namespace App\Entity;
 
-use Stringable;
-use Override;
 use App\Repository\TypeRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: TypeRepository::class)]
-class Type implements Stringable
+class Type implements \Stringable
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -36,7 +34,7 @@ class Type implements Stringable
         return $this;
     }
 
-    #[Override]
+    #[\Override]
     public function __toString(): string
     {
         return (string) $this->name;
