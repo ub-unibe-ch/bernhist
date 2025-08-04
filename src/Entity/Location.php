@@ -84,7 +84,7 @@ class Location implements Stringable
     }
 
     /**
-     * @return Collection<int, self>|self[]
+     * @return Collection<int, self>
      */
     public function getChildren(): Collection
     {
@@ -139,7 +139,7 @@ class Location implements Stringable
     }
 
     /**
-     * @return Collection<int, DataEntry>|DataEntry[]
+     * @return Collection<int, DataEntry>
      */
     public function getDataEntries(): Collection
     {

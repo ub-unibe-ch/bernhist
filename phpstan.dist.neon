@@ -10,5 +10,5 @@ parameters:
         - tests
     doctrine:
         allowNullablePropertyForRequiredField: true
-includes:
-	- phar://phpstan.phar/conf/bleedingEdge.neon
+#includes:
+#	- phar://phpstan.phar/conf/bleedingEdge.neon
