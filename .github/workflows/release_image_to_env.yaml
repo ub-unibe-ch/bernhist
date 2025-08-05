@@ -1,0 +1,51 @@
+name: Deploy Image to Dev Environment
+
+on:
+  release:
+    types: [published]
+
+jobs:
+  update_development_env_version:
+    if: "${{ startsWith(github.event.release.tag_name, 'dev') }}"
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.head_ref }}
+      - name: Get the dev version
+        id: get_version
+        run: echo ::set-output name=VERSION::$(echo ${GITHUB_REF##refs-tags-})
+      - name: Update Kustomize Dev to new Version
+        run: |
+          ls 'envs/development/' -1tr | head -n -5 | xargs -d '\n' rm -f --
+          cp -rp "`ls -dtr1 envs/development/* /* | tail -1`" "envs/development/${{ github.event.release.tag_name }}.yaml"
+          echo ${{ github.event.release.tag_name }}
+      - uses: stefanzweifel/git-auto-commit-action@v5
+        name: Apply changes to Repository
+
+  update_production_env_version:
+    if: "${{ startsWith(github.event.release.tag_name, 'prod') }}"
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.head_ref }}
+      - name: Get the version
+        id: get_version
+        run: echo ::set-output name=VERSION::$(echo ${GITHUB_REF##refs-tags-})
+      - uses: EuphoricSystems/docker-promote-image@v2
+        with:
+          src: |
+            ghcr.io/ub-unibe-ch/berner-ortsgeschichten:dev_${{ steps.get_version.outputs.VERSION }}
+          destinations: |
+            ghcr.io/ub-unibe-ch/berner-ortsgeschichten:prod_${{ steps.get_version.outputs.VERSION }}
+      - name: Update Kustomize Dev to new Version
+        run: |
+          ls 'envs/production/' -1tr | head -n -5 | xargs -d '\n' rm -f --
+          cp 'envs/development/helm_dev_${{ steps.get_version.outputs.VERSION }}.yaml' \
+          'envs/production/helm_prod_
+          ${{ steps.get_version.outputs.VERSION }}.yaml'
+      - uses: stefanzweifel/git-auto-commit-action@v5
+        name: Apply changes to Repository

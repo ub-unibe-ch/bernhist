@@ -11,6 +11,7 @@
         "doctrine/orm": "^3.0",
         "phpdocumentor/reflection-docblock": "^5.3",
         "phpoffice/phpspreadsheet": "^4.0",
+        "runtime/frankenphp-symfony": "^0.2.0",
         "symfony/apache-pack": "^1.0",
         "symfony/asset": "7.2.*",
         "symfony/console": "7.2.*",

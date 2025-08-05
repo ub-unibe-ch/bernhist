@@ -1,0 +1,24 @@
+name: Promote Image to Prod
+on:
+  push:
+    tags:
+      - 'prod_v[0-9]+.[0-9]+.[0-9]+'
+
+jobs:
+  promote_latest_dev_image_to_prod:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Get the version
+        id: get_version
+        run: echo ::set-output name=VERSION::$(echo ${GITHUB_REF##refs/tags/prod_})
+      - uses: docker/login-action@v1.9.0
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ github.token }}
+      - uses: EuphoricSystems/docker-promote-image@v2.1.0
+        with:
+          src: "ghcr.io/ub-unibe-ch/berner-ortsgeschichten:${{ steps.get_version.outputs.VERSION }}"
+          destinations: |
+            "ghcr.io/ub-unibe-ch/berner-ortsgeschichten:prod"

@@ -1,0 +1,17 @@
+name: Deploy Image to Dev
+
+on:
+  push:
+    tags:
+      - 'dev_v[0-9]+.[0-9]+.[0-9]+'
+
+jobs:
+  build_and_push_latest_dev_image:
+    uses:
+      ub-unibe-ch/github-workflows/.github/workflows/build_and_push_to_reg.yaml@build_and_push_w_npm
+    with:
+      php: true
+      target: "frankenphp_dev"
+    secrets:
+      packagist-token: ${{ secrets.PACKAGIST_TOKEN }}
+      node-token: ${{ secrets.NODE_AUTH_TOKEN }}

@@ -1,0 +1,81 @@
+services:
+  symfony:
+    image: ghcr.io/ub-unibe-ch/berner-ortsgeschichten:prod
+    restart: unless-stopped
+    environment:
+      SERVER_NAME: ${SERVER_NAME:-localhost}, php:80
+      MERCURE_PUBLISHER_JWT_KEY: ${CADDY_MERCURE_JWT_SECRET:-!ChangeThisMercureHubJWTSecretKey!}
+      MERCURE_SUBSCRIBER_JWT_KEY: ${CADDY_MERCURE_JWT_SECRET:-!ChangeThisMercureHubJWTSecretKey!}
+      MERCURE_URL: ${CADDY_MERCURE_URL:-http://php/.well-known/mercure}
+      DATABASE_URL: "postgresql://app:1234@database:5432/app?serverVersion=16&charset=utf8"
+      POSTGRES_PASSWORD: "1234"
+      POSTGRES_USER: app
+      POSTGRES_DB: app
+      MERCURE_PUBLIC_URL: ${CADDY_MERCURE_PUBLIC_URL:-https://${SERVER_NAME:-localhost}:${HTTPS_PORT:-443}/.well-known/mercure}
+      MERCURE_JWT_SECRET: ${CADDY_MERCURE_JWT_SECRET:-!ChangeThisMercureHubJWTSecretKey!}
+      SYMFONY_VERSION: ${SYMFONY_VERSION:-}
+      UB_AUTH_OIDC_CLIENT_ID: clientId
+      UB_AUTH_OIDC_CLIENT_SECRET: clientSecret
+      UB_AUTH_OIDC_SCOPES: "[\"openid\", \"email\", \"profile\"]"
+      UB_AUTH_OIDC_PROVIDER_URL: "http://${UB_AUTH_DEV_HOST}:${UB_AUTH_DEV_PORT}"
+      STABILITY: ${STABILITY:-stable}
+      MIGRATE: ${MIGRATE:-no}
+    volumes:
+      - caddy_data:/data
+      - caddy_config:/config
+      - .:/app
+    ports:
+      - target: 80
+        published: ${HTTP_PORT:-80}
+        protocol: tcp
+      - target: 443
+        published: ${HTTPS_PORT:-443}
+        protocol: tcp
+      - target: 443
+        published: ${HTTP3_PORT:-443}
+        protocol: udp
+
+  database:
+    image: postgres:${POSTGRES_VERSION:-16}-alpine
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-app}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-!ChangeMe!}
+      POSTGRES_USER: ${POSTGRES_USER:-app}
+    healthcheck:
+      test: ["CMD", "pg_isready", "-d", "${POSTGRES_DB:-app}", "-U", "${POSTGRES_USER:-app}"]
+      timeout: 5s
+      retries: 5
+      start_period: 60s
+    ports: [ 5432 ]
+    volumes:
+      - database_data:/var/lib/postgresql/data:rw
+
+  webservices:
+    image: mockoon/cli:latest
+    command: ["--data", "/data.json", "--port", "3000"]
+    labels:
+      com.symfony.server.service-prefix: 'WEB_SERVICES'
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f http://localhost:3000/_health || exit 1"]
+      interval: 10s
+      timeout: 5s
+    ports: [ 3001 ]
+    volumes:
+      - ./.devcontainer/docker/mockoon.json:/data.json:readonly
+
+  oidc:
+    image: ghcr.io/ub-unibe-ch/dev-oidc-access:main
+    environment:
+      - MODE=azure
+    labels:
+      com.symfony.server.service-prefix: 'UB_AUTH_DEV'
+    healthcheck:
+      test: [ "CMD-SHELL", "curl -f http://localhost:3000/_health || exit 1" ]
+      interval: 10s
+      timeout: 5s
+    ports: [ 3000 ]
+
+volumes:
+  caddy_data:
+  caddy_config:
+  database_data:
