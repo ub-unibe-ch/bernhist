@@ -101,6 +101,38 @@ Open the `.env.local` file and set `APP_ENV` to `prod`.
 
 Ensure that the web root configured in the webserver points to the `public` folder.
 
+## Docker Setup
+### Creating the Dev and Prod Images
+To create a new `dev` image, you can create a tag and push it. The corresponding action only responds if the tag is of the form `dev_v[int].[int].[int]`.
+An image with the tag `dev_v0.0.1` can be created as follows, for example:
+
+```
+git tag -a dev_v0.0.1
+git push origin dev_v0.0.1
+```
+
+If you want to create a `prod` image from a `dev` image, simply tag the `dev` image with `prod`. To do this, you can create a tag, similar to before. You can tag the image `dev_v0.0.1` with `prod` as follows:
+```
+git tag -a prod_v0.0.1
+git push origin prod_v0.0.1
+```
+
+### Local testing of the Docker image
+The `prod` image is stored in `compose.yaml` by default. If you want to pull a different image, you can adjust the tag.
+
+You can then create the container:
+```
+docker compose up
+```
+With the following command, you can also execute the local database migration when starting the container:
+```
+MIGRATE="yes" docker compose up
+```
+where `MIGRATE` specifies whether the migration should be executed when the container is started. If you do not want to execute the migration, you can omit the value, as in the following command.
+```
+docker compose up
+```
+
 ## Contributors
 
 ### Original project
