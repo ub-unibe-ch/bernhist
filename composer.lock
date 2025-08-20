@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "0c552e796300ab7e32b3da40807ed0e1",
+    "content-hash": "5e13aef96e3e0f99c2a9f7407433b392",
     "packages": [
         {
             "name": "composer/pcre",
@@ -7429,55 +7429,6 @@
             "time": "2023-12-06T14:18:33+00:00"
         },
         {
-            "name": "symsensor/actuator-mailer-bundle",
-            "version": "v1.1.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/SymSensor/ActuatorMailerBundle.git",
-                "reference": "c8bdb71cc3b0bce16e883af96cce2af6df02242c"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/SymSensor/ActuatorMailerBundle/zipball/c8bdb71cc3b0bce16e883af96cce2af6df02242c",
-                "reference": "c8bdb71cc3b0bce16e883af96cce2af6df02242c",
-                "shasum": ""
-            },
-            "require": {
-                "symfony/framework-bundle": "^6.0 || ^7.0",
-                "symsensor/actuator-bundle": "^1.1"
-            },
-            "require-dev": {
-                "friendsofphp/php-cs-fixer": "^3.22",
-                "mikey179/vfsstream": "^1.6",
-                "phpstan/phpstan": "^1.10",
-                "phpstan/phpstan-phpunit": "^1.1",
-                "phpstan/phpstan-symfony": "^1.1",
-                "phpunit/phpunit": "^10.3",
-                "symfony/browser-kit": "^6.0",
-                "symfony/mailer": "^6.0",
-                "symfony/yaml": "^6.0"
-            },
-            "type": "symfony-bundle",
-            "autoload": {
-                "psr-4": {
-                    "SymSensor\\ActuatorMailerBundle\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "description": "Extension for the ActuatorBundle which provides health checking capabilities for the symfony mailer component.",
-            "keywords": [
-                "actuator"
-            ],
-            "support": {
-                "issues": "https://github.com/SymSensor/ActuatorMailerBundle/issues",
-                "source": "https://github.com/SymSensor/ActuatorMailerBundle/tree/v1.1.0"
-            },
-            "time": "2023-12-06T14:19:17+00:00"
-        },
-        {
             "name": "symsensor/actuator-maintenance-bundle",
             "version": "v1.0.1",
             "source": {
@@ -11650,7 +11601,7 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": [],
+    "stability-flags": {},
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
@@ -11659,6 +11610,6 @@
         "ext-iconv": "*",
         "ext-json": "*"
     },
-    "platform-dev": [],
+    "platform-dev": {},
     "plugin-api-version": "2.6.0"
 }
