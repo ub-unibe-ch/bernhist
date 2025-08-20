@@ -35,7 +35,6 @@
         "symfony/yaml": "7.3.*",
         "symsensor/actuator-bundle": "^1.1",
         "symsensor/actuator-doctrine-bundle": "^1.1",
-        "symsensor/actuator-mailer-bundle": "^1.1",
         "symsensor/actuator-maintenance-bundle": "^1.0",
         "tecnickcom/tcpdf": "^6.2"
     },

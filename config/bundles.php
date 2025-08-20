@@ -15,5 +15,4 @@ return [
     SymSensor\ActuatorBundle\SymSensorActuatorBundle::class => ['all' => true],
     SymSensor\ActuatorDoctrineBundle\SymSensorActuatorDoctrineBundle::class => ['all' => true],
     SymSensor\ActuatorMaintenanceBundle\SymSensorActuatorMaintenanceBundle::class => ['all' => true],
-    SymSensor\ActuatorMailerBundle\SymSensorActuatorMailerBundle::class => ['all' => true],
 ];
