@@ -29,7 +29,7 @@ class Location implements \Stringable
     private Collection $children;
 
     #[ORM\Column(type: Types::BOOLEAN)]
-    private ?bool $isStartNode = null;
+    private ?bool $isStartNode = false;
 
     #[ORM\JoinColumn(nullable: false)]
     #[ORM\ManyToOne(targetEntity: Type::class)]
@@ -43,7 +43,6 @@ class Location implements \Stringable
 
     public function __construct()
     {
-        $this->isStartNode = false;
         $this->children = new ArrayCollection();
         $this->dataEntries = new ArrayCollection();
     }
@@ -83,7 +82,7 @@ class Location implements \Stringable
     }
 
     /**
-     * @return Collection<int, self>|self[]
+     * @return Collection<int, self>
      */
     public function getChildren(): Collection
     {
@@ -138,7 +137,7 @@ class Location implements \Stringable
     }
 
     /**
-     * @return Collection<int, DataEntry>|DataEntry[]
+     * @return Collection<int, DataEntry>
      */
     public function getDataEntries(): Collection
     {
@@ -170,7 +169,7 @@ class Location implements \Stringable
 
     public function hasDescendant(self $location): bool
     {
-        if ($this->getId() == $location->getId()) {
+        if ($this->getId() === $location->getId()) {
             return true;
         }
 
