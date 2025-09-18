@@ -42,7 +42,7 @@ jobs:
         run: composer install --ansi --no-interaction --no-progress --prefer-dist
 
       - name: "Run phpstan"
-        run: php vendor/bin/phpstan analyse --error-format=github 
+        run: php vendor/bin/phpstan analyse --error-format=github
 
 
   php-cs-fixer:
@@ -79,7 +79,7 @@ jobs:
 
   phpunit:
     needs: [ "phpstan", "php-cs-fixer" ]
-    
+
     name: "phpunit"
     runs-on: ubuntu-latest
 
@@ -113,7 +113,7 @@ jobs:
       - name: "Install Node"
         uses: actions/setup-node@v3
         with:
-          node-version: '18.16'
+          node-version: '18.20'
 
       - name: "Install latest dependencies"
         run: |
