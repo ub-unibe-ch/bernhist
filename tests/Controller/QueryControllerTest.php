@@ -15,9 +15,6 @@ class QueryControllerTest extends WebTestCase
 
         $client->request('GET', '/query/');
 
-        file_put_contents('./var/test.html', $client->getResponse()->getContent());
-        exit;
-
         self::assertResponseIsSuccessful();
         self::assertSelectorTextContains('h1', 'Ortsauswahl');
         self::assertSelectorExists('#level-16');
