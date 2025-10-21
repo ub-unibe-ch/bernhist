@@ -19,7 +19,7 @@ class QueryService
     {
         $location = $this->locationRepo->findRoot();
 
-        if (!$location instanceof \App\Entity\Location) {
+        if (!$location instanceof Location) {
             return null;
         }
 
@@ -99,7 +99,7 @@ class QueryService
     {
         if (!$this->hasAllowedLocation($location, $allowedLocations)) {
             $parent = $location->getParent();
-            if ($parent instanceof \App\Entity\Location) {
+            if ($parent instanceof Location) {
                 $parent->removeChild($location);
             }
         } else {
@@ -130,7 +130,7 @@ class QueryService
     {
         if (!$this->hasAllowedTopic($topic, $allowedTopics)) {
             $parent = $topic->getParent();
-            if ($parent instanceof \App\Entity\Topic) {
+            if ($parent instanceof Topic) {
                 $parent->removeChild($topic);
             }
         } else {
