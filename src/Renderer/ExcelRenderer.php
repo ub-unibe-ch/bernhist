@@ -68,7 +68,7 @@ class ExcelRenderer extends AbstractRenderer
 
     protected function write(IWriter $writer): Response
     {
-        return new StreamedResponse(function () use ($writer) {
+        return new StreamedResponse(function () use ($writer): void {
             $writer->save('php://output');
         }, Response::HTTP_OK, [
             'Content-Type' => 'application/download',

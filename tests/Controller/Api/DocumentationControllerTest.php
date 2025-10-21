@@ -7,12 +7,12 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 /**
  * @internal
  */
-class DocumentationControllerTest extends WebTestCase
+final class DocumentationControllerTest extends WebTestCase
 {
     public function testHomepage(): void
     {
-        $client = static::createClient();
-        $client->request('GET', '/api/');
+        $client = self::createClient();
+        $client->request(\Symfony\Component\HttpFoundation\Request::METHOD_GET, '/api/');
 
         self::assertResponseIsSuccessful();
     }

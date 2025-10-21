@@ -49,7 +49,7 @@ class QueryController extends AbstractController
         $yearsFrom = $queryService->getYearsFrom($location, $topic);
         $yearsTo = $queryService->getYearsTo($location, $topic);
 
-        if (0 === \count($yearsFrom) || 0 === \count($yearsTo)) {
+        if ([] === $yearsFrom || [] === $yearsTo) {
             $this->addFlash('warning', 'Für das zuvor gewählte Thema "'.$topic.'" sind für diesen Ort keine Einträge vorhanden.');
 
             return $this->redirectToRoute('query_location', ['id' => $location->getId()]);
@@ -72,7 +72,7 @@ class QueryController extends AbstractController
         $yearsFrom = $queryService->getYearsFrom($location, $topic);
         $yearsTo = $queryService->getYearsTo($location, $topic);
 
-        if (0 === \count($yearsFrom) || 0 === \count($yearsTo)) {
+        if ([] === $yearsFrom || [] === $yearsTo) {
             throw new NotFoundHttpException();
         }
 
@@ -112,7 +112,7 @@ class QueryController extends AbstractController
         $yearsFrom = $queryService->getYearsFrom($location, $topic);
         $yearsTo = $queryService->getYearsTo($location, $topic);
 
-        if (0 === \count($yearsFrom) || 0 === \count($yearsTo)) {
+        if ([] === $yearsFrom || [] === $yearsTo) {
             throw new NotFoundHttpException();
         }
 

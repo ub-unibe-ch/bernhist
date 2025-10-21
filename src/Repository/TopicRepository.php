@@ -31,7 +31,7 @@ class TopicRepository extends ServiceEntityRepository
      */
     public function findWithDataEntries(?Location $location = null): array
     {
-        if (null !== $location) {
+        if ($location instanceof \App\Entity\Location) {
             return $this->createQueryBuilder('t')
                 ->innerJoin('t.dataEntries', 'd')
                 ->addSelect('t')

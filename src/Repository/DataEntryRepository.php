@@ -109,13 +109,13 @@ class DataEntryRepository extends ServiceEntityRepository
 
         $query = $this->createQueryBuilder('d');
 
-        if (null !== $location) {
+        if ($location instanceof \App\Entity\Location) {
             $query->andWhere('d.location = :location')
                 ->setParameter('location', $location)
             ;
         }
 
-        if (null !== $topic) {
+        if ($topic instanceof \App\Entity\Topic) {
             $query->andWhere('d.topic = :topic')
                 ->setParameter('topic', $topic)
             ;

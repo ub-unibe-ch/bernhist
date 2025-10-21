@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-use Rector\CodeQuality\Rector\Class_\InlineConstructorDefaultToPropertyRector;
 use Rector\Config\RectorConfig;
-use Rector\Doctrine\Set\DoctrineSetList;
+use Rector\Symfony\CodeQuality\Rector\Class_\InlineClassRoutePrefixRector;
+use Rector\TypeDeclaration\Rector\StmtsAwareInterface\DeclareStrictTypesRector;
 
 return RectorConfig::configure()
     ->withPaths([
@@ -12,14 +12,30 @@ return RectorConfig::configure()
         __DIR__.'/tests',
         __DIR__.'/templates',
     ])
-    ->withRules([
-        InlineConstructorDefaultToPropertyRector::class,
-    ])
-    ->withImportNames(true)
-    ->withAttributesSets(symfony: true, doctrine: true)
-    ->withPhpSets(php83: true)
-    ->withComposerBased(twig: true, doctrine: true, phpunit: true, symfony: true)
-    ->withSets([
-        DoctrineSetList::DOCTRINE_CODE_QUALITY,
+    ->withSymfonyContainerXml(__DIR__.'/var/cache/dev/App_KernelDevDebugContainer.xml')
+    ->withComposerBased()
+    ->withAttributesSets(
+        symfony: true,
+        doctrine: true,
+        phpunit: true,
+    )
+    ->withPhpSets()
+    ->withPreparedSets(
+        deadCode: true,
+        codeQuality: true,
+        codingStyle: true,
+        typeDeclarations: true,
+        privatization: true,
+        instanceOf: true,
+        earlyReturn: true,
+        strictBooleans: true,
+        rectorPreset: true,
+        doctrineCodeQuality: true,
+        symfonyCodeQuality: true,
+        symfonyConfigs: true,
+    )
+    ->withSkip([
+        InlineClassRoutePrefixRector::class,
+        DeclareStrictTypesRector::class,
     ])
 ;

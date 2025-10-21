@@ -10,14 +10,8 @@ use App\Service\ValuePresenter;
 
 abstract class AbstractRenderer implements RendererInterface
 {
-    /**
-     * @var ValuePresenter
-     */
-    protected $presenter;
-
-    public function __construct(private readonly QueryService $queryService, ValuePresenter $presenter)
+    public function __construct(private readonly QueryService $queryService, protected \App\Service\ValuePresenter $presenter)
     {
-        $this->presenter = $presenter;
     }
 
     /**

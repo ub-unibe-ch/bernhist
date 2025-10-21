@@ -10,16 +10,14 @@ class ValuePresenter
      * @var DataEntry[]
      */
     private static array $dataEntries = [];
+
     private static int $decimals = 0;
 
     public static function present(?string $value): string
     {
-        if (\is_string($value)) {
-            $value = (float) $value;
-        } else {
-            $value = 0;
-        }
-        if (0 === \count(self::$dataEntries)) {
+        $value = \is_string($value) ? (float) $value : 0;
+
+        if ([] === self::$dataEntries) {
             return (string) $value;
         }
 
@@ -39,10 +37,8 @@ class ValuePresenter
             $decimals = $arr[1];
             for ($i = 0; $i < \strlen($decimals); ++$i) {
                 $digit = substr($decimals, $i, 1);
-                if ('0' !== $digit) {
-                    if ($i + 1 > self::$decimals) {
-                        self::$decimals = $i + 1;
-                    }
+                if ('0' !== $digit && $i + 1 > self::$decimals) {
+                    self::$decimals = $i + 1;
                 }
             }
         }

@@ -7,12 +7,12 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 /**
  * @internal
  */
-class PageControllerTest extends WebTestCase
+final class PageControllerTest extends WebTestCase
 {
     public function testHomepage(): void
     {
-        $client = static::createClient();
-        $client->request('GET', '/');
+        $client = self::createClient();
+        $client->request(\Symfony\Component\HttpFoundation\Request::METHOD_GET, '/');
 
         self::assertResponseIsSuccessful();
         self::assertSelectorTextContains('h1', 'Impressum');
@@ -20,8 +20,8 @@ class PageControllerTest extends WebTestCase
 
     public function testWhatIs(): void
     {
-        $client = static::createClient();
-        $client->request('GET', '/whatis/');
+        $client = self::createClient();
+        $client->request(\Symfony\Component\HttpFoundation\Request::METHOD_GET, '/whatis/');
 
         self::assertResponseIsSuccessful();
         self::assertSelectorTextContains('h1', 'Was ist BERNHIST');
@@ -29,8 +29,8 @@ class PageControllerTest extends WebTestCase
 
     public function testHistory(): void
     {
-        $client = static::createClient();
-        $client->request('GET', '/history/');
+        $client = self::createClient();
+        $client->request(\Symfony\Component\HttpFoundation\Request::METHOD_GET, '/history/');
 
         self::assertResponseIsSuccessful();
         self::assertSelectorTextContains('h1', 'Geschichte von BERNHIST');
@@ -38,8 +38,8 @@ class PageControllerTest extends WebTestCase
 
     public function testLiterature(): void
     {
-        $client = static::createClient();
-        $client->request('GET', '/literature/');
+        $client = self::createClient();
+        $client->request(\Symfony\Component\HttpFoundation\Request::METHOD_GET, '/literature/');
 
         self::assertResponseIsSuccessful();
         self::assertSelectorTextContains('h1', 'Literatur');
@@ -47,8 +47,8 @@ class PageControllerTest extends WebTestCase
 
     public function testContact(): void
     {
-        $client = static::createClient();
-        $client->request('GET', '/contact/');
+        $client = self::createClient();
+        $client->request(\Symfony\Component\HttpFoundation\Request::METHOD_GET, '/contact/');
 
         self::assertResponseIsSuccessful();
         self::assertSelectorTextContains('h1', 'Kontakt');
