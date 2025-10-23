@@ -57,6 +57,7 @@ class ApiService
                 'has_records' => true,
             ];
         }
+
         $parent = $entry->getParent()?->getId();
 
         if ($entry instanceof Location && null !== $entry->getIsStartNode() && $entry->getIsStartNode()) {

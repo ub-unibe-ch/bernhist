@@ -17,6 +17,7 @@ class RendererFactory
         if ('xlsx' === $format) {
             return new ExcelRenderer($this->queryService, $this->presenter);
         }
+
         if ('pdf' === $format) {
             return new PdfRenderer($this->queryService, $this->presenter);
         }

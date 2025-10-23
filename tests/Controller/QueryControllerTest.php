@@ -7,13 +7,13 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 /**
  * @internal
  */
-class QueryControllerTest extends WebTestCase
+final class QueryControllerTest extends WebTestCase
 {
     public function testQuery(): void
     {
-        $client = static::createClient();
+        $client = self::createClient();
 
-        $client->request('GET', '/query/');
+        $client->request(\Symfony\Component\HttpFoundation\Request::METHOD_GET, '/query/');
 
         self::assertResponseIsSuccessful();
         self::assertSelectorTextContains('h1', 'Ortsauswahl');
@@ -23,9 +23,9 @@ class QueryControllerTest extends WebTestCase
 
     public function testQueryEntry(): void
     {
-        $client = static::createClient();
+        $client = self::createClient();
 
-        $client->request('GET', '/query/location/434/topic/990/1856-1980/');
+        $client->request(\Symfony\Component\HttpFoundation\Request::METHOD_GET, '/query/location/434/topic/990/1856-1980/');
 
         self::assertResponseIsSuccessful();
         self::assertSelectorTextContains('body > main > h1.d-print-none', 'Resultate');
