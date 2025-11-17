@@ -12,15 +12,16 @@ use Doctrine\ORM\Mapping as ORM;
 class Topic implements \Stringable
 {
     #[ORM\Id]
+    #[ORM\GeneratedValue]
     #[ORM\Column(type: Types::INTEGER)]
-    private ?int $id = null;
+    private int $id;
 
     #[ORM\Column(type: Types::STRING, length: 255)]
-    private ?string $name = null;
+    private string $name;
 
     #[ORM\JoinColumn(nullable: false)]
     #[ORM\ManyToOne(targetEntity: Type::class)]
-    private ?Type $type = null;
+    private Type $type;
 
     #[ORM\ManyToOne(targetEntity: self::class, inversedBy: 'children', cascade: ['persist', 'remove'])]
     private ?Topic $parent = null;
@@ -71,7 +72,7 @@ class Topic implements \Stringable
         return $this->type;
     }
 
-    public function setType(?Type $type): self
+    public function setType(Type $type): self
     {
         $this->type = $type;
 
@@ -143,10 +144,6 @@ class Topic implements \Stringable
     {
         if ($this->dataEntries->contains($dataEntry)) {
             $this->dataEntries->removeElement($dataEntry);
-            // set the owning side to null (unless already changed)
-            if ($dataEntry->getTopic() === $this) {
-                $dataEntry->setTopic(null);
-            }
         }
 
         return $this;
@@ -170,6 +167,6 @@ class Topic implements \Stringable
     #[\Override]
     public function __toString(): string
     {
-        return (string) $this->name;
+        return $this->name;
     }
 }

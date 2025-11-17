@@ -12,11 +12,12 @@ use Doctrine\ORM\Mapping as ORM;
 class Location implements \Stringable
 {
     #[ORM\Id]
+    #[ORM\GeneratedValue]
     #[ORM\Column(type: Types::INTEGER)]
-    private ?int $id = null;
+    private int $id;
 
     #[ORM\Column(type: Types::STRING, length: 150)]
-    private ?string $name = null;
+    private string $name;
 
     #[ORM\ManyToOne(targetEntity: self::class, inversedBy: 'children', cascade: ['persist', 'remove'])]
     private ?Location $parent = null;
@@ -29,11 +30,11 @@ class Location implements \Stringable
     private Collection $children;
 
     #[ORM\Column(type: Types::BOOLEAN)]
-    private ?bool $isStartNode = false;
+    private bool $isStartNode = false;
 
     #[ORM\JoinColumn(nullable: false)]
     #[ORM\ManyToOne(targetEntity: Type::class)]
-    private ?Type $type = null;
+    private Type $type;
 
     /**
      * @var Collection<int, DataEntry>
@@ -129,7 +130,7 @@ class Location implements \Stringable
         return $this->type;
     }
 
-    public function setType(?Type $type): self
+    public function setType(Type $type): self
     {
         $this->type = $type;
 
@@ -159,9 +160,7 @@ class Location implements \Stringable
         if ($this->dataEntries->contains($dataEntry)) {
             $this->dataEntries->removeElement($dataEntry);
             // set the owning side to null (unless already changed)
-            if ($dataEntry->getLocation() === $this) {
-                $dataEntry->setLocation(null);
-            }
+            //  orphanRemoval: true should remove the dataEntry from the database automatically
         }
 
         return $this;
