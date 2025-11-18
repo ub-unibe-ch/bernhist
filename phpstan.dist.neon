@@ -9,6 +9,6 @@ parameters:
         - src
         - tests
     doctrine:
-        allowNullablePropertyForRequiredField: true
+        allowNullablePropertyForRequiredField: false
 #includes:
 #	- phar://phpstan.phar/conf/bleedingEdge.neon

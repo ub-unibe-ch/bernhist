@@ -15,7 +15,7 @@ class Type implements \Stringable
     private ?int $id = null;
 
     #[ORM\Column(type: Types::STRING, length: 255)]
-    private ?string $name = null;
+    private string $name;
 
     public function getId(): ?int
     {
@@ -37,6 +37,6 @@ class Type implements \Stringable
     #[\Override]
     public function __toString(): string
     {
-        return (string) $this->name;
+        return $this->name;
     }
 }
