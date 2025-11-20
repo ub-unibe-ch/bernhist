@@ -114,7 +114,13 @@ class QueryService
      */
     protected function hasAllowedTopic(Topic $topic, array $allowedTopics): bool
     {
-        return array_any($allowedTopics, fn (self $allowedTopic): bool => $topic->hasDescendant($allowedTopic));
+        foreach ($allowedTopics as $allowedTopic) {
+            if ($topic->hasDescendant($allowedTopic)) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     /**
