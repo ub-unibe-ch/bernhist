@@ -89,8 +89,8 @@ class RecordController extends AbstractController
             $limit = 2500;
         }
 
-        $yearFrom = $request->get('from', null);
-        $yearTo = $request->get('to', null);
+        $yearFrom = $request->get('from');
+        $yearTo = $request->get('to');
         $page = (int) $request->get('page', 1);
         $offset = ($page - 1) * $limit;
 
