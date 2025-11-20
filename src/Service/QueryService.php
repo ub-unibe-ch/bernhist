@@ -114,7 +114,7 @@ class QueryService
      */
     protected function hasAllowedTopic(Topic $topic, array $allowedTopics): bool
     {
-        return array_any($allowedTopics, fn(self $allowedTopic): bool => $topic->hasDescendant($allowedTopic));
+        return array_any($allowedTopics, fn (self $allowedTopic): bool => $topic->hasDescendant($allowedTopic));
     }
 
     /**
