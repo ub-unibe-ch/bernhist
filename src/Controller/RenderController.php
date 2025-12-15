@@ -13,15 +13,19 @@ use Symfony\Component\Routing\Attribute\Route;
 #[Route(path: '/render')]
 class RenderController extends AbstractController
 {
-    #[Route(path: '/BERNHIST_{locationId}_{id}_{yearFrom}-{yearTo}.{format}', name: 'render_result')]
-    public function renderFile(int $locationId, Topic $topic, int $yearFrom, int $yearTo, string $format, LocationRepository $locationRepo, RendererFactory $rendererFactory): Response
+    public function __construct(private readonly LocationRepository $locationRepo, private readonly RendererFactory $rendererFactory)
     {
-        $location = $locationRepo->find($locationId);
+    }
+
+    #[Route(path: '/BERNHIST_{locationId}_{id}_{yearFrom}-{yearTo}.{format}', name: 'render_result')]
+    public function renderFile(int $locationId, Topic $topic, int $yearFrom, int $yearTo, string $format): Response
+    {
+        $location = $this->locationRepo->find($locationId);
         if (null === $location) {
             throw new NotFoundHttpException();
         }
 
-        $renderer = $rendererFactory->create($format);
+        $renderer = $this->rendererFactory->create($format);
 
         return $renderer->render($location, $topic, $yearFrom, $yearTo);
     }

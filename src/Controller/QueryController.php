@@ -18,36 +18,40 @@ use Symfony\Component\Routing\Attribute\Route;
 #[Route(path: '/query')]
 class QueryController extends AbstractController
 {
-    #[Route(path: '/', name: 'query')]
-    public function selectLocation(Request $request, QueryService $queryService): Response
+    public function __construct(private readonly QueryService $queryService, private readonly LocationRepository $locationRepo, private readonly ValuePresenter $valuePresenter)
     {
-        $topicId = $request->get('topicId', 0);
+    }
+
+    #[Route(path: '/', name: 'query')]
+    public function selectLocation(Request $request): Response
+    {
+        $topicId = $request->query->get('topicId', '0');
 
         return $this->render('query/location/index.html.twig', [
-            'location' => $queryService->getLocationRoot(),
+            'location' => $this->queryService->getLocationRoot(),
             'topicId' => $topicId,
         ]);
     }
 
     #[Route(path: '/location/{id}/', name: 'query_location')]
-    public function selectTopic(Location $location, QueryService $queryService): Response
+    public function selectTopic(Location $location): Response
     {
         return $this->render('query/topic/index.html.twig', [
             'location' => $location,
-            'topic' => $queryService->getTopicRoot($location),
+            'topic' => $this->queryService->getTopicRoot($location),
         ]);
     }
 
     #[Route(path: '/location/{locationId}/topic/{id}/', name: 'query_topic')]
-    public function selectYearRange(int $locationId, Topic $topic, LocationRepository $locationRepo, QueryService $queryService): RedirectResponse
+    public function selectYearRange(int $locationId, Topic $topic): RedirectResponse
     {
-        $location = $locationRepo->find($locationId);
+        $location = $this->locationRepo->find($locationId);
         if (null === $location) {
             throw new NotFoundHttpException();
         }
 
-        $yearsFrom = $queryService->getYearsFrom($location, $topic);
-        $yearsTo = $queryService->getYearsTo($location, $topic);
+        $yearsFrom = $this->queryService->getYearsFrom($location, $topic);
+        $yearsTo = $this->queryService->getYearsTo($location, $topic);
 
         if ([] === $yearsFrom || [] === $yearsTo) {
             $this->addFlash('warning', 'Für das zuvor gewählte Thema "'.$topic.'" sind für diesen Ort keine Einträge vorhanden.');
@@ -62,15 +66,15 @@ class QueryController extends AbstractController
     }
 
     #[Route(path: '/location/{locationId}/topic/{id}/{yearFrom}-{yearTo}/', name: 'query_result')]
-    public function showResult(int $locationId, Topic $topic, int $yearFrom, int $yearTo, LocationRepository $locationRepo, QueryService $queryService, ValuePresenter $valuePresenter): Response
+    public function showResult(int $locationId, Topic $topic, int $yearFrom, int $yearTo): Response
     {
-        $location = $locationRepo->find($locationId);
+        $location = $this->locationRepo->find($locationId);
         if (null === $location) {
             throw new NotFoundHttpException();
         }
 
-        $yearsFrom = $queryService->getYearsFrom($location, $topic);
-        $yearsTo = $queryService->getYearsTo($location, $topic);
+        $yearsFrom = $this->queryService->getYearsFrom($location, $topic);
+        $yearsTo = $this->queryService->getYearsTo($location, $topic);
 
         if ([] === $yearsFrom || [] === $yearsTo) {
             throw new NotFoundHttpException();
@@ -84,10 +88,10 @@ class QueryController extends AbstractController
             $this->addFlash('warning', 'Bitte wählen Sie bei "Jahr bis" einen Wert der gleich oder grösser ist, als "Jahr von".');
             $results = [];
         } else {
-            $results = $queryService->getDataEntries($location, $topic, $yearFrom, $yearTo);
+            $results = $this->queryService->getDataEntries($location, $topic, $yearFrom, $yearTo);
         }
 
-        $valuePresenter::setDataEntries($results);
+        $this->valuePresenter::setDataEntries($results);
 
         return $this->render('query/result/index.html.twig', [
             'location' => $location,
@@ -97,20 +101,20 @@ class QueryController extends AbstractController
             'yearsFrom' => $yearsFrom,
             'yearsTo' => $yearsTo,
             'results' => $results,
-            'valuePresenter' => $valuePresenter,
+            'valuePresenter' => $this->valuePresenter,
         ]);
     }
 
     #[Route(path: '/location/{locationId}/topic/{id}/{yearFrom}-{yearTo}/chartist/', name: 'query_result_chartist')]
-    public function chartistResult(int $locationId, Topic $topic, int $yearFrom, int $yearTo, LocationRepository $locationRepo, QueryService $queryService, ValuePresenter $valuePresenter): JsonResponse
+    public function chartistResult(int $locationId, Topic $topic, int $yearFrom, int $yearTo): JsonResponse
     {
-        $location = $locationRepo->find($locationId);
+        $location = $this->locationRepo->find($locationId);
         if (null === $location) {
             throw new NotFoundHttpException();
         }
 
-        $yearsFrom = $queryService->getYearsFrom($location, $topic);
-        $yearsTo = $queryService->getYearsTo($location, $topic);
+        $yearsFrom = $this->queryService->getYearsFrom($location, $topic);
+        $yearsTo = $this->queryService->getYearsTo($location, $topic);
 
         if ([] === $yearsFrom || [] === $yearsTo) {
             throw new NotFoundHttpException();
@@ -125,8 +129,8 @@ class QueryController extends AbstractController
         }
 
         /* @var \App\Entity\DataEntry[] $results */
-        $results = $queryService->getDataEntries($location, $topic, $yearFrom, $yearTo);
-        $valuePresenter::setDataEntries($results);
+        $results = $this->queryService->getDataEntries($location, $topic, $yearFrom, $yearTo);
+        $this->valuePresenter::setDataEntries($results);
 
         $valuesByYear = [];
         for ($year = $yearFrom; $year <= $yearTo; ++$year) {

@@ -19,7 +19,7 @@ class Location implements \Stringable
     #[ORM\Column(type: Types::STRING, length: 150)]
     private string $name;
 
-    #[ORM\ManyToOne(targetEntity: self::class, inversedBy: 'children', cascade: ['persist', 'remove'])]
+    #[ORM\ManyToOne(targetEntity: self::class, cascade: ['persist', 'remove'], inversedBy: 'children')]
     private ?Location $parent = null;
 
     /**
@@ -39,7 +39,7 @@ class Location implements \Stringable
     /**
      * @var Collection<int, DataEntry>
      */
-    #[ORM\OneToMany(targetEntity: DataEntry::class, mappedBy: 'location', orphanRemoval: true, cascade: ['persist', 'remove'])]
+    #[ORM\OneToMany(targetEntity: DataEntry::class, mappedBy: 'location', cascade: ['persist', 'remove'], orphanRemoval: true)]
     private Collection $dataEntries;
 
     public function __construct()

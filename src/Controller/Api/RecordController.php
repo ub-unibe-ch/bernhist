@@ -18,64 +18,68 @@ use Symfony\Component\Routing\Attribute\Route;
 #[Route(path: '/api/record', defaults: ['_format' => 'json'])]
 class RecordController extends AbstractController
 {
+    public function __construct(private readonly LocationRepository $locationRepo, private readonly TopicRepository $topicRepo, private readonly ApiService $apiService, private readonly QueryService $queryService)
+    {
+    }
+
     #[Route(path: '/list/', name: 'api_record_location')]
-    public function list(LocationRepository $locationRepo, TopicRepository $topicRepo, ApiService $apiService, QueryService $queryService, Request $request): JsonResponse
+    public function list(Request $request): JsonResponse
     {
         $location = null;
-        $locationId = $request->get('locationId');
-        if (null === $locationId) {
-            $location = $locationRepo->find($locationId);
+        $locationId = $request->query->get('locationId');
+        if (null !== $locationId) {
+            $location = $this->locationRepo->find($locationId);
             if (null === $location) {
                 throw new NotFoundHttpException();
             }
         }
 
         $topic = null;
-        $topicId = $request->get('topicId');
-        if (null === $topicId) {
-            $topic = $topicRepo->find($topicId);
+        $topicId = $request->query->get('topicId');
+        if (null !== $topicId) {
+            $topic = $this->topicRepo->find($topicId);
             if (null === $topic) {
                 throw new NotFoundHttpException();
             }
         }
 
-        return $this->json($this->createRecordList(true, $request, $apiService, $queryService, $location, $topic));
+        return $this->json($this->createRecordList(true, $request, $this->apiService, $this->queryService, $location, $topic));
     }
 
     #[Route(path: '/list/full/', name: 'api_record_list_full')]
-    public function fullList(LocationRepository $locationRepo, TopicRepository $topicRepo, Request $request, ApiService $apiService, QueryService $queryService): JsonResponse
+    public function fullList(Request $request): JsonResponse
     {
         $location = null;
-        $locationId = $request->get('locationId');
-        if (null === $locationId) {
-            $location = $locationRepo->find($locationId);
+        $locationId = $request->query->get('locationId');
+        if (null !== $locationId) {
+            $location = $this->locationRepo->find($locationId);
             if (null === $location) {
                 throw new NotFoundHttpException();
             }
         }
 
         $topic = null;
-        $topicId = $request->get('topicId');
-        if (null === $topicId) {
-            $topic = $topicRepo->find($topicId);
+        $topicId = $request->query->get('topicId');
+        if (null !== $topicId) {
+            $topic = $this->topicRepo->find($topicId);
             if (null === $topic) {
                 throw new NotFoundHttpException();
             }
         }
 
-        return $this->json($this->createRecordList(false, $request, $apiService, $queryService, $location, $topic));
+        return $this->json($this->createRecordList(false, $request, $this->apiService, $this->queryService, $location, $topic));
     }
 
     #[Route(path: '/{id}/', name: 'api_record')]
-    public function record(DataEntry $record, ApiService $apiService): JsonResponse
+    public function record(DataEntry $record): JsonResponse
     {
-        return $this->json($apiService->toArray($record, false));
+        return $this->json($this->apiService->toArray($record, false));
     }
 
     #[Route(path: '/{id}/full/', name: 'api_record_full')]
-    public function fullRecord(DataEntry $record, ApiService $apiService): JsonResponse
+    public function fullRecord(DataEntry $record): JsonResponse
     {
-        return $this->json($apiService->toArray($record));
+        return $this->json($this->apiService->toArray($record));
     }
 
     /**
@@ -89,15 +93,15 @@ class RecordController extends AbstractController
             $limit = 2500;
         }
 
-        $yearFrom = $request->get('from');
-        $yearTo = $request->get('to');
-        $page = (int) $request->get('page', 1);
+        $yearFrom = $request->query->get('from');
+        $yearTo = $request->query->get('to');
+        $page = (int) $request->query->get('page', '1');
         $offset = ($page - 1) * $limit;
 
         $recordsFrom = $offset + 1;
         $recordsTo = $recordsFrom + ($limit - 1);
 
-        $totalRecords = $queryService->getDataEntriesTotal($location, $topic, $yearFrom, $yearTo);
+        $totalRecords = $queryService->getDataEntriesTotal($location, $topic, (int) $yearFrom, (int) $yearTo);
 
         if ($totalRecords < $recordsTo) {
             $recordsTo = $totalRecords;
@@ -105,7 +109,7 @@ class RecordController extends AbstractController
 
         $pagesTotal = ceil($totalRecords / $limit);
 
-        $dataEntries = $queryService->getDataEntries($location, $topic, $yearFrom, $yearTo, $offset, $limit);
+        $dataEntries = $queryService->getDataEntries($location, $topic, (int) $yearFrom, (int) $yearTo, $offset, $limit);
 
         $records = [
             'info' => [
