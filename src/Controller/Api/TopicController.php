@@ -12,7 +12,7 @@ use Symfony\Component\Routing\Attribute\Route;
 #[Route(path: '/api/topic', defaults: ['_format' => 'json'])]
 class TopicController extends AbstractController
 {
-    public function __construct(private readonly \App\Service\ApiService $apiService, private readonly \App\Service\QueryService $queryService)
+    public function __construct(private readonly ApiService $apiService, private readonly QueryService $queryService)
     {
     }
 
@@ -20,6 +20,7 @@ class TopicController extends AbstractController
     public function list(): JsonResponse
     {
         $topics = $this->apiService->createList($this->queryService->getTopicRoot());
+
         return $this->json($topics);
     }
 
@@ -27,6 +28,7 @@ class TopicController extends AbstractController
     public function tree(): JsonResponse
     {
         $topics = $this->apiService->createTree($this->queryService->getTopicRoot());
+
         return $this->json($topics);
     }
 

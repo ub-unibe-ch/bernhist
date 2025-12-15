@@ -18,7 +18,7 @@ use Symfony\Component\Routing\Attribute\Route;
 #[Route(path: '/api/record', defaults: ['_format' => 'json'])]
 class RecordController extends AbstractController
 {
-    public function __construct(private readonly \App\Repository\LocationRepository $locationRepo, private readonly \App\Repository\TopicRepository $topicRepo, private readonly \App\Service\ApiService $apiService, private readonly \App\Service\QueryService $queryService)
+    public function __construct(private readonly LocationRepository $locationRepo, private readonly TopicRepository $topicRepo, private readonly ApiService $apiService, private readonly QueryService $queryService)
     {
     }
 

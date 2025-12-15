@@ -13,7 +13,7 @@ use Symfony\Component\Routing\Attribute\Route;
 #[Route(path: '/render')]
 class RenderController extends AbstractController
 {
-    public function __construct(private readonly \App\Repository\LocationRepository $locationRepo, private readonly \App\Renderer\RendererFactory $rendererFactory)
+    public function __construct(private readonly LocationRepository $locationRepo, private readonly RendererFactory $rendererFactory)
     {
     }
 

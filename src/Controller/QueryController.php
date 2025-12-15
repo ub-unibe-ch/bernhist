@@ -18,7 +18,7 @@ use Symfony\Component\Routing\Attribute\Route;
 #[Route(path: '/query')]
 class QueryController extends AbstractController
 {
-    public function __construct(private readonly \App\Service\QueryService $queryService, private readonly \App\Repository\LocationRepository $locationRepo, private readonly \App\Service\ValuePresenter $valuePresenter)
+    public function __construct(private readonly QueryService $queryService, private readonly LocationRepository $locationRepo, private readonly ValuePresenter $valuePresenter)
     {
     }
 
