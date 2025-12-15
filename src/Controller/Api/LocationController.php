@@ -12,25 +12,27 @@ use Symfony\Component\Routing\Attribute\Route;
 #[Route(path: '/api/location', defaults: ['_format' => 'json'])]
 class LocationController extends AbstractController
 {
-    #[Route(path: '/list/', name: 'api_location_list')]
-    public function list(ApiService $apiService, QueryService $queryService): JsonResponse
+    public function __construct(private readonly \App\Service\ApiService $apiService, private readonly \App\Service\QueryService $queryService)
     {
-        $locations = $apiService->createList($queryService->getLocationRoot());
+    }
 
+    #[Route(path: '/list/', name: 'api_location_list')]
+    public function list(): JsonResponse
+    {
+        $locations = $this->apiService->createList($this->queryService->getLocationRoot());
         return $this->json($locations);
     }
 
     #[Route(path: '/tree/', name: 'api_location_tree')]
-    public function tree(ApiService $apiService, QueryService $queryService): JsonResponse
+    public function tree(): JsonResponse
     {
-        $locations = $apiService->createTree($queryService->getLocationRoot());
-
+        $locations = $this->apiService->createTree($this->queryService->getLocationRoot());
         return $this->json($locations);
     }
 
     #[Route(path: '/{id}/', name: 'api_location')]
-    public function show(Location $location, ApiService $apiService): JsonResponse
+    public function show(Location $location): JsonResponse
     {
-        return $this->json($apiService->toArray($location));
+        return $this->json($this->apiService->toArray($location));
     }
 }

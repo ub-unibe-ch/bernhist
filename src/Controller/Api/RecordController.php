@@ -18,13 +18,17 @@ use Symfony\Component\Routing\Attribute\Route;
 #[Route(path: '/api/record', defaults: ['_format' => 'json'])]
 class RecordController extends AbstractController
 {
+    public function __construct(private readonly \App\Repository\LocationRepository $locationRepo, private readonly \App\Repository\TopicRepository $topicRepo, private readonly \App\Service\ApiService $apiService, private readonly \App\Service\QueryService $queryService)
+    {
+    }
+
     #[Route(path: '/list/', name: 'api_record_location')]
-    public function list(LocationRepository $locationRepo, TopicRepository $topicRepo, ApiService $apiService, QueryService $queryService, Request $request): JsonResponse
+    public function list(Request $request): JsonResponse
     {
         $location = null;
         $locationId = $request->get('locationId');
         if (null === $locationId) {
-            $location = $locationRepo->find($locationId);
+            $location = $this->locationRepo->find($locationId);
             if (null === $location) {
                 throw new NotFoundHttpException();
             }
@@ -33,22 +37,22 @@ class RecordController extends AbstractController
         $topic = null;
         $topicId = $request->get('topicId');
         if (null === $topicId) {
-            $topic = $topicRepo->find($topicId);
+            $topic = $this->topicRepo->find($topicId);
             if (null === $topic) {
                 throw new NotFoundHttpException();
             }
         }
 
-        return $this->json($this->createRecordList(true, $request, $apiService, $queryService, $location, $topic));
+        return $this->json($this->createRecordList(true, $request, $this->apiService, $this->queryService, $location, $topic));
     }
 
     #[Route(path: '/list/full/', name: 'api_record_list_full')]
-    public function fullList(LocationRepository $locationRepo, TopicRepository $topicRepo, Request $request, ApiService $apiService, QueryService $queryService): JsonResponse
+    public function fullList(Request $request): JsonResponse
     {
         $location = null;
         $locationId = $request->get('locationId');
         if (null === $locationId) {
-            $location = $locationRepo->find($locationId);
+            $location = $this->locationRepo->find($locationId);
             if (null === $location) {
                 throw new NotFoundHttpException();
             }
@@ -57,25 +61,25 @@ class RecordController extends AbstractController
         $topic = null;
         $topicId = $request->get('topicId');
         if (null === $topicId) {
-            $topic = $topicRepo->find($topicId);
+            $topic = $this->topicRepo->find($topicId);
             if (null === $topic) {
                 throw new NotFoundHttpException();
             }
         }
 
-        return $this->json($this->createRecordList(false, $request, $apiService, $queryService, $location, $topic));
+        return $this->json($this->createRecordList(false, $request, $this->apiService, $this->queryService, $location, $topic));
     }
 
     #[Route(path: '/{id}/', name: 'api_record')]
-    public function record(DataEntry $record, ApiService $apiService): JsonResponse
+    public function record(DataEntry $record): JsonResponse
     {
-        return $this->json($apiService->toArray($record, false));
+        return $this->json($this->apiService->toArray($record, false));
     }
 
     #[Route(path: '/{id}/full/', name: 'api_record_full')]
-    public function fullRecord(DataEntry $record, ApiService $apiService): JsonResponse
+    public function fullRecord(DataEntry $record): JsonResponse
     {
-        return $this->json($apiService->toArray($record));
+        return $this->json($this->apiService->toArray($record));
     }
 
     /**
