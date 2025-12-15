@@ -25,7 +25,7 @@ class QueryController extends AbstractController
     #[Route(path: '/', name: 'query')]
     public function selectLocation(Request $request): Response
     {
-        $topicId = $request->get('topicId', 0);
+        $topicId = $request->query->get('topicId', 0);
 
         return $this->render('query/location/index.html.twig', [
             'location' => $this->queryService->getLocationRoot(),

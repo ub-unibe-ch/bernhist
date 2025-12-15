@@ -26,7 +26,7 @@ class RecordController extends AbstractController
     public function list(Request $request): JsonResponse
     {
         $location = null;
-        $locationId = $request->get('locationId');
+        $locationId = $request->query->get('locationId');
         if (null === $locationId) {
             $location = $this->locationRepo->find($locationId);
             if (null === $location) {
@@ -35,7 +35,7 @@ class RecordController extends AbstractController
         }
 
         $topic = null;
-        $topicId = $request->get('topicId');
+        $topicId = $request->query->get('topicId');
         if (null === $topicId) {
             $topic = $this->topicRepo->find($topicId);
             if (null === $topic) {
@@ -50,7 +50,7 @@ class RecordController extends AbstractController
     public function fullList(Request $request): JsonResponse
     {
         $location = null;
-        $locationId = $request->get('locationId');
+        $locationId = $request->query->get('locationId');
         if (null === $locationId) {
             $location = $this->locationRepo->find($locationId);
             if (null === $location) {
@@ -59,7 +59,7 @@ class RecordController extends AbstractController
         }
 
         $topic = null;
-        $topicId = $request->get('topicId');
+        $topicId = $request->query->get('topicId');
         if (null === $topicId) {
             $topic = $this->topicRepo->find($topicId);
             if (null === $topic) {
@@ -93,9 +93,9 @@ class RecordController extends AbstractController
             $limit = 2500;
         }
 
-        $yearFrom = $request->get('from');
-        $yearTo = $request->get('to');
-        $page = (int) $request->get('page', 1);
+        $yearFrom = $request->query->get('from');
+        $yearTo = $request->query->get('to');
+        $page = (int) $request->query->get('page', 1);
         $offset = ($page - 1) * $limit;
 
         $recordsFrom = $offset + 1;

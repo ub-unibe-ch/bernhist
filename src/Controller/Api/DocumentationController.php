@@ -10,10 +10,6 @@ use Symfony\Component\Routing\Attribute\Route;
 #[Route(path: '/api')]
 class DocumentationController extends AbstractController
 {
-    public function __construct(private readonly \App\Service\QueryService $queryService)
-    {
-    }
-
     #[Route(path: '/', name: 'api_documentation')]
     public function documentation(): Response
     {
