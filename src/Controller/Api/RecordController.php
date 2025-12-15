@@ -27,7 +27,7 @@ class RecordController extends AbstractController
     {
         $location = null;
         $locationId = $request->query->get('locationId');
-        if (null === $locationId) {
+        if (null !== $locationId) {
             $location = $this->locationRepo->find($locationId);
             if (null === $location) {
                 throw new NotFoundHttpException();
@@ -36,7 +36,7 @@ class RecordController extends AbstractController
 
         $topic = null;
         $topicId = $request->query->get('topicId');
-        if (null === $topicId) {
+        if (null !== $topicId) {
             $topic = $this->topicRepo->find($topicId);
             if (null === $topic) {
                 throw new NotFoundHttpException();
@@ -51,7 +51,7 @@ class RecordController extends AbstractController
     {
         $location = null;
         $locationId = $request->query->get('locationId');
-        if (null === $locationId) {
+        if (null !== $locationId) {
             $location = $this->locationRepo->find($locationId);
             if (null === $location) {
                 throw new NotFoundHttpException();
@@ -60,7 +60,7 @@ class RecordController extends AbstractController
 
         $topic = null;
         $topicId = $request->query->get('topicId');
-        if (null === $topicId) {
+        if (null !== $topicId) {
             $topic = $this->topicRepo->find($topicId);
             if (null === $topic) {
                 throw new NotFoundHttpException();
