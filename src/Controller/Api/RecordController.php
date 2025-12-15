@@ -95,13 +95,13 @@ class RecordController extends AbstractController
 
         $yearFrom = $request->query->get('from');
         $yearTo = $request->query->get('to');
-        $page = (int) $request->query->get('page', 1);
+        $page = (int) $request->query->get('page', '1');
         $offset = ($page - 1) * $limit;
 
         $recordsFrom = $offset + 1;
         $recordsTo = $recordsFrom + ($limit - 1);
 
-        $totalRecords = $queryService->getDataEntriesTotal($location, $topic, $yearFrom, $yearTo);
+        $totalRecords = $queryService->getDataEntriesTotal($location, $topic, (int) $yearFrom, (int) $yearTo);
 
         if ($totalRecords < $recordsTo) {
             $recordsTo = $totalRecords;
@@ -109,7 +109,7 @@ class RecordController extends AbstractController
 
         $pagesTotal = ceil($totalRecords / $limit);
 
-        $dataEntries = $queryService->getDataEntries($location, $topic, $yearFrom, $yearTo, $offset, $limit);
+        $dataEntries = $queryService->getDataEntries($location, $topic, (int) $yearFrom, (int) $yearTo, $offset, $limit);
 
         $records = [
             'info' => [
