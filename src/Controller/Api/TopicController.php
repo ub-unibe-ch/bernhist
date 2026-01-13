@@ -12,25 +12,29 @@ use Symfony\Component\Routing\Attribute\Route;
 #[Route(path: '/api/topic', defaults: ['_format' => 'json'])]
 class TopicController extends AbstractController
 {
-    #[Route(path: '/list/', name: 'api_topic_list')]
-    public function list(ApiService $apiService, QueryService $queryService): JsonResponse
+    public function __construct(private readonly ApiService $apiService, private readonly QueryService $queryService)
     {
-        $topics = $apiService->createList($queryService->getTopicRoot());
+    }
+
+    #[Route(path: '/list/', name: 'api_topic_list')]
+    public function list(): JsonResponse
+    {
+        $topics = $this->apiService->createList($this->queryService->getTopicRoot());
 
         return $this->json($topics);
     }
 
     #[Route(path: '/tree/', name: 'api_topic_tree')]
-    public function tree(ApiService $apiService, QueryService $queryService): JsonResponse
+    public function tree(): JsonResponse
     {
-        $topics = $apiService->createTree($queryService->getTopicRoot());
+        $topics = $this->apiService->createTree($this->queryService->getTopicRoot());
 
         return $this->json($topics);
     }
 
     #[Route(path: '/{id}/', name: 'api_topic')]
-    public function show(Topic $topic, ApiService $apiService): JsonResponse
+    public function show(Topic $topic): JsonResponse
     {
-        return $this->json($apiService->toArray($topic));
+        return $this->json($this->apiService->toArray($topic));
     }
 }

@@ -23,7 +23,7 @@ class Topic implements \Stringable
     #[ORM\ManyToOne(targetEntity: Type::class)]
     private Type $type;
 
-    #[ORM\ManyToOne(targetEntity: self::class, inversedBy: 'children', cascade: ['persist', 'remove'])]
+    #[ORM\ManyToOne(targetEntity: self::class, cascade: ['persist', 'remove'], inversedBy: 'children')]
     private ?Topic $parent = null;
 
     /**
@@ -36,7 +36,7 @@ class Topic implements \Stringable
     /**
      * @var Collection<int, DataEntry>
      */
-    #[ORM\OneToMany(targetEntity: DataEntry::class, mappedBy: 'topic', orphanRemoval: true, cascade: ['persist', 'remove'])]
+    #[ORM\OneToMany(targetEntity: DataEntry::class, mappedBy: 'topic', cascade: ['persist', 'remove'], orphanRemoval: true)]
     private Collection $dataEntries;
 
     public function __construct()
