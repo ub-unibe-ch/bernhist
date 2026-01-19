@@ -4,7 +4,6 @@ const $ = require('jquery');
 require('bootstrap');
 require('./chartist-modal.js');
 
-
 $(document).ready(function(){
    console.log('Welcome to BERNHIST!');
    if(window.location.hash){

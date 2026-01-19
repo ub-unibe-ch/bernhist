@@ -135,8 +135,7 @@ document.addEventListener('shown.bs.modal', function (event) {
             });
         });
     }
-)
-;
+);
 
 document.addEventListener('hidden.bs.modal', function (event) {
     if (event.target.id !== targetId) {
