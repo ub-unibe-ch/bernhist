@@ -143,5 +143,5 @@ document.addEventListener('hidden.bs.modal', function (event) {
         return
     }
     chart.detach();
-    $(this).find('.chartist').html('');
+    $(event.target).find('.chartist').html('');
 });
