@@ -6,7 +6,7 @@ let chart;
 const targetId = 'chartistModal';
 document.addEventListener('shown.bs.modal', function (event) {
         if (event.target.id !== targetId) {
-            return
+            return;
         }
         $('.chartist').each(function () {
             let url = $(this).data('url');
@@ -140,7 +140,7 @@ document.addEventListener('shown.bs.modal', function (event) {
 
 document.addEventListener('hidden.bs.modal', function (event) {
     if (event.target.id !== targetId) {
-        return
+        return;
     }
     chart.detach();
     $(event.target).find('.chartist').html('');
