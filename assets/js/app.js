@@ -6,7 +6,7 @@ require('./chartist-modal.js');
 
 
 $(document).ready(function(){
-   console.log('Welcome to BERNHIST!!');
+   console.log('Welcome to BERNHIST!');
    if(window.location.hash){
       let id = window.location.hash.substr(1);
       let current = $('#level-' + id);
