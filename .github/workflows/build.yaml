@@ -114,7 +114,7 @@ jobs:
       - name: "Install Node"
         uses: actions/setup-node@v3
         with:
-          node-version: '18.20'
+          node-version: '22.22'
 
       - name: "Install latest dependencies"
         run: |

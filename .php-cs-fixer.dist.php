@@ -6,6 +6,10 @@ $finder = (new PhpCsFixer\Finder())
     ->exclude('config')
     ->exclude('node_modules')
     ->exclude('vendor')
+    ->notPath([
+        'config/bundles.php',
+        'config/reference.php',
+    ])
 ;
 
 return (new PhpCsFixer\Config())
@@ -17,4 +21,4 @@ return (new PhpCsFixer\Config())
     ])
     ->setRiskyAllowed(true)
     ->setFinder($finder)
-;
+    ;
