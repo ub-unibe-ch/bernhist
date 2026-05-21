@@ -4,21 +4,21 @@
         "@babel/preset-env": "^7.16.0",
         "@hotwired/stimulus": "^3.0.0",
         "@popperjs/core": "^2.11.8",
-        "@symfony/stimulus-bridge": "^3.2.0",
-        "@symfony/webpack-encore": "^5.1.0",
+        "@symfony/stimulus-bridge": "^4.0.1",
+        "@symfony/webpack-encore": "^6.0.0",
         "bootstrap": "^5.3.0",
         "buffer": "^6.0.3",
         "chartist": "^0.11.0",
         "core-js": "^3.38.0",
         "jquery": "^3.4.1",
         "popper.js": "^1.15.0",
-        "regenerator-runtime": "^0.13.9",
+        "regenerator-runtime": "^0.14.1",
         "sass": "^1.72.0",
         "sass-loader": "^16.0.0",
         "stream": "^0.0.3",
         "swagger-ui": "^5.0.0",
         "webpack": "^5.74.0",
-        "webpack-cli": "^5.1.0"
+        "webpack-cli": "^7.0.2"
     },
     "resolutions": {
         "prismjs": "^1.30.0"
