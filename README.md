@@ -17,7 +17,7 @@ The files of the original project can be found [here](https://github.com/ub-unib
 ## What is new?
 
 The re-programming was made with the PHP Framework [Symfony](<https://symfony.com>), the front-end component library [Bootstrap](<https://getbootstrap.com>) and the JavaScript charting library [Chartist](<https://gionkunz.github.io/chartist-js/>).
-To enable automated queries an [OAI](<https://github.com/OAI/OpenAPI-Specification>) compatible API was created.
+To enable automated queries, an [OpenAPI](<https://github.com/OAI/OpenAPI-Specification>) compatible API was created.
 
 ## Prerequisites
 
