@@ -16,4 +16,24 @@ return [
         'path' => './assets/app.js',
         'entrypoint' => true,
     ],
+    'bootstrap' => [
+        'version' => '5.3.8',
+    ],
+    '@popperjs/core' => [
+        'version' => '2.11.8',
+    ],
+    'bootstrap/dist/css/bootstrap.min.css' => [
+        'version' => '5.3.8',
+        'type' => 'css',
+    ],
+    'jquery' => [
+        'version' => '4.0.0',
+    ],
+    'chartist' => [
+        'version' => '1.5.0',
+    ],
+    'chartist/dist/index.min.css' => [
+        'version' => '1.5.0',
+        'type' => 'css',
+    ],
 ];
