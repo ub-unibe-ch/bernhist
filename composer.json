@@ -31,7 +31,6 @@
         "symfony/twig-bundle": "7.4.*",
         "symfony/validator": "7.4.*",
         "symfony/web-link": "7.4.*",
-        "symfony/webpack-encore-bundle": "^2.0",
         "symfony/yaml": "7.4.*",
         "symsensor/actuator-bundle": "^1.1",
         "symsensor/actuator-doctrine-bundle": "^1.1",

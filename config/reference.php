@@ -1423,16 +1423,6 @@ use Symfony\Component\Config\Loader\ParamConfigurator as Param;
  *     generate_final_classes?: bool|Param, // Default: true
  *     generate_final_entities?: bool|Param, // Default: false
  * }
- * @psalm-type WebpackEncoreConfig = array{
- *     output_path?: scalar|Param|null, // The path where Encore is building the assets - i.e. Encore.setOutputPath()
- *     crossorigin?: false|"anonymous"|"use-credentials"|Param, // crossorigin value when Encore.enableIntegrityHashes() is used, can be false (default), anonymous or use-credentials // Default: false
- *     preload?: bool|Param, // preload all rendered script and link tags automatically via the http2 Link header. // Default: false
- *     cache?: bool|Param, // Enable caching of the entry point file(s) // Default: false
- *     strict_mode?: bool|Param, // Throw an exception if the entrypoints.json file is missing or an entry is missing from the data // Default: true
- *     builds?: array<string, scalar|Param|null>,
- *     script_attributes?: array<string, scalar|Param|null>,
- *     link_attributes?: array<string, scalar|Param|null>,
- * }
  * @psalm-type DebugConfig = array{
  *     max_items?: int|Param, // Max number of displayed items past the first level, -1 means no limit. // Default: 2500
  *     min_depth?: int|Param, // Minimum tree depth to clone all the items, 1 is default. // Default: 1
@@ -1499,7 +1489,6 @@ use Symfony\Component\Config\Loader\ParamConfigurator as Param;
  *     security?: SecurityConfig,
  *     twig?: TwigConfig,
  *     monolog?: MonologConfig,
- *     webpack_encore?: WebpackEncoreConfig,
  *     sym_sensor_actuator?: SymSensorActuatorConfig,
  *     sym_sensor_actuator_doctrine?: SymSensorActuatorDoctrineConfig,
  *     sym_sensor_actuator_maintenance?: SymSensorActuatorMaintenanceConfig,
@@ -1515,7 +1504,6 @@ use Symfony\Component\Config\Loader\ParamConfigurator as Param;
  *         web_profiler?: WebProfilerConfig,
  *         monolog?: MonologConfig,
  *         maker?: MakerConfig,
- *         webpack_encore?: WebpackEncoreConfig,
  *         debug?: DebugConfig,
  *         sym_sensor_actuator?: SymSensorActuatorConfig,
  *         sym_sensor_actuator_doctrine?: SymSensorActuatorDoctrineConfig,
@@ -1531,7 +1519,6 @@ use Symfony\Component\Config\Loader\ParamConfigurator as Param;
  *         security?: SecurityConfig,
  *         twig?: TwigConfig,
  *         monolog?: MonologConfig,
- *         webpack_encore?: WebpackEncoreConfig,
  *         sym_sensor_actuator?: SymSensorActuatorConfig,
  *         sym_sensor_actuator_doctrine?: SymSensorActuatorDoctrineConfig,
  *         sym_sensor_actuator_maintenance?: SymSensorActuatorMaintenanceConfig,
@@ -1547,7 +1534,6 @@ use Symfony\Component\Config\Loader\ParamConfigurator as Param;
  *         twig?: TwigConfig,
  *         web_profiler?: WebProfilerConfig,
  *         monolog?: MonologConfig,
- *         webpack_encore?: WebpackEncoreConfig,
  *         dama_doctrine_test?: DamaDoctrineTestConfig,
  *         sym_sensor_actuator?: SymSensorActuatorConfig,
  *         sym_sensor_actuator_doctrine?: SymSensorActuatorDoctrineConfig,
