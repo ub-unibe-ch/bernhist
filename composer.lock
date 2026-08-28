@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "1264fee1282d3f33abe5487375b75f63",
+    "content-hash": "0a86cefeae6cdc3ad8542fabdd12ce93",
     "packages": [
         {
             "name": "composer/pcre",
@@ -7631,6 +7631,62 @@
             "time": "2026-06-08T20:24:16+00:00"
         },
         {
+            "name": "symfonycasts/sass-bundle",
+            "version": "v0.10.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/SymfonyCasts/sass-bundle.git",
+                "reference": "eedf6ace11e5323344726d2b6e0ba1635cf12bb5"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/SymfonyCasts/sass-bundle/zipball/eedf6ace11e5323344726d2b6e0ba1635cf12bb5",
+                "reference": "eedf6ace11e5323344726d2b6e0ba1635cf12bb5",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=8.1",
+                "symfony/asset-mapper": "^6.3|^7.0|^8.0",
+                "symfony/console": "^5.4|^6.3|^7.0|^8.0",
+                "symfony/filesystem": "^5.4|^6.3|^7.0|^8.0",
+                "symfony/finder": "^5.4|^6.3|^7.0|^8.0",
+                "symfony/http-client": "^5.4|^6.3|^7.0|^8.0",
+                "symfony/process": "^5.4|^6.3|^7.0|^8.0"
+            },
+            "require-dev": {
+                "matthiasnoback/symfony-config-test": "^5.0|^6.0",
+                "phpunit/phpunit": "^9.6",
+                "symfony/framework-bundle": "^6.3|^7.0|^8.0",
+                "symfony/phpunit-bridge": "^6.3.9|^7.0|^8.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Symfonycasts\\SassBundle\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Mathéo Daninos",
+                    "homepage": "https://github.com/WebMamba"
+                }
+            ],
+            "description": "Delightful Sass Support for Symfony + AssetMapper",
+            "keywords": [
+                "asset-mapper",
+                "sass"
+            ],
+            "support": {
+                "issues": "https://github.com/SymfonyCasts/sass-bundle/issues",
+                "source": "https://github.com/SymfonyCasts/sass-bundle/tree/v0.10.0"
+            },
+            "time": "2026-04-09T11:29:28+00:00"
+        },
+        {
             "name": "symsensor/actuator-bundle",
             "version": "v1.1.0",
             "source": {
@@ -7853,6 +7909,56 @@
             "time": "2026-04-21T17:00:18+00:00"
         },
         {
+            "name": "twbs/bootstrap",
+            "version": "v5.3.8",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/twbs/bootstrap.git",
+                "reference": "25aa8cc0b32f0d1a54be575347e6d84b70b1acd7"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/twbs/bootstrap/zipball/25aa8cc0b32f0d1a54be575347e6d84b70b1acd7",
+                "reference": "25aa8cc0b32f0d1a54be575347e6d84b70b1acd7",
+                "shasum": ""
+            },
+            "replace": {
+                "twitter/bootstrap": "self.version"
+            },
+            "type": "library",
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Mark Otto",
+                    "email": "markdotto@gmail.com"
+                },
+                {
+                    "name": "Jacob Thornton",
+                    "email": "jacobthornton@gmail.com"
+                }
+            ],
+            "description": "The most popular front-end framework for developing responsive, mobile first projects on the web.",
+            "homepage": "https://getbootstrap.com/",
+            "keywords": [
+                "JS",
+                "css",
+                "framework",
+                "front-end",
+                "mobile-first",
+                "responsive",
+                "sass",
+                "web"
+            ],
+            "support": {
+                "issues": "https://github.com/twbs/bootstrap/issues",
+                "source": "https://github.com/twbs/bootstrap/tree/v5.3.8"
+            },
+            "time": "2025-08-26T02:01:02+00:00"
+        },
+        {
             "name": "twig/twig",
             "version": "v3.28.0",
             "source": {
@@ -7931,6 +8037,62 @@
                 }
             ],
             "time": "2026-07-03T20:44:34+00:00"
+        },
+        {
+            "name": "ub-unibe-ch/bootstrap-bundle",
+            "version": "v1.0.1",
+            "source": {
+                "type": "git",
+                "url": "git@github.com:ub-unibe-ch/bootstrap-bundle.git",
+                "reference": "a6d6e0c7426ea11e69b881b9ac58fa9bec44c168"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/ub-unibe-ch/bootstrap-bundle/zipball/a6d6e0c7426ea11e69b881b9ac58fa9bec44c168",
+                "reference": "a6d6e0c7426ea11e69b881b9ac58fa9bec44c168",
+                "shasum": ""
+            },
+            "require": {
+                "symfony/asset": "6.4.*|7.0.*|7.1.*|7.2.*|7.3.*|7.4.*|8.0.*",
+                "symfony/asset-mapper": "6.4.*|7.0.*|7.1.*|7.2.*|7.3.*|7.4.*|8.0.*",
+                "symfony/framework-bundle": "6.4.*|7.0.*|7.1.*|7.2.*|7.3.*|7.4.*|8.0.*"
+            },
+            "require-dev": {
+                "friendsofphp/php-cs-fixer": "^3.59",
+                "phpro/grumphp-shim": "^2.6",
+                "phpstan/extension-installer": "^1.4",
+                "phpstan/phpstan": "^2.0",
+                "phpstan/phpstan-deprecation-rules": "^2.0",
+                "phpstan/phpstan-phpunit": "^2.0",
+                "phpstan/phpstan-strict-rules": "^2.0",
+                "rector/rector": "^2.0",
+                "symfony/dotenv": "^7.4",
+                "symfony/test-pack": "^1.1"
+            },
+            "type": "symfony-bundle",
+            "extra": {
+                "symfony": {
+                    "allow-contrib": "true"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "UB\\BootstrapBundle\\": "src/"
+                }
+            },
+            "autoload-dev": {
+                "psr-4": {
+                    "UB\\BootstrapBundle\\Tests\\": "tests/"
+                }
+            },
+            "license": [
+                "MIT"
+            ],
+            "support": {
+                "source": "https://github.com/ub-unibe-ch/bootstrap-bundle/tree/v1.0.1",
+                "issues": "https://github.com/ub-unibe-ch/bootstrap-bundle/issues"
+            },
+            "time": "2026-08-20T12:37:51+00:00"
         },
         {
             "name": "webmozart/assert",

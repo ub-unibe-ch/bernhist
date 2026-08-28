@@ -14,4 +14,6 @@ return [
     SymSensor\ActuatorBundle\SymSensorActuatorBundle::class => ['all' => true],
     SymSensor\ActuatorDoctrineBundle\SymSensorActuatorDoctrineBundle::class => ['all' => true],
     SymSensor\ActuatorMaintenanceBundle\SymSensorActuatorMaintenanceBundle::class => ['all' => true],
+    Symfonycasts\SassBundle\SymfonycastsSassBundle::class => ['all' => true],
+    UB\BootstrapBundle\UBBootstrapBundle::class => ['all' => true],
 ];

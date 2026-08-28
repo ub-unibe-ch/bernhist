@@ -33,10 +33,13 @@
         "symfony/validator": "7.4.*",
         "symfony/web-link": "7.4.*",
         "symfony/yaml": "7.4.*",
+        "symfonycasts/sass-bundle": "^0.10.0",
         "symsensor/actuator-bundle": "^1.1",
         "symsensor/actuator-doctrine-bundle": "^1.1",
         "symsensor/actuator-maintenance-bundle": "^1.0",
-        "tecnickcom/tcpdf": "^6.2"
+        "tecnickcom/tcpdf": "^6.2",
+        "twbs/bootstrap": "^5.3",
+        "ub-unibe-ch/bootstrap-bundle": "^1.0"
     },
     "require-dev": {
         "dama/doctrine-test-bundle": "^8.0",
@@ -108,7 +111,11 @@
     "extra": {
         "symfony": {
             "allow-contrib": false,
-            "require": "7.4.*"
+            "require": "7.4.*",
+            "endpoint": [
+                "https://api.github.com/repos/ub-unibe-ch/symfony-recipes/contents/index.json",
+                "flex://defaults"
+            ]
         }
     },
     "repositories": [

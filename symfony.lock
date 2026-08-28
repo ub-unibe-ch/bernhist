@@ -481,6 +481,19 @@
     "symfony/yaml": {
         "version": "v4.2.8"
     },
+    "symfonycasts/sass-bundle": {
+        "version": "0.10",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "main",
+            "version": "0.5",
+            "ref": "4812be2fc05dad51e05837779e9175321fb68d9f"
+        },
+        "files": [
+            "config/packages/symfonycasts_sass.yaml",
+            "assets/styles/app.scss"
+        ]
+    },
     "symsensor/actuator-bundle": {
         "version": "v1.1.0"
     },
@@ -498,6 +511,18 @@
     },
     "twig/twig": {
         "version": "v2.9.0"
+    },
+    "ub-unibe-ch/bootstrap-bundle": {
+        "version": "1.0",
+        "recipe": {
+            "repo": "github.com/ub-unibe-ch/symfony-recipes",
+            "branch": "main",
+            "version": "1.0",
+            "ref": "20a4dcf2125bb5c9a02f348632818ee9f2ddcb59"
+        },
+        "files": [
+            "src/.tests/bootstrap-bundle/panther-router.php"
+        ]
     },
     "webmozart/assert": {
         "version": "1.4.0"
