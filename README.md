@@ -21,10 +21,10 @@ To enable automated queries, an [OpenAPI](<https://github.com/OAI/OpenAPI-Specif
 
 ## Prerequisites
 
-* [PHP](<https://php.net/>) 8.4 or newer (See [here](<https://symfony.com/doc/6.4/reference/requirements.html>) for more information about the needed php extensions)
-* A database. The symfony framework is compatible with many database types. The project was tested with [PostgreSQL](<https://www.postgresql.org/>) server version 15
-* [composer]((<https://getcomposer.org/>)) and [yarn](<https://yarnpkg.com/>)
-* [Apache](<https://httpd.apache.org/>) or [NGINX](<https://www.nginx.com/>) webserver (See [here](<https://symfony.com/doc/6.4/setup/web_server_configuration.html>) for more information about the configuration).
+* [PHP](<https://php.net/>) 8.4 or newer (See [here](<https://symfony.com/doc/7.4/reference/requirements.html>) for more information about the needed php extensions)
+* A database. The symfony framework is compatible with many database types. The project was tested with [PostgreSQL](<https://www.postgresql.org/>) server version 16
+* [composer]((<https://getcomposer.org/>)) and ([Docker](https://www.docker.com/))
+* [Apache](<https://httpd.apache.org/>) or [NGINX](<https://www.nginx.com/>) webserver (See [here](<https://symfony.com/doc/7.4/setup/web_server_configuration.html>) for more information about the configuration).
   During development Symfony's built-in webserver can be used.
 
 ## Installation
@@ -69,19 +69,12 @@ gunzip -c data.sql.gz | psql -u [username] -p [database]
 
 Replace [username] with the mysql user, [database] with the name of your database.
 
-Install the frontend dependencies with:
-
+### Install assets and compile SASS files:
+We use *[AssetMapper](https://symfony.com/doc/current/frontend/asset_mapper.html)* to manage our website assets. Therefore, the main JavaScript file is `/assets/app.js`, and all the installed assets are located in `/assets` (defined by `config/packages/asset_mapper.yaml`). The build configuration can be found in `/importmap.php`.
 ```
-yarn install
+symfony console assets:install && symfony console importmap:install && symfony console sass:build
 ```
 
-**Development**
-
-Build the assets with
-
-```
-yarn encore dev
-```
 
 Run the Symfony Server with
 
@@ -94,7 +87,7 @@ bin/console server:start
 Build the assets with
 
 ```
-yarn encore prod
+symfony console asset-map:compile
 ```
 
 Open the `.env.local` file and set `APP_ENV` to `prod`.
