@@ -15,7 +15,7 @@
         <ini name="error_reporting" value="-1" />
         <server name="APP_ENV" value="test" force="true" />
         <server name="SHELL_VERBOSITY" value="-1" />
-        <server name="PANTHER_WEB_SERVER_ROUTER" value="../tests/router.php" />
+        <server name="PANTHER_WEB_SERVER_ROUTER" value="../tests/bootstrap-bundle/panther-router.php" />
     </php>
 
     <testsuites>

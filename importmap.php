@@ -17,7 +17,7 @@ return [
         'entrypoint' => true,
     ],
     'swagger' => [
-        'path' => './js/swagger.js',
+        'path' => './assets/js/swagger.js',
         'entrypoint' => true,
     ],
     'bootstrap' => [
@@ -31,7 +31,7 @@ return [
         'type' => 'css',
     ],
     'jquery' => [
-        'version' => '4.0.0',
+        'version' => '3.7.1',
     ],
     'chartist' => [
         'version' => '1.5.0',

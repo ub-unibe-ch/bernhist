@@ -8,7 +8,7 @@ SwaggerUIBundle({
     url: '/api/specification.yaml',
     presets: [
         SwaggerUIBundle.presets.apis,
-        SwaggerUIBundle.SwaggerUIStandalonePreset
+        SwaggerUIStandalonePreset
     ],
     displayOperationId: true,
     displayRequestDuration: true

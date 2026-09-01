@@ -23,7 +23,7 @@ To enable automated queries, an [OpenAPI](<https://github.com/OAI/OpenAPI-Specif
 
 * [PHP](<https://php.net/>) 8.4 or newer (See [here](<https://symfony.com/doc/7.4/reference/requirements.html>) for more information about the needed php extensions)
 * A database. The symfony framework is compatible with many database types. The project was tested with [PostgreSQL](<https://www.postgresql.org/>) server version 16
-* [composer]((<https://getcomposer.org/>)) and ([Docker](https://www.docker.com/))
+* [Composer](https://getcomposer.org/) and [Docker](https://www.docker.com/)
 * [Apache](<https://httpd.apache.org/>) or [NGINX](<https://www.nginx.com/>) webserver (See [here](<https://symfony.com/doc/7.4/setup/web_server_configuration.html>) for more information about the configuration).
   During development Symfony's built-in webserver can be used.
 
