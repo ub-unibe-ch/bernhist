@@ -10,7 +10,6 @@ SwaggerUIBundle({
         SwaggerUIBundle.presets.apis,
         SwaggerUIBundle.SwaggerUIStandalonePreset
     ],
-    //layout: "StandaloneLayout",
     displayOperationId: true,
     displayRequestDuration: true
 });

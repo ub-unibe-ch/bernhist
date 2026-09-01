@@ -1,0 +1,17 @@
+name: Checks
+
+on:
+  pull_request: {}
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  check:
+    permissions:
+      contents: read
+      packages: read
+    uses: ub-unibe-ch/github-workflows/.github/workflows/symfony_check.yml@v1
+    secrets:
+      packagist-token: ${{ secrets.PACKAGIST_TOKEN }}
