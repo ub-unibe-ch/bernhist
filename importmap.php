@@ -16,6 +16,10 @@ return [
         'path' => './assets/app.js',
         'entrypoint' => true,
     ],
+    'swagger' => [
+        'path' => './js/swagger.js',
+        'entrypoint' => true,
+    ],
     'bootstrap' => [
         'version' => '5.3.8',
     ],
@@ -34,6 +38,13 @@ return [
     ],
     'chartist/dist/index.min.css' => [
         'version' => '1.5.0',
+        'type' => 'css',
+    ],
+    'swagger-ui-dist' => [
+        'version' => '5.32.14',
+    ],
+    'swagger-ui/dist/swagger-ui.css' => [
+        'version' => '5.32.14',
         'type' => 'css',
     ],
 ];
