@@ -12,6 +12,9 @@ security:
             # Ensure dev tools and static assets are always allowed
             pattern: ^/(_profiler|_wdt|assets|build)/
             security: false
+        actuator:
+            pattern: ^/_actuator
+            stateless: true
         main:
             lazy: true
             provider: users_in_memory
