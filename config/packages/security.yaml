@@ -12,6 +12,9 @@ security:
             # Ensure dev tools and static assets are always allowed
             pattern: ^/(_profiler|_wdt|assets|build)/
             security: false
+        actuator:
+            pattern: ^/_actuator
+            stateless: true
         main:
             lazy: true
             provider: users_in_memory
@@ -26,9 +29,10 @@ security:
     access_control:
         # - { path: ^/admin, roles: ROLE_ADMIN }
         # - { path: ^/profile, roles: ROLE_USER }
-        - { path: '^/_actuator', roles: PUBLIC_ACCESS, ips: [127.0.0.1, ::1, 130.92.0.0/16] }
+        - { path: '^/_actuator/info', roles: PUBLIC_ACCESS, ips: [ 127.0.0.1, ::1 ] }
+        - { path: '^/_actuator/health$', roles: PUBLIC_ACCESS, ips: [ 127.0.0.1, ::1, 130.92.0.0/16 ] }
         - { path: '^/_actuator', roles: ROLE_NO_ACCESS }
-        
+
 when@test:
     security:
         password_hashers:
