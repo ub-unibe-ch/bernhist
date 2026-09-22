@@ -1,6 +1,7 @@
-const $ = require('jquery');
-require('bootstrap');
-const Chartist = require('chartist');
+import $ from 'jquery';
+import 'bootstrap';
+import * as Chartist from 'chartist';
+import { LineChart } from 'chartist'
 
 let chart;
 const targetId = 'chartistModal';
@@ -84,7 +85,7 @@ document.addEventListener('shown.bs.modal', function (event) {
                     }]
                 ];
 
-                chart = new Chartist.Line('.chartist', data, options, responsiveOptions);
+                chart = new LineChart('.chartist', data, options, responsiveOptions);
 
                 let seq = 0,
                     delays = 25,
