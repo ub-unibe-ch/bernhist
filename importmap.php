@@ -26,10 +26,6 @@ return [
     '@popperjs/core' => [
         'version' => '2.11.8',
     ],
-    'bootstrap/dist/css/bootstrap.min.css' => [
-        'version' => '5.3.8',
-        'type' => 'css',
-    ],
     'jquery' => [
         'version' => '3.7.1',
     ],
