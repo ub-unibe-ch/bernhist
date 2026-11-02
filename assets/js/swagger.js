@@ -1,10 +1,14 @@
-require('swagger-ui/dist/swagger-ui.css');
+import '../vendor/swagger-ui/dist/swagger-ui.css';
 
-const SwaggerUI = require('swagger-ui');
+import { SwaggerUIBundle, SwaggerUIStandalonePreset } from "swagger-ui-dist"
 
-SwaggerUI({
+SwaggerUIBundle({
     dom_id: '#swagger',
     url: '/api/specification.yaml',
+    presets: [
+        SwaggerUIBundle.presets.apis,
+        SwaggerUIStandalonePreset
+    ],
     displayOperationId: true,
     displayRequestDuration: true
 });

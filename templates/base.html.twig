@@ -9,9 +9,7 @@
     <link rel="icon" href="{{ asset('favicon.ico') }}">
 
     <title>BERNHIST - Historisch-Statistische Datenbank des Kantons Bern</title>
-    {% block stylesheets %}
-        {{ encore_entry_link_tags('app') }}
-    {% endblock %}
+    {% block importmap %}{{ importmap('app') }}{% endblock %}
 </head>
 
 <body>
@@ -75,8 +73,5 @@
                     target="_blank" href="https://github.com/UB-Bern/bernhist">Github</a></small></span>
     </div>
 </footer>
-{% block javascripts %}
-    {{ encore_entry_script_tags('app') }}
-{% endblock %}
 </body>
 </html>

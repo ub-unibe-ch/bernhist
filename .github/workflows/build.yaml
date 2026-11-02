@@ -1,12 +1,7 @@
 name: "Build"
 
 on:
-    push:
-        branches:
-            - main
-    pull_request:
-        branches:
-            - main
+    pull_request: {}
 
 concurrency:
     group: ${{ github.workflow }}-${{ github.ref }}
@@ -33,18 +28,20 @@ jobs:
               run: echo "dir=$(composer config cache-files-dir)" >> $GITHUB_OUTPUT
 
             - name: Cache dependencies
-              uses: actions/cache@v3
+              uses: actions/cache@v4
               with:
                   path: ${{ steps.composerCache.outputs.dir }}
                   key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.json') }}
                   restore-keys: ${{ runner.os }}-composer-
+
+            - name: "Configure Composer token"
+              run: composer config -g github-oauth.github.com ${{ secrets.PACKAGIST_TOKEN }}
 
             - name: "Install latest dependencies"
               run: composer install --ansi --no-interaction --no-progress --prefer-dist
 
             - name: "Run phpstan"
               run: php vendor/bin/phpstan analyse --error-format=github
-
 
     php-cs-fixer:
         name: "php-cs-fixer"
@@ -66,11 +63,14 @@ jobs:
               run: echo "dir=$(composer config cache-files-dir)" >> $GITHUB_OUTPUT
 
             - name: Cache dependencies
-              uses: actions/cache@v3
+              uses: actions/cache@v4
               with:
                   path: ${{ steps.composerCache.outputs.dir }}
                   key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.json') }}
                   restore-keys: ${{ runner.os }}-composer-
+
+            - name: "Configure Composer token"
+              run: composer config -g github-oauth.github.com ${{ secrets.PACKAGIST_TOKEN }}
 
             - name: "Install latest dependencies"
               run: composer install --ansi --no-interaction --no-progress --prefer-dist
@@ -79,9 +79,8 @@ jobs:
               run: php vendor/bin/php-cs-fixer fix -v --dry-run --using-cache=no
 
     phpunit:
-        needs: [ "phpstan", "php-cs-fixer" ]
-
         name: "phpunit"
+        needs: [ "phpstan", "php-cs-fixer" ]
         runs-on: ubuntu-latest
 
         steps:
@@ -89,7 +88,7 @@ jobs:
               uses: "actions/checkout@v4"
 
             - name: "Install PHP"
-              uses: "shivammathur/setup-php@verbose"
+              uses: "shivammathur/setup-php@v2"
               with:
                   coverage: "pcov"
                   php-version: "8.4"
@@ -105,24 +104,22 @@ jobs:
               run: echo "dir=$(composer config cache-files-dir)" >> $GITHUB_OUTPUT
 
             - name: Cache dependencies
-              uses: actions/cache@v3
+              uses: actions/cache@v4
               with:
                   path: ${{ steps.composerCache.outputs.dir }}
                   key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.json') }}
                   restore-keys: ${{ runner.os }}-composer-
 
-            - name: "Install Node"
-              uses: actions/setup-node@v3
-              with:
-                  node-version: '22.22'
+            - name: "Configure Composer token"
+              run: composer config -g github-oauth.github.com ${{ secrets.PACKAGIST_TOKEN }}
 
             - name: "Install latest dependencies"
-              run: |
-                  composer install --ansi --no-interaction --no-progress --prefer-dist
-                  yarn
+              run: composer install --ansi --no-interaction --no-progress --prefer-dist
 
             - name: "Build assets"
-              run: yarn encore production --color
+              run: |
+                  php bin/console sass:build
+                  php bin/console asset-map:compile
 
             - name: "Start services"
               run: docker compose up -d --wait
